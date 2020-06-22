@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+	<h1>Actualizar</h1>
+	<form method="POST">
+		{% csrf_token %}
+		<div class="row">
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<div>{{ form.cantPruebasRealizadas }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<div>{{ form.cantPruebasRealizadas }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<div>{{ form.cantPruebasRealizadas }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<div>{{ form.cantPruebasRealizadas }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+		  </div>
+		 
+			
+			
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		
+	
+	{% if reporte %}
+		<a href="{% url 'delete_reporte' reporte.id %}">Borrar</a>
+	{% endif %}
+</div>
+{% endblock %}

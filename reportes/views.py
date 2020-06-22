@@ -22,7 +22,7 @@ def update_reporte(request,id):
 		form.save()
 		return redirect('listar_reportes')
 	
-	return render(request, 'reportes-form.html',{'form':form,'reporte':reporte})
+	return render(request, 'reportes-form-act.html',{'form':form,'reporte':reporte})
 
 def delete_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)

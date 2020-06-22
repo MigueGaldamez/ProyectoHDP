@@ -1,17 +1,41 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-	<h1>Nuevo / actualizar producto</h1>
+	<h1>Nuevo Reporte de casos</h1>
 	<form method="POST">
 	{% csrf_token %}
-	 <div class="form-group">
-    <label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-    <div>{{ form.cantPruebasRealizadas }}</div>
-    <small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-  </div>
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.cantPruebasRealizadas }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.cantPruebasRealizadas }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.cantPruebasRealizadas }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+	  </div>
+	  <div class="col">
+		<div class="form-group">
+			<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+			<div>{{ form.cantPruebasRealizadas }}</div>
+			<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+		</div>
+	</div>	
 		
-		
-		<button type ="submit">Guardar</button>
+	  <button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 	
 	{% if reporte %}
