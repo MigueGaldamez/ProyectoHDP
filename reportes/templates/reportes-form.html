@@ -1,14 +1,21 @@
+{% extends 'base.html' %}
 {% block content %}
-
+<div class="container">
 	<h1>Nuevo / actualizar producto</h1>
 	<form method="POST">
-		{% csrf_token %}
-		{{ form }}
+	{% csrf_token %}
+	 <div class="form-group">
+    <label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+    <div>{{ form.cantPruebasRealizadas }}</div>
+    <small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+  </div>
+		
+		
 		<button type ="submit">Guardar</button>
 	</form>
 	
 	{% if reporte %}
 		<a href="{% url 'delete_reporte' reporte.id %}">Borrar</a>
 	{% endif %}
-
+</div>
 {% endblock %}
