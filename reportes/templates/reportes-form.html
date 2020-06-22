@@ -1,0 +1,14 @@
+{% block content %}
+
+	<h1>Nuevo / actualizar producto</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form }}
+		<button type ="submit">Guardar</button>
+	</form>
+	
+	{% if reporte %}
+		<a href="{% url 'delete_reporte' reporte.id %}">Borrar</a>
+	{% endif %}
+
+{% endblock %}

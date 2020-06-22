@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<div class="container">
+			<!-- Content here -->
+			
+		
+			<table class="table">
+				<thead>
+				  <tr>
+					<th scope="col">#</th>
+					<th scope="col">First</th>
+					<th scope="col">Last</th>
+					<th scope="col">Handle</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{% for reporte in reportes %}
+						<tr>
+							<th scope="row"><a href="{% url 'update_reporte' reporte.id %}">{{reporte.id}}</a></th>
+							<td>{{reporte.cantPruebasRealizadas}}</td>
+							<td>{{reporte.cantPruebasPos}}</td>
+							<td>{{reporte.sospechosos}}</td>
+						  </tr>
+					{% endfor %}
+				</tbody>
+			  </table>	
+		<a href ="{% url 'crear_reporte'%}">Nuevo Producto </a>
+	</div>
+{% endblock %}
