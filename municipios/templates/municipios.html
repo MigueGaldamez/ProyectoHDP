@@ -9,20 +9,38 @@
 					<th scope="col">#</th>
 					<th scope="col">Nombre Municipio</th>
 					<th scope="col">Id Departamento</th>
-				
+					<th scope="col">Id Departamento</th>
 				  </tr>
 				</thead>
 				<tbody>
+					
 					{% for municipio in municipios %}
 						<tr>
 							<th scope="row"><a href="{% url 'actualizar_municipio' municipio.id %}">{{municipio.id}}</a></th>
 							<td>{{municipio.nombreMunicipio}}</td>
 							<td>{{municipio.idDepartamento}}</td>
-						
+						    <td>
+								<div class="input-group mb-3">
+								<div class="input-group-prepend">
+								  <label class="input-group-text" for="inputGroupSelect01">v</label>
+								</div>
+								<select class="custom-select" id="inputGroupSelect01">
+								  <option selected></option>
+									{% for departamento in departamentos %}
+									<option value="{{ departamento.id }}">{{ departamento.nombreDepartamento }}</option>
+									{% endfor %}
+								</select>
+							  </div>
+							</td>
 						  </tr>
 					{% endfor %}
+					<form action="">	{{form.departamento}}</form>
+				
 				</tbody>
 			  </table>	
+					
+
+					
 		<a href ="{% url 'crear_municipio'%}">Nuevo Municipio</a>
 	</div>
 {% endblock %}
