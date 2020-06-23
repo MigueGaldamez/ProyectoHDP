@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-	<h1>Nuevo Reporte de casos</h1>
+	<h1>Nuevo reporte de casos</h1>
 	<form method="POST">
 	{% csrf_token %}
 	<div class="row">
@@ -10,6 +10,13 @@
 				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
 				<div>{{ form.cantPruebasRealizadas }}</div>
 				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
+				<div>{{ form.cantPruebasPos }}</div>
+				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
 		<div class="col">
@@ -27,19 +34,21 @@
 			</div>
 		</div>
 	  </div>
-	  <div class="col">
-		<div class="form-group">
-			<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-			<div>{{ form.cantPruebasRealizadas }}</div>
-			<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-		</div>
-	</div>	
 		
-	  <button type="submit" class="btn btn-primary">Submit</button>
+		<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group mr-2" role="group" aria-label="First group">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+			<div class="btn-group mr-2" role="group" aria-label="Second group">
+				{% if reporte %}
+				<div><a class="btn btn-danger" href="{% url 'eliminar_reporte' reporte.id %}" role="button">Borrar</a></div>
+					
+				{% endif %}
+			</div>
+			
+		  </div>
+		   
 	</form>
-	
-	{% if reporte %}
-		<a href="{% url 'delete_reporte' reporte.id %}">Borrar</a>
-	{% endif %}
+
 </div>
 {% endblock %}

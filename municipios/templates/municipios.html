@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	<div class="container">
+		
+			<table class="table">
+				<thead>
+				  <tr>
+					<th scope="col">#</th>
+					<th scope="col">Nombre Municipio</th>
+					<th scope="col">Id Departamento</th>
+				
+				  </tr>
+				</thead>
+				<tbody>
+					{% for municipio in municipios %}
+						<tr>
+							<th scope="row"><a href="{% url 'actualizar_municipio' municipio.id %}">{{municipio.id}}</a></th>
+							<td>{{municipio.nombreMunicipio}}</td>
+							<td>{{municipio.idDepartamento}}</td>
+						
+						  </tr>
+					{% endfor %}
+				</tbody>
+			  </table>	
+		<a href ="{% url 'crear_municipio'%}">Nuevo Municipio</a>
+	</div>
+{% endblock %}

@@ -12,9 +12,9 @@ def crear_reporte(request):
 	if form.is_valid():
 		form.save()
 		return redirect('listar_reportes')
-	return render(request, 'reportes-form.html',{'form':form})
+	return render(request, 'reporte-guardar.html',{'form':form})
 
-def update_reporte(request,id):
+def actualizar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
 	form = ReporteForm(request.POST or None, instance=reporte)
 	
@@ -22,12 +22,12 @@ def update_reporte(request,id):
 		form.save()
 		return redirect('listar_reportes')
 	
-	return render(request, 'reportes-form-act.html',{'form':form,'reporte':reporte})
+	return render(request, 'reporte-actualizar.html',{'form':form,'reporte':reporte})
 
-def delete_reporte(request,id):
+def eliminar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
 	if request.method == 'POST':
 		reporte.delete()
 		return redirect('listar_reportes')
 
-	return render(request, 'prod-delete-confirm.html',{'reporte':reporte})
+	return render(request, 'reporte-eliminar.html',{'reporte':reporte})

@@ -15,7 +15,7 @@
 				<tbody>
 					{% for reporte in reportes %}
 						<tr>
-							<th scope="row"><a href="{% url 'update_reporte' reporte.id %}">{{reporte.id}}</a></th>
+							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}">{{reporte.id}}</a></th>
 							<td>{{reporte.cantPruebasRealizadas}}</td>
 							<td>{{reporte.cantPruebasPos}}</td>
 							<td>{{reporte.sospechosos}}</td>
@@ -23,6 +23,6 @@
 					{% endfor %}
 				</tbody>
 			  </table>	
-		<a href ="{% url 'crear_reporte'%}">Nuevo Producto </a>
+		<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
 	</div>
 {% endblock %}
