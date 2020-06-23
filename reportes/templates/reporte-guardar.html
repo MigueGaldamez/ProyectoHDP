@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'plantilla.html' %}
 {% block content %}
 <div class="container">
 	<h1>Nuevo reporte de casos</h1>
@@ -8,31 +8,33 @@
 		<div class="col">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-				<div>{{ form.cantPruebasRealizadas }}</div>
+				<div>{{form.cantidadPruebas }}</div>
 				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
 		</div>
 		<div class="col">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
-				<div>{{ form.cantPruebasPos }}</div>
+				<div>{{ form.cantidadPositivas }}</div>
 				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-				<div>{{ form.cantPruebasRealizadas }}</div>
-				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				<label for="exampleInputEmail1">Departamento</label>
+				<div>{{ form.departamento}}</div>
+				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-				<div>{{ form.cantPruebasRealizadas }}</div>
-				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				<label for="exampleInputEmail1">Municipio</label>
+				<div>{{ form.municipio}}</div>
+				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
+		
+		
 	  </div>
 		
 		<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

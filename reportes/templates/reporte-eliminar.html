@@ -1,9 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'plantilla.html' %}
 
 {% block content %}
 	<form method="post">
 		{% csrf_token %}
-		<h2>Estas seguro que deseas borrar {{reporte.comentario}}?<h2>
+		<h2>Estas seguro que deseas borrar {{reporte.cantidadPruebas}}?<h2>
 		<button type="submit">Confirmar</button>
 	</form>
 

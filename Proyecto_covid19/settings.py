@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'reportes',
-    'municipios'
+    'reportes'
 
 ]
 
@@ -83,9 +82,9 @@ DATABASES = {
     'default': {
                 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
-        'USER': 'test',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',   # Or an IP Address that your database is hosted on
+        'USER': 'admin',
+        'PASSWORD': 'admin13',
+        'HOST': '138.197.70.153',   # Or an IP Address that your database is hosted on
         'PORT': '3306',
         #optional:
         'OPTIONS': {

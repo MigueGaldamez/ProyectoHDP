@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'plantilla.html' %}
 {% block content %}
 <div class="container">
 	<h1>Actualizar</h1>
@@ -7,12 +7,18 @@
 		<div class="row">
 			<div class="col">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Nombre departamento</label>
-					<div>{{ form.nombreDepartamento }}</div>
+					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<div>{{ form.departamento }}</div>
 					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 				</div>
 			</div>
-			
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
+					<div>{{ form.nombre }}</div>
+					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+				</div>
+			</div>
 			
 		  </div>
 			
@@ -21,8 +27,8 @@
 					<button type="submit" class="btn btn-primary">Guardar</button>
 				</div>
 				<div class="btn-group mr-2" role="group" aria-label="Second group">
-					{% if departamento %}
-					<div><a class="btn btn-danger" href="{% url 'eliminar_departamento' departamento.id %}" role="button">Borrar</a></div>
+					{% if municipio %}
+					<div><a class="btn btn-danger" href="{% url 'eliminar_municipio' municipio.id %}" role="button">Borrar</a></div>
 						
 					{% endif %}
 				</div>

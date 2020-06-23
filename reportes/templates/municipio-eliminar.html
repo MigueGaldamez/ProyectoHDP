@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'plantilla.html' %}
 
 {% block content %}
 <div class="container">
 	<form method="post">
 		{% csrf_token %}
-		<h2>Estas seguro que deseas borrar {{departamento.nombreDepartamento}}?<h2>
+		<h2>Estas seguro que deseas borrar {{municipio.nombre}}?<h2>
 		<button type="submit" class="btn btn-danger">Proceder</button>
 	</form>
 </div>
