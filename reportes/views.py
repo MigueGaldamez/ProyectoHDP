@@ -7,7 +7,8 @@ from .forms import ReporteForm, MunicipioForm, DepartamentoForm
 def listar_municipios(request):
     municipios = Municipio.objects.all()
     departamentos = Departamento.objects.all()
-    return render(request,'municipios.html',{'municipios':municipios,'departamentos':departamentos})
+    return render(request,'municipio/municipios.html',{'municipios':municipios,'departamentos':departamentos})
+				#
 	
 def crear_municipio(request):
 	form = MunicipioForm(request.POST or None)
@@ -15,7 +16,7 @@ def crear_municipio(request):
 	if form.is_valid():
 		form.save()
 		return redirect('listar_municipios')
-	return render(request, 'municipio-guardar.html',{'form':form})
+	return render(request, 'municipio/municipio-guardar.html',{'form':form})
 
 def actualizar_municipio(request,id):
 	municipio = Municipio.objects.get(id=id)
@@ -25,7 +26,7 @@ def actualizar_municipio(request,id):
 		form.save()
 		return redirect('listar_municipios')
 	
-	return render(request, 'municipio-actualizar.html',{'form':form,'municipio':municipio})
+	return render(request, 'municipio/municipio-actualizar.html',{'form':form,'municipio':municipio})
 
 def eliminar_municipio(request,id):
 	municipio = Municipio.objects.get(id=id)
@@ -33,12 +34,12 @@ def eliminar_municipio(request,id):
 		municipio.delete()
 		return redirect('listar_municipios')
 
-	return render(request, 'municipio-eliminar.html',{'municipio':municipio})
+	return render(request, 'municipio/municipio-eliminar.html',{'municipio':municipio})
 
 #crud depto
 def listar_departamentos(request):
     departamentos = Departamento.objects.all()
-    return render(request,'departamentos.html',{'departamentos':departamentos})
+    return render(request,'departamento/departamentos.html',{'departamentos':departamentos})
     
 def crear_departamento(request):
     form = DepartamentoForm(request.POST or None)
@@ -46,7 +47,7 @@ def crear_departamento(request):
     if form.is_valid():
         form.save()
         return redirect('listar_departamentos')
-    return render(request, 'departamento-guardar.html',{'form':form})
+    return render(request, 'departamento/departamento-guardar.html',{'form':form})
 
 def actualizar_departamento(request,id):
     departamento = Departamento.objects.get(id=id)
@@ -56,7 +57,7 @@ def actualizar_departamento(request,id):
         form.save() 
         return redirect('listar_departamentos')
     
-    return render(request, 'departamento-actualizar.html',{'form':form,'departamento':departamento})
+    return render(request, 'departamento/departamento-actualizar.html',{'form':form,'departamento':departamento})
 
 def eliminar_departamento(request,id):
     departamento = Departamento.objects.get(id=id)
@@ -64,20 +65,21 @@ def eliminar_departamento(request,id):
         departamento.delete()
         return redirect('listar_departamentos')
 
-    return render(request, 'departamento-eliminar.html',{'departamento':departamento}) 
+    return render(request, 'departamento/departamento-eliminar.html',{'departamento':departamento}) 
 
 #crud reporte
 def listar_reportes(request):
 	reportes = Reporte.objects.all()
-	return render(request,'reportes.html',{'reportes':reportes})
+	return render(request,'reportes/reportes.html',{'reportes':reportes})
 	
 def crear_reporte(request):
+	departamentos = Departamento.objects.all()
+	municipios = Municipio.objects.all()
 	form = ReporteForm(request.POST or None)
-	
 	if form.is_valid():
 		form.save()
 		return redirect('listar_reportes')
-	return render(request, 'reporte-guardar.html',{'form':form})
+	return render(request,'reportes/reporte-guardar.html',{'form':form,'municipios':municipios,'departamentos':departamentos})
 
 def actualizar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
@@ -87,7 +89,7 @@ def actualizar_reporte(request,id):
 		form.save()
 		return redirect('listar_reportes')
 	
-	return render(request, 'reporte-actualizar.html',{'form':form,'reporte':reporte})
+	return render(request, 'reportes/reporte-actualizar.html',{'form':form,'reporte':reporte})
 
 def eliminar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
@@ -95,4 +97,4 @@ def eliminar_reporte(request,id):
 		reporte.delete()
 		return redirect('listar_reportes')
 
-	return render(request, 'reporte-eliminar.html',{'reporte':reporte})
+	return render(request, 'reportes/reporte-eliminar.html',{'reporte':reporte})

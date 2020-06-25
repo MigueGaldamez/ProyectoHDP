@@ -1,4 +1,4 @@
-{% extends 'plantilla.html' %}
+{% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
 	<h1>Nuevo reporte de casos</h1>
@@ -21,15 +21,27 @@
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Departamento</label>
-				<div>{{ form.departamento}}</div>
+				<label for="cboregion">Departamento</label>
+				<select class="form-control" name="cboregion" id="cboregion" required >
+					<option selected>Seleccione</option>
+					{% for d in departamentos %}
+					<option value="{{ d.id }}">{{ d.nombre }} </option>
+					{% endfor %}
+				  </select>
+
+				<div></div>
 				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
 		<div class="col">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Municipio</label>
-				<div>{{ form.municipio}}</div>
+				<label for="cbocomuna">Municipio</label>
+				<select class="form-control" name="cbocomuna" id="cbocomuna" disabled required>
+					<option value="">Seleccione.</option>
+					{% for m in municipios %}
+					<option value="{{ m.id }}" data-departamento="{{ m.departamento.id}}">{{ m.nombre }}</option>
+					{% endfor %}
+				  </select>
 				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 			</div>
 		</div>
