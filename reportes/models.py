@@ -19,8 +19,8 @@ class Municipio(models.Model):
 class Reporte(models.Model):
 	cantidadPruebas = models.IntegerField()
 	cantidadPositivas = models.IntegerField()
+	departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE) 
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
-
 	class Meta:
 		db_table="reporte"
 

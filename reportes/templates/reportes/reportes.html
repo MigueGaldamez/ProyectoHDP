@@ -18,9 +18,9 @@
 						<tr>
 							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}">{{reporte.id}}</a></th>
 							<td>{{reporte.cantidadPruebas}}</td>
-							<td>{{reporte.cantidadPositivas}}</td>
+							<td>{{reporte.cantidadPositivas}}</td>						
+							<td>{{reporte.departamento}}</td>
 							<td>{{reporte.municipio}}</td>
-							<td>{{reporte.municipio.departamento}}</td>
 						  </tr>
 					{% endfor %}
 				</tbody>

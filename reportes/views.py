@@ -3,6 +3,11 @@ from .models import Reporte, Municipio, Departamento
 from .forms import ReporteForm, MunicipioForm, DepartamentoForm
 
 
+def cargar_municipios(request):
+    departamento_id = request.GET.get('departamento')
+    municipios = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
+    return render(request, 'reportes/municipios-listar.html', {'municipios': municipios})
+
 # crud municipios
 def listar_municipios(request):
     municipios = Municipio.objects.all()
@@ -80,6 +85,10 @@ def crear_reporte(request):
 		form.save()
 		return redirect('listar_reportes')
 	return render(request,'reportes/reporte-guardar.html',{'form':form,'municipios':municipios,'departamentos':departamentos})
+<<<<<<< HEAD
+=======
+
+>>>>>>> e1f832654f62ec2a1441cfe36314973d6e9f00d5
 
 def actualizar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
