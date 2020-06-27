@@ -1,61 +1,72 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
-	<h1>Actualizar</h1>
-	<form method="POST">
-		{% csrf_token %}
-		<div class="row">
-			<div class="col">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-					<div>{{form.cantidadPruebas }}</div>
-					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-				</div>
+<form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
+	{% csrf_token %}
+	
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.cantidadPruebas }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
-			<div class="col">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
-					<div>{{ form.cantidadPositivas }}</div>
-					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
-				</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.cantidadPositivas }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
-			<div class="col">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Departamento</label>
-					<div>{{ form.departamento}}</div>
-					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
-				</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.departamento }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
-			<div class="col">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Municipio</label>
-					<div>{{ form.municipio}}</div>
-					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
-				</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.municipio }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
-			
-			
-		  </div>
-			
-			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-				<div class="btn-group mr-2" role="group" aria-label="First group">
-					<button type="submit" class="btn btn-primary">Guardar</button>
-				</div>
-				<div class="btn-group mr-2" role="group" aria-label="Second group">
-					{% if reporte %}
-					<div><a class="btn btn-danger" href="{% url 'eliminar_reporte' reporte.id %}" role="button">Borrar</a></div>
-						
-					{% endif %}
-				</div>
+		</div>
+	</div>
+	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group mr-2" role="group" aria-label="First group">
+			<button type="submit" class="btn btn-primary">Guardar</button>
+		</div>
+		<div class="btn-group mr-2" role="group" aria-label="Second group">
+			{% if reporte %}
+			<div><a class="btn btn-danger" href="{% url 'eliminar_reporte' reporte.id %}" role="button">Borrar</a></div>
 				
-			  </div>
-			   
-			   
-		   
-			
-		</form>
+			{% endif %}
+		</div>
 		
+	  </div>
+	   
 	
-	
+  </form>
 </div>
-{% endblock %}
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $("#id_departamento").change(function () {
+      var url = $("#ReporteForm").attr("data-municipios-url");
+      var departamentoId = $(this).val();
+
+      $.ajax({
+        url: url,
+        data: {
+          'departamento': departamentoId
+        },
+        success: function (data) {
+          $("#id_municipio").html(data);
+        }
+      });
+
+    });
+  </script>
+  {% endblock %}
