@@ -10,8 +10,6 @@ class Departamento(models.Model):
 class Municipio(models.Model):
 	departamento =  models.ForeignKey(Departamento,on_delete=models.CASCADE) 
 	nombre = models.CharField(max_length=50)
-	
-
 	def __str__(self):
 		return self.nombre
 	class Meta:
@@ -21,8 +19,8 @@ class Municipio(models.Model):
 class Reporte(models.Model):
 	cantidadPruebas = models.IntegerField()
 	cantidadPositivas = models.IntegerField()
+	departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE) 
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
-
 	class Meta:
 		db_table="reporte"
 
