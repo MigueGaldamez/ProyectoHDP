@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from . import views
-from django.urls import path
+from django.urls import include,path
 from .views import listar_reportes, crear_reporte, actualizar_reporte, eliminar_reporte,listar_municipios, crear_municipio,actualizar_municipio, eliminar_municipio,listar_departamentos,crear_departamento,actualizar_departamento, eliminar_departamento
 
 urlpatterns=[
@@ -8,6 +8,7 @@ urlpatterns=[
 	path('new',crear_reporte, name='crear_reporte'),
 	path('update/<int:id>',actualizar_reporte, name='actualizar_reporte'),
 	path('delete/<int:id>',eliminar_reporte,name='eliminar_reporte'),
+	path('ajax/cargar-municipios', views.cargar_municipios, name='ajax_cargar_municipios'),
 
 	path('municipios/',listar_municipios,name='listar_municipios'),
 	path('municipios/new',crear_municipio, name='crear_municipio'),
