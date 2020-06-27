@@ -85,10 +85,7 @@ def crear_reporte(request):
 		form.save()
 		return redirect('listar_reportes')
 	return render(request,'reportes/reporte-guardar.html',{'form':form,'municipios':municipios,'departamentos':departamentos})
-<<<<<<< HEAD
-=======
 
->>>>>>> e1f832654f62ec2a1441cfe36314973d6e9f00d5
 
 def actualizar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
