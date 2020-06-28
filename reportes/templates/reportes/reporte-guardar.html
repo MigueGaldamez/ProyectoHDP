@@ -51,22 +51,4 @@
   </form>
 </div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
-    $("#id_departamento").change(function () {
-      var url = $("#ReporteForm").attr("data-municipios-url");
-      var departamentoId = $(this).val();
-
-      $.ajax({
-        url: url,
-        data: {
-          'departamento': departamentoId
-        },
-        success: function (data) {
-          $("#id_municipio").html(data);
-        }
-      });
-
-    });
-  </script>
   {% endblock %}

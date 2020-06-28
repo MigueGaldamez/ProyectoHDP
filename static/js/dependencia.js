@@ -1,10 +1,16 @@
-const $region = $('#cboregion');
-const $comuna = $('#cbocomuna');
-    
-$region.change(function() {
-    $comuna.val('');
-    
-    $comuna.prop('disabled', !Boolean($region.val()));
-    $comuna.find('option[data-departamento]').hide();
-    $comuna.find('option[data-departamento="' + $region.val() + '"]').show();
+
+$("#id_departamento").change(function () {
+  var url = $("#ReporteForm").attr("data-municipios-url");
+  var departamentoId = $(this).val();
+
+  $.ajax({
+    url: url,
+    data: {
+      'departamento': departamentoId
+    },
+    success: function (data) {
+      $("#id_municipio").html(data);
+    }
+  });
+
 });

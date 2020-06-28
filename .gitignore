@@ -2,5 +2,6 @@
 *~  
 __pycache__  
 myvenv  
+Proyecto_covid19/settings.py
 db.sqlite3  
 .DS_Store  
