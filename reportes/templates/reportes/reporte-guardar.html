@@ -3,36 +3,145 @@
 <div class="container">
 <form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
 	{% csrf_token %}
-	
+
+	{% if messages %}
+		{% for message in messages %}
+			<div role="alert" class="alert alert-primary {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+		{% endfor %}
+  	{% endif %}
+  	{% if form.errors %}
+			{% for field in form %}
+				{% if field.errors %}
+					{% for error in field.errors %}
+					<div role="alert" class="alert alert-danger alert-dismissible">
+						<a href="#id_{{ field.name }}" class="alert-link">{{ error|escape }}</a>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					{% endfor %}
+				{% endif %}
+			{% endfor %}
+		{% if form.non_field_errors %}
+			{{ form.non_field_errors }}
+		{% endif %}
+ 	 {% endif %}
 	<div class="row">
-		<div class="col">
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Departamento</label>
+				<div>{{ form.departamento }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Municipio</label>
+				<div>{{ form.municipio }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Direccion</label>
+				<div>{{ form.complemento }}</div>
+				<small id="emailHelp" class="form-text text-muted">Calle/Pj/colonia/residencia</small>
+			</div>
+		</div>
+		<!--	-->	
+			<div class="col-sm-4">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
 				<div>{{ form.cantidadPruebas }}</div>
 				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
 		</div>
-		<div class="col">
+		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
 				<div>{{ form.cantidadPositivas }}</div>
-				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
 		</div>
-		<div class="col">
+		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-				<div>{{ form.departamento }}</div>
-				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				<label for="exampleInputEmail1">Cantidad Sospechozos</label>
+				<div>{{ form.sospechosos }}</div>
 			</div>
 		</div>
-		<div class="col">
+		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
-				<div>{{ form.municipio }}</div>
-				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				<label for="exampleInputEmail1">Fecha Tomada las pruebas</label>
+				<div>{{ form.fechaTomada }}</div>
 			</div>
 		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Positivos Femenino</label>
+				<div>{{ form.cantFemenino }} </div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Positivos Masculino</label>
+				<div>{{ form.cantMasculino}}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">0 a 9 años</label>
+				<div>{{ form.edadCero }}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">10 a 19 años</label>
+				<div>{{ form.edadDiez }}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">20 a 39 años</label>
+				<div>{{ form.edadVeinte }}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">40 a 59 años</label>
+				<div>{{ form.edadCuarenta }}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">60 a 79 años</label>
+				<div>{{ form.edadSesenta }}</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Mayores de 80 años</label>
+				<div>{{ form.edadOchenta }}</div>
+			</div>
+		</div>
+		<!--
+		<div class="col-sm-4">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Estado</label>
+				<div>{{ form.estado }}</div>
+			</div>
+		</div>
+-->
+
+
+
+
+
+
+
+
+
+
+
+
 	</div>
 	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 		<div class="btn-group mr-2" role="group" aria-label="First group">
@@ -44,10 +153,7 @@
 				
 			{% endif %}
 		</div>
-		
-	  </div>
-	   
-	
+	</div>
   </form>
 </div>
 

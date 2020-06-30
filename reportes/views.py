@@ -1,6 +1,8 @@
 from django.shortcuts import render ,redirect
 from .models import Reporte, Municipio, Departamento
 from .forms import ReporteForm, MunicipioForm, DepartamentoForm
+import datetime #for checking renewal date range.
+from django.core.exceptions import ValidationError
 
 
 def cargar_municipios(request):
