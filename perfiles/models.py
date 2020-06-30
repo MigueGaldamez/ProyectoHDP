@@ -5,16 +5,15 @@ from django.dispatch import receiver
 from departamentos.models import Departamento
 from municipios.models import Municipio
     
-class Reporte(models.Model):
-	cantidadPruebas = models.IntegerField()
-	cantidadPositivas = models.IntegerField()
+# Create your models here.
+
+class Perfil(models.Model):
 	departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE) 
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
-	estado = models.IntegerField()
+	nombre =models.CharField(max_length=50)
+	user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
+	def __str__(self):
+		return self.nombre
 	class Meta:
-		db_table="reporte"
-
-
-
-
+		db_table="perfil"
 

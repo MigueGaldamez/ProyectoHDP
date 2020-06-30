@@ -1,7 +1,7 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
-<form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
+<form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
 	{% csrf_token %}
 	
 	<div class="row">
@@ -19,6 +19,7 @@
 				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 			</div>
 		</div>
+		
 		<div class="col">
 			<div class="form-group">
 				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>

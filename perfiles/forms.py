@@ -1,19 +1,27 @@
 import json
 from django import forms
-from .models import Reporte
+from .models import Perfil
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from departamentos.models import Departamento
 from municipios.models import Municipio
-from perfiles.models import Perfil
+from reportes.models import Reporte
 
-class ReporteForm(forms.ModelForm):
 
-	estado = forms.IntegerField(required=False)
+class UCFWithEmail(UserCreationForm):
+    # Ahora el campo username es de tipo email y cambiamos su texto
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder':'Correo Electronico'}))
+
+    class Meta:
+        model = User
+        fields = ["username", "password1", "password2","email"]
+
+
+class PerfilForm(forms.ModelForm):
 	class Meta:
-		model = Reporte
-		fields =['cantidadPruebas','cantidadPositivas','departamento','municipio','estado']
-	
+		model=Perfil
+		fields =['departamento','municipio','nombre']
+
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)
 		self.fields['municipio'].queryset = Municipio.objects.none()

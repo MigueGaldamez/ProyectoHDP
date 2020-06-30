@@ -1,0 +1,68 @@
+{% extends 'plantilla.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <h1>Bienvenido , {{user.username}} , aqui los reportes sin validar</h1>
+
+		
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cantidad Pruebas</th>
+            <th scope="col">Cantidad Positivas</th>
+            <th scope="col">municipio</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for reporte in reportes %}
+                <tr>
+                    <th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}">{{reporte.id}}</a></th>
+                    <td>{{reporte.cantidadPruebas}}</td>
+                    <td>{{reporte.cantidadPositivas}}</td>						
+                    <td>{{reporte.departamento}}</td>
+                    <td>{{reporte.municipio}}</td>
+                    <td><a href="">Validar</a></td>
+                    <td></td>
+                  </tr>
+            {% endfor %}
+        </tbody>
+      </table>	
+
+      <h1>Solicitudes de colaboracion</h1>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">municipio</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for user in perfiles %}
+                <tr>
+                    <th scope="row"><a href="">{{user.id}}</a></th>
+                    <td>{{user.username}}</td>
+                    <td>{{user.perfil.departamento}}</td>						
+                    <td>{{user.perfil.nombre}}</td>
+                    <td>{{user.perfil.municipio}}</td>
+                    <td><a href="">Aceptar</a></td> 
+                  </tr>
+            {% endfor %}
+        </tbody>
+      </table>	
+
+</div>
+
+{% endblock %}
+{% block badge %}
+     <span class="badge badge-light">{{reportes_count}}</span>
+{% endblock %}

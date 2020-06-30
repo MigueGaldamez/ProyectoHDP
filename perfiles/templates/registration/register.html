@@ -1,0 +1,169 @@
+{% extends '../plantilla.html' %}
+
+
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+<script>  
+window.location.replace('/dashboard/');
+</script> 
+{% endif %}
+
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">Crear Cuenta</div>
+                        <div class="card-body">
+                            <form action="" id="PerfilForm" method="POST" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
+                                {% csrf_token %}
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Usuario</label>
+                                    <div class="col-md-6">
+                                     {{form.username}}
+                                    </div>
+                                    {% if form.usuario.errors %}
+                                        <ul>
+                                        {% for error in form.usuario.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+    
+                                <div class="form-group row">
+                                    <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
+                                    <div class="col-md-6">
+                                        {{form.password1}}
+                                    </div>
+                                    {% if form.password1.errors %}
+                                        <ul>
+                                        {% for error in form.password1.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                      
+                                        </ul>
+                                    {% endif %}
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Confirmar su contraseña</label>
+                                    <div class="col-md-6">
+                                     {{form.password2}}
+                                    </div>
+                                    {% if form.password2.errors %}
+                                        <ul>
+                                        {% for error in form.password2.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Usuario</label>
+                                    <div class="col-md-6">
+                                     {{form.email}}
+                                    </div>
+                                    {% if form.email.errors %}
+                                        <ul>
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">departamento</label>
+                                    <div class="col-md-6">
+                                     {{perfil_form.departamento}}
+                                    </div>
+                                    {% if perfil_form.departamento.errors %}
+                                        <ul>
+                                        {% for error in form.departamento.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">municipio</label>
+                                    <div class="col-md-6">
+                                     {{perfil_form.municipio}}
+                                    </div>
+                                    {% if perfil_form.municipio.errors %}
+                                        <ul>
+                                        {% for error in form.municipio.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Nombre</label>
+                                    <div class="col-md-6">
+                                     {{perfil_form.nombre}}
+                                    </div>
+                                    {% if perfil_form.nombre.errors %}
+                                        <ul>
+                                        {% for error in perfil_form.nombre.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+    
+                                <div class="form-group row">
+                                    <div class="col-md-6 offset-md-4">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" name="remember"> Recuerdame
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6 offset-md-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Registrarse
+                                    </button>
+                                    <a href="#" class="btn btn-link">
+                                       ¿Olvidaste tu contraseña?
+                                    </a>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        $("#id_departamento").change(function () {
+          var url = $("#PerfilForm").attr("data-municipios-url");
+          var departamentoId = $(this).val();
+    
+          $.ajax({
+            url: url,
+            data: {
+              'departamento': departamentoId
+            },
+            success: function (data) {
+              $("#id_municipio").html(data);
+            }
+          });
+    
+        });
+    </script>
+{% endblock %}
