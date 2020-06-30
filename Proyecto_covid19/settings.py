@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.1.22']
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 

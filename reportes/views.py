@@ -45,8 +45,11 @@ def crear_reporte(request):
 		return redirect('listar_reportes')
 	return render(request,'reportes/reporte-guardar.html',{'form':form,'municipios':municipios,'departamentos':departamentos})
 
+@login_required
 def actualizar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
+	departamentos = Departamento.objects.all()
+	municipios = Municipio.objects.all()
 	form = ReporteForm(request.POST or None, instance=reporte)
 	
 	if form.is_valid():
@@ -59,8 +62,9 @@ def actualizar_reporte(request,id):
 		obj.save()
 		return redirect('listar_reportes')
 	
-	return render(request, 'reportes/reporte-actualizar.html',{'form':form,'reporte':reporte})
+	return render(request, 'reportes/reporte-actualizar.html',{'form':form,'reporte':reporte,'municipios':municipios,'departamentos':departamentos})
 
+@login_required
 def eliminar_reporte(request,id):
 	reporte = Reporte.objects.get(id=id)
 	if request.method == 'POST':

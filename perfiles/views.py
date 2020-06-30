@@ -14,12 +14,18 @@ from municipios.forms import  MunicipioForm
 from reportes.models import Reporte
 from reportes.forms import ReporteForm
 
+from django.db.models import Sum
+
+
 
 # Create your views here.
 
 #VIEWS DE SEGURIDAD
 def indexView(request):
-    return render(request,'index.html')
+	
+    casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
+    pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
+    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count})
 
 @login_required
 def dashboardView(request):
@@ -34,7 +40,7 @@ def registerView(request):
 		perfil_form = PerfilForm(request.POST)
 	
 		
-		if form.is_valid() and perfil_form.is_valid:
+		if form.is_valid() and perfil_form.is_valid():
 			user = form.save(commit=False)
 			user.is_active=0
 			user.save()
