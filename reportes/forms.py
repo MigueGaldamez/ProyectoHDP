@@ -1,26 +1,25 @@
 import json
-from django import forms
-from .models import Reporte,Municipio,Departamento
+from django import forms 
+from .models import Reporte
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from departamentos.models import Departamento
+from municipios.models import Municipio
+from perfiles.models import Perfil
+
+#chepe
 from django.forms import ModelForm, Textarea, IntegerField
 from django.core import validators
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-class DepartamentoForm(forms.ModelForm):
-	class Meta:
-		model = Departamento
-		fields =['nombre']
-
-class MunicipioForm(forms.ModelForm):
-	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), required = True)
-	class Meta:
-		model = Municipio
-		fields =['nombre','departamento']
 
 class ReporteForm(forms.ModelForm):
 	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), required = False)
+	#municipio = forms.ModelChoiceField(queryset=Municipio.objects.all(), required = False)
 	departamento.empty_label="Seleccione"
 	requerido = "Ingrese un Dato: "
 	departamento.widget.attrs.update({'class': 'form-control'})
+	
 	cantidadPruebas = forms.IntegerField(min_value=0,error_messages={'required': requerido +"Pruebas realizadas",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	cantidadPositivas = forms.IntegerField(min_value=0,error_messages={'required': requerido+"Positivas",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	sospechosos = forms.IntegerField(min_value=0,error_messages={'required': requerido+"Sospechosos",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
@@ -33,12 +32,12 @@ class ReporteForm(forms.ModelForm):
 	edadCuarenta = forms.IntegerField(min_value=0,error_messages={'required': requerido+"40-59",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	edadSesenta = forms.IntegerField(min_value=0,error_messages={'required': requerido+"60-79",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	edadOchenta = forms.IntegerField(min_value=0,error_messages={'required': requerido+"Mayores de 80",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
-	#estado = forms.IntegerField(error_messages={'required': requerido+"Mayores de 80"},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	complemento = forms.CharField(error_messages={'required': requerido+"Complemento de direccion"},widget=forms.TextInput(attrs={'class': 'form-control'}))
+	estado = forms.IntegerField(required=False)
 	class Meta:
 		model = Reporte
 		fields =['cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento']
-
+	
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)
 		self.fields['municipio'].queryset = Municipio.objects.none()
@@ -50,6 +49,7 @@ class ReporteForm(forms.ModelForm):
 
 				departamento_id =int(self.data.get('departamento'))
 				self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
+			
 			except(ValueError ,TypeError):
 				pass 	
 		

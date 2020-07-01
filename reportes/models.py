@@ -1,19 +1,7 @@
 from django.db import models
-
-class Departamento(models.Model):
-	nombre = models.CharField(max_length=50)	
-	def __str__(self):
-		return self.nombre
-	class Meta:
-		db_table="departamento"
+from departamentos.models import Departamento
+from municipios.models import Municipio
     
-class Municipio(models.Model):
-	departamento =  models.ForeignKey(Departamento,on_delete=models.CASCADE) 
-	nombre = models.CharField(max_length=50)
-	def __str__(self):
-		return self.nombre
-	class Meta:
-		db_table="municipio"
 class Reporte(models.Model):
 	cantidadPruebas = models.IntegerField()
 	cantidadPositivas = models.IntegerField()
@@ -27,11 +15,14 @@ class Reporte(models.Model):
 	edadCuarenta = models.IntegerField()
 	edadSesenta = models.IntegerField()
 	edadOchenta = models.IntegerField()
-	estado = models.IntegerField(default=0)
-	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE)
 	complemento = models.CharField(max_length=50)	
+	departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE) 
+	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
+	estado = models.IntegerField()
 	class Meta:
 		db_table="reporte"
+
+
 
 
 

@@ -1,0 +1,56 @@
+{% extends 'plantilla.html' %}
+      
+    {% block content %}
+ 
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <br>
+                <h2>Casos Covid19 El Salvador</h2>
+                <p>incluso los no reportados por el gob xd</p>
+            </div>    
+        </div>
+        <div class="row text-center">
+            <div class="col">
+                <div class="counter">
+                    <i class="fa fa-code fa-2x"></i>
+                    <h2 class="timer count-title count-number" data-to="1700" data-speed="1500">{{ pruebas_count.cantidadPruebas__sum}}</h2>
+                    <p class="count-text ">Pruebas Realizadas</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <i class="fa fa-coffee fa-2x"></i>
+                    <h2 class="timer count-title count-number" data-to="100" data-speed="1500">{{ casos_count.cantidadPositivas__sum}}</h2>
+                    <p class="count-text ">Casos Confirmados</p>
+                    
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <i class="fa fa-lightbulb-o fa-2x"></i>
+                    <h2 class="timer count-title count-number" data-to="11900" data-speed="1500">456</h2>
+                    <p class="count-text ">Casos Sospechosos</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="counter">
+                    <i class="fa fa-bug fa-2x"></i>
+                    <h2 class="timer count-title count-number" data-to="157" data-speed="1500"></h2>
+                    <p class="count-text ">aun no se xd</p>
+                </div>
+            </div>
+     
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col text-center">
+                <h2>Casos Covid19 por Departamento</h2>
+                <p>y municipio supongo</p>
+            </div>    
+        </div>
+    </div>
+
+    
+    {% endblock %}
+

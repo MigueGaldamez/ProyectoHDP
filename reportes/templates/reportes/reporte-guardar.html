@@ -1,6 +1,8 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
+<br>
+
 <form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
 	{% csrf_token %}
 
@@ -8,16 +10,19 @@
 		{% for message in messages %}
 			<div role="alert" class="alert alert-primary {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
 		{% endfor %}
-  	{% endif %}
+	{% endif %}
+	<div class="row row-cols-3">  
   	{% if form.errors %}
 			{% for field in form %}
 				{% if field.errors %}
 					{% for error in field.errors %}
-					<div role="alert" class="alert alert-danger alert-dismissible">
-						<a href="#id_{{ field.name }}" class="alert-link">{{ error|escape }}</a>
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
+						<div class="col">
+						<div class="alert border border-danger">
+							<a href="#id_{{ field.name }}" class="text-danger">{{ error|escape }}</a>
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
 					</div>
 					{% endfor %}
 				{% endif %}
@@ -25,7 +30,8 @@
 		{% if form.non_field_errors %}
 			{{ form.non_field_errors }}
 		{% endif %}
- 	 {% endif %}
+	{% endif %}
+	</div>
 	<div class="row">
 		<div class="col-sm-3">
 			<div class="form-group">
@@ -122,14 +128,7 @@
 				<div>{{ form.edadOchenta }}</div>
 			</div>
 		</div>
-		<!--
-		<div class="col-sm-4">
-			<div class="form-group">
-				<label for="exampleInputEmail1">Estado</label>
-				<div>{{ form.estado }}</div>
-			</div>
-		</div>
--->
+
 
 
 

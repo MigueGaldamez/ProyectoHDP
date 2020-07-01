@@ -1,0 +1,38 @@
+{% extends 'plantilla.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <aside class="col-sm-6 mx-auto" style="">
+      
+      <div class="card">
+      <article class="card-body">
+      <a href="" class="float-right btn btn-outline-primary">Reporta para nosotros</a>
+      <h4 class="card-title mb-4 mt-1">Iniciar Sesion</h4>
+        <form>
+          <div class="form-group">
+            <label>Usuario</label>
+              <input name="" class="form-control" placeholder="Usuario" type="email">
+          </div> <!-- form-group// -->
+          <div class="form-group">
+            <a class="float-right" href="#">Olvidaste tu contraseña</a>
+            <label>contraseña</label>
+              <input class="form-control" placeholder="******" type="password">
+          </div> <!-- form-group// --> 
+          <div class="form-group"> 
+          <div class="checkbox">
+            <label> <input type="checkbox"> recuerdame </label>
+          </div> <!-- checkbox .// -->
+          </div> <!-- form-group// -->  
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesion  </button>
+          </div> <!-- form-group// -->                                                           
+      </form>
+      </article>
+      </div> <!-- card.// -->
+  
+    </aside> <!-- col.// --->
+  </div>
+  
+</div>
+
+{% endblock %}

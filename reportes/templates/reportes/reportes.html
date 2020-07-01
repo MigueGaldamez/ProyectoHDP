@@ -1,6 +1,6 @@
 {% extends '../plantilla.html' %}
 {% block content %}
-
+<br>
 	<div class="container">
 		
 			<table class="table">
@@ -9,8 +9,10 @@
 					<th scope="col">#</th>
 					<th scope="col">Cantidad Pruebas</th>
 					<th scope="col">Cantidad Positivas</th>
-					<th scope="col">municipio</th>
+					<th scope="col">Sospechosos</th>
 					<th scope="col">Departamento</th>
+					<th scope="col">Municipio</th>
+					<th scope="col">Estado</th>
 				  </tr>
 				</thead>
 				<tbody>
@@ -18,9 +20,19 @@
 						<tr>
 							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}">{{reporte.id}}</a></th>
 							<td>{{reporte.cantidadPruebas}}</td>
-							<td>{{reporte.cantidadPositivas}}</td>						
+							<td>{{reporte.cantidadPositivas}}</td>
+							<td>{{reporte.sospechosos}}</td>						
 							<td>{{reporte.departamento}}</td>
 							<td>{{reporte.municipio}}</td>
+							{% if reporte.estado == 1 %}
+							<td>Validado</td>
+
+							{% endif %}
+							{% if reporte.estado == 0 %}
+							<td>Sin Validar</td>
+							
+							{% endif %}
+							
 						  </tr>
 					{% endfor %}
 				</tbody>

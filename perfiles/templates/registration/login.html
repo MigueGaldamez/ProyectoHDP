@@ -1,0 +1,47 @@
+{% extends '../plantilla.html' %}
+
+{% block content %}
+  
+{% if user.is_authenticated %}
+<script>  
+window.location.replace('/dashboard/');
+</script> 
+{% endif %}
+{{user.username}}
+<br>
+    <div class="container">
+        <div class="row">
+          <aside class="col-sm-6 mx-auto" >
+            
+            <div class="card">
+            <article class="card-body">
+            <a  href="{% url 'register_url' %}" class="float-right btn btn-outline-primary">Reporta para nosotros</a>
+            <h4 class="card-title mb-4 mt-1">Iniciar Sesion</h4>
+              <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label>Usuario</label>
+                    {{form.username}}
+                </div> <!-- form-group// -->
+                <div class="form-group">
+                  <a class="float-right" href="#">Olvidaste tu contraseña</a>
+                  <label>contraseña</label>
+                   {{form.password}}
+                </div> <!-- form-group// --> 
+                <div class="form-group"> 
+                <div class="checkbox">
+                  <label> <input type="checkbox"> recuerdame </label>
+                </div> <!-- checkbox .// -->
+                </div> <!-- form-group// -->  
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesion  </button>
+                </div> <!-- form-group// -->                                                           
+            </form>
+            </article>
+            </div> <!-- card.// -->
+        
+          </aside> <!-- col.// --->
+        </div>
+        
+      </div>    
+{% endblock %}

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Application definition
 
@@ -37,7 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'reportes'
+    'reportes',
+    'widget_tweaks',
+    'django_filters',
+    'departamentos',
+    'municipios',
+    'perfiles'
+    
 
 ]
 
@@ -79,9 +87,9 @@ DATABASES = {
     'default': {
                 'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
-        'USER': 'admin',
-        'PASSWORD': 'admin13',
-        'HOST': '138.197.70.153',   # Or an IP Address that your database is hosted on
+        'USER': 'test',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',   # Or an IP Address that your database is hosted on
         'PORT': '3306',
         #optional:
         'OPTIONS': {
@@ -141,3 +149,5 @@ STATICFILES_DIRS = (
 )
 #STATIC_ROOT = os.path.join(BASE_DIR,'static')
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL='/dashboard/'
+LOGIN_URL ='/login/'
