@@ -51,17 +51,14 @@ def actualizar_reporte(request,id):
 	departamentos = Departamento.objects.all()
 	municipios = Municipio.objects.all()
 	form = ReporteForm(request.POST or None, instance=reporte)
-	
 	if form.is_valid():
 		obj = form.save(commit=False)
-		
 		if not request.user.is_authenticated:
         		obj.estado = 0
 		else:
         		obj.estado = 1
 		obj.save()
 		return redirect('listar_reportes')
-	
 	return render(request, 'reportes/reporte-actualizar.html',{'form':form,'reporte':reporte,'municipios':municipios,'departamentos':departamentos})
 
 @login_required

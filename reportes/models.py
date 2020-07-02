@@ -7,6 +7,7 @@ class Reporte(models.Model):
 	cantidadPositivas = models.IntegerField()
 	sospechosos= models.IntegerField()
 	fechaTomada=  models.DateField()
+	fechaEditado=  models.DateField()
 	cantFemenino = models.IntegerField()
 	cantMasculino = models.IntegerField()
 	edadCero = models.IntegerField()
