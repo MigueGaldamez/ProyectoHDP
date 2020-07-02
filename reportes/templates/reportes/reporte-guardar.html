@@ -1,36 +1,43 @@
 {% extends '../plantilla.html' %}
 {% block content %}
+
 <div class="container">
-<br>
+		<div class="my-5">
+			<p class="h2">Crear nuevo Reporte</p>
+		</div>
+		<div class="row">
+			<div class="cols-3">
+				<a class="btn btn-primary btn-outline-light" href="{% url 'listar_reportes' %}" role="button"><i class="material-icons md-48">arrow_back</i></a>
+			</div>
+		</div>
 
 <form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
 	{% csrf_token %}
-
-	{% if messages %}
-		{% for message in messages %}
-			<div role="alert" class="alert alert-primary {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-		{% endfor %}
-	{% endif %}
-	<div class="row row-cols-3">  
-  	{% if form.errors %}
-			{% for field in form %}
-				{% if field.errors %}
-					{% for error in field.errors %}
-						<div class="col">
-						<div class="alert border border-danger">
-							<a href="#id_{{ field.name }}" class="text-danger">{{ error|escape }}</a>
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-					</div>
-					{% endfor %}
-				{% endif %}
+	<div class="row">
+		{% if messages %}
+			{% for message in messages %}
+				<div role="alert" class="alert alert-primary {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
 			{% endfor %}
-		{% if form.non_field_errors %}
-			{{ form.non_field_errors }}
 		{% endif %}
-	{% endif %}
+			{% if form.errors %}
+				{% for field in form %}
+					{% if field.errors %}
+						{% for error in field.errors %}
+							<div class="col-sm-4">
+								<div class="alert border border-danger">
+									<a href="#id_{{ field.name }}" class="text-danger"> {{ error|escape }}</a>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+				{% endfor %}
+				{% if form.non_field_errors %}
+					{{ form.non_field_errors }}
+				{% endif %}
+			{% endif %}
 	</div>
 	<div class="row">
 		<div class="col-sm-3">
@@ -128,9 +135,7 @@
 				<div>{{ form.edadOchenta }}</div>
 			</div>
 		</div>
-		<!--
-	
--->
+
 
 
 
@@ -158,24 +163,4 @@
   </form>
 </div>
 
-
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-  $("#id_departamento").change(function () {
-	var url = $("#ReporteForm").attr("data-municipios-url");
-	var departamentoId = $(this).val();
-
-	$.ajax({
-	  url: url,
-	  data: {
-		'departamento': departamentoId
-	  },
-	  success: function (data) {
-		$("#id_municipio").html(data);
-	  }
-	});
-
-  });
-</script>
   {% endblock %}

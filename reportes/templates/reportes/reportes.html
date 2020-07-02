@@ -2,41 +2,47 @@
 {% block content %}
 <br>
 	<div class="container">
-		
-			<table class="table">
+		<div class="my-5">
+			<p class="h2">Lista de reportes</p>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover">
 				<thead>
-				  <tr>
-					<th scope="col">#</th>
-					<th scope="col">Cantidad Pruebas</th>
-					<th scope="col">Cantidad Positivas</th>
-					<th scope="col">Sospechosos</th>
-					<th scope="col">Departamento</th>
-					<th scope="col">Municipio</th>
-					<th scope="col">Estado</th>
-				  </tr>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Cantidad Pruebas</th>
+						<th scope="col">Cantidad Positivas</th>
+						<th scope="col">Sospechosos</th>
+						<th scope="col">Departamento</th>
+						<th scope="col">Municipio</th>
+						<th scope="col">Fecha Tomada</th>
+						<th scope="col">Estado</th>
+						<th scope="col">Ver/Editar</th>
+					</tr>
 				</thead>
 				<tbody>
 					{% for reporte in reportes %}
 						<tr>
-							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}">{{reporte.id}}</a></th>
+							<td scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"></a>{{reporte.id}}</a></th>
 							<td>{{reporte.cantidadPruebas}}</td>
 							<td>{{reporte.cantidadPositivas}}</td>
 							<td>{{reporte.sospechosos}}</td>						
 							<td>{{reporte.departamento}}</td>
 							<td>{{reporte.municipio}}</td>
+							<td>{{reporte.fechaTomada}}</td>
 							{% if reporte.estado == 1 %}
-							<td>Validado</td>
-
+								<td>Validado</td>
 							{% endif %}
 							{% if reporte.estado == 0 %}
-							<td>Sin Validar</td>
-							
+								<td>Sin Validar</td>
 							{% endif %}
-							
+							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						  </tr>
 					{% endfor %}
 				</tbody>
-			  </table>	
+			</table>
+		</div>	
 		<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
+		
 	</div>
 {% endblock %}
