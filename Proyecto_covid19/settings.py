@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'departamentos',
     'municipios',
-    'perfiles'
+    'perfiles',
     
 
 ]
@@ -133,9 +133,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-US'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/El_Salvador'
 
 USE_I18N = True
 
