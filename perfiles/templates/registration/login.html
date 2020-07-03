@@ -24,14 +24,11 @@ window.location.replace('/dashboard/');
                     {{form.username}}
                 </div> <!-- form-group// -->
                 <div class="form-group">
-                  <a class="float-right" href="#">Olvidaste tu contraseña</a>
+                  <a class="float-right" href="{% url 'password_reset' %}">Olvidaste tu contraseña</a>
                   <label>contraseña</label>
                    {{form.password}}
                 </div> <!-- form-group// --> 
                 <div class="form-group"> 
-                <div class="checkbox">
-                  <label> <input type="checkbox"> recuerdame </label>
-                </div> <!-- checkbox .// -->
                 </div> <!-- form-group// -->  
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Iniciar Sesion  </button>

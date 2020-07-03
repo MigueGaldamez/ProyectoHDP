@@ -17,10 +17,10 @@ window.location.replace('/dashboard/');
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">Crear Cuenta</div>
-                        <div class="card-body">
-                            <form action="" id="PerfilForm" method="POST" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
+                        <div class="card-body ">
+                            <form action="" class="row row-cols-2" id="ReporteForm" method="POST" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
                                 {% csrf_token %}
-                                <div class="form-group row">
+                                <div class="form-group row col">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Usuario</label>
                                     <div class="col-md-6">
                                      {{form.username}}
@@ -34,7 +34,7 @@ window.location.replace('/dashboard/');
                                     {% endif %}
                                 </div>
     
-                                <div class="form-group row">
+                                <div class="form-group row col">
                                     <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
                                     <div class="col-md-6">
                                         {{form.password1}}
@@ -49,7 +49,7 @@ window.location.replace('/dashboard/');
                                     {% endif %}
                                     
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row col">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Confirmar su contraseña</label>
                                     <div class="col-md-6">
                                      {{form.password2}}
@@ -83,7 +83,7 @@ window.location.replace('/dashboard/');
                                     </div>
                                     {% if perfil_form.departamento.errors %}
                                         <ul>
-                                        {% for error in form.departamento.errors %}
+                                        {% for error in perfil_form.departamento.errors %}
                                             <li>{{ error }}</li>
                                         {% endfor %}
                                     
@@ -98,7 +98,36 @@ window.location.replace('/dashboard/');
                                     </div>
                                     {% if perfil_form.municipio.errors %}
                                         <ul>
-                                        {% for error in form.municipio.errors %}
+                                        {% for error in perfil_form.municipio.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">especialidad</label>
+                                    <div class="col-md-6">
+                                     {{doctor_form.especialidad}}
+                                    </div>
+                                    {% if doctor_form.especialidad.errors %}
+                                        <ul>
+                                        {% for error in  doctor_form.especialidad.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Codido Doctor</label>
+                                    <div class="col-md-6">
+                                     {{doctor_form.codigoDoctor}}
+                                    </div>
+                                    {% if doctor_form.codigoDoctor.errors %}
+                                        <ul>
+                                        {% for error in  doctor_form.codigoDoctor.errors %}
                                             <li>{{ error }}</li>
                                         {% endfor %}
                                     
@@ -135,8 +164,8 @@ window.location.replace('/dashboard/');
                                     <button type="submit" class="btn btn-primary">
                                         Registrarse
                                     </button>
-                                    <a href="#" class="btn btn-link">
-                                       ¿Olvidaste tu contraseña?
+                                    <a href="{% url 'login' %}" class="btn btn-link">
+                                       ¿ya tienes cuenta? Inicia sesion.c:
                                     </a>
                                 </div>
                         </div>
@@ -148,22 +177,5 @@ window.location.replace('/dashboard/');
         </div>
     
     </main>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        $("#id_departamento").change(function () {
-          var url = $("#PerfilForm").attr("data-municipios-url");
-          var departamentoId = $(this).val();
-    
-          $.ajax({
-            url: url,
-            data: {
-              'departamento': departamentoId
-            },
-            success: function (data) {
-              $("#id_municipio").html(data);
-            }
-          });
-    
-        });
-    </script>
+   
 {% endblock %}

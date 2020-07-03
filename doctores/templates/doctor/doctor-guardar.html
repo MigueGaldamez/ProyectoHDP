@@ -1,0 +1,41 @@
+{% extends '../plantilla.html' %}
+{% block content %}
+<div class="container">
+	<h1>Nuevo Doctor</h1>
+	<form method="POST">
+	{% csrf_token %}
+	<div class="row">
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+				<div>{{ form.especialidad }}</div>
+				<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+			</div>
+		</div>
+		<div class="col">
+			<div class="form-group">
+				<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
+				<div>{{ form.codigoDoctor }}</div>
+				<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+			</div>
+		</div>
+		
+	  </div>
+		
+		<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-group mr-2" role="group" aria-label="First group">
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</div>
+			<div class="btn-group mr-2" role="group" aria-label="Second group">
+				{% if doctor %}
+				<div><a class="btn btn-danger" href="{% url 'eliminar_doctor' doctor.id %}" role="button">Borrar</a></div>
+					
+				{% endif %}
+			</div>
+			
+		  </div>
+		   
+	</form>
+
+</div>
+{% endblock %}

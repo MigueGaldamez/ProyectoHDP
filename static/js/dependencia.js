@@ -1,5 +1,6 @@
 
 $("#id_departamento").change(function () {
+  //alert('llega')
   var url = $("#ReporteForm").attr("data-municipios-url");
   var departamentoId = $(this).val();
 
