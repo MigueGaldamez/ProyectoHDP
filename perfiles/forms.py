@@ -39,6 +39,7 @@ class PerfilForm(forms.ModelForm):
 	departamento.empty_label="Seleccione"
 	departamento.widget.attrs.update({'class': 'form-control'})
 	nombre = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'nombre','class': 'form-control'}))
+	tipoUsuario = forms.IntegerField(required=False)
 	class Meta:
 		model=Perfil
 		fields =['departamento','municipio','nombre']

@@ -12,6 +12,7 @@ class Perfil(models.Model):
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
 	nombre =models.CharField(max_length=50)
 	user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
+	tipoUsuario =  models.IntegerField()
 	def __str__(self):
 		return self.nombre
 	class Meta:
