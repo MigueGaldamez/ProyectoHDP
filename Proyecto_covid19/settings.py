@@ -1,4 +1,5 @@
 import pymysql
+from django.contrib.messages import constants as messages#para los mensajes
 pymysql.version_info = (1, 3, 13, "final", 0)
 pymysql.install_as_MySQLdb()
 """
@@ -45,10 +46,15 @@ INSTALLED_APPS = [
     'departamentos',
     'municipios',
     'perfiles',
-    
-
 ]
-
+#para los mensajes
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,7 +64,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'Proyecto_covid19.urls'
 USE_I18N = True
 TEMPLATES = [

@@ -34,10 +34,11 @@ class ReporteForm(forms.ModelForm):
 	edadOchenta = forms.IntegerField(min_value=0,error_messages={'required': requerido+"Mayores de 80",'min_value':'Ingrese # Positivo'},widget=forms.NumberInput(attrs={'class': 'form-control'}))
 	complemento = forms.CharField(error_messages={'required': requerido+"Complemento de direccion"},widget=forms.TextInput(attrs={'class': 'form-control'}))
 	estado = forms.IntegerField(required=False)
-	fechaEditado=  forms.DateField(required=False)
+	eliminado = forms.IntegerField(required=False)
+	fechaEditado=  forms.DateField(required=False,widget=forms.TextInput(attrs={'class': 'form-control'}))
 	class Meta:
 		model = Reporte
-		fields =['cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento']
+		fields =['cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']
 	
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)
@@ -89,6 +90,8 @@ class ReporteForm(forms.ModelForm):
 				raise ValidationError(_('%(value)s No puede ser mayor a pruebas positivas'),params={'value': cantMasculino},)
 			elif sumadas > cantidadPositivas :
 				raise ValidationError(_('%(value)s La cant. femnenino y masculino No puede ser mayor a pruebas positivas'),params={'value': sumadas},)
+			elif sumadas < cantidadPositivas :
+				raise ValidationError(_('%(value)s La cant. femnenino y masculino No puede ser menor a pruebas positivas'),params={'value': sumadas},)
 		except(ValueError ,TypeError):
 			pass 
 		return cantMasculino
@@ -185,3 +188,7 @@ class ReporteForm(forms.ModelForm):
 		fechaEditado=self.cleaned_data.get('fechaEditado')
 		fechaEditado=datetime.date.today()
 		return fechaEditado
+	def clean_eliminado(self):
+		eliminado=self.cleaned_data.get('eliminado')
+		eliminado=0
+		return eliminado

@@ -20,6 +20,7 @@ class Reporte(models.Model):
 	departamento = models.ForeignKey(Departamento,on_delete=models.CASCADE) 
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
 	estado = models.IntegerField()
+	eliminado = models.IntegerField()
 	class Meta:
 		db_table="reporte"
 

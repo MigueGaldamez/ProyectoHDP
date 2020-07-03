@@ -51,11 +51,24 @@
   </div>
 </nav>
 <body>
+
 	{% block content %}
   {% endblock %}
 	<!----Javascript-->
 	<script src="{% static '/js/jquery-3.5.1.min.js' %}"></script>
 	<script src="{% static '/js/bootstrap.min.js' %}" ></script>
-	<script src="{% static '/js/dependencia.js' %}" ></script>
+  <script src="{% static '/js/dependencia.js' %}" ></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <!--
+<script>
+
+Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
+</script>
+-->
 </body>
 </html>

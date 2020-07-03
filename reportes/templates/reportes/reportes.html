@@ -1,12 +1,13 @@
 {% extends '../plantilla.html' %}
 {% block content %}
+{% include 'reportes/mensaje.html' %}
 <br>
 	<div class="container">
 		<div class="my-5">
 			<p class="h2">Lista de reportes</p>
 		</div>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover ">
 				<thead>
 					<tr>
 						<th scope="col">#</th>
@@ -20,23 +21,23 @@
 						<th scope="col">Ver/Editar</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody >
 					{% for reporte in reportes %}
-						<tr>
-							<td scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"></a>{{reporte.id}}</a></th>
-							<td>{{reporte.cantidadPruebas}}</td>
-							<td>{{reporte.cantidadPositivas}}</td>
-							<td>{{reporte.sospechosos}}</td>						
-							<td>{{reporte.departamento}}</td>
-							<td>{{reporte.municipio}}</td>
-							<td>{{reporte.fechaTomada}}</td>
+						<tr >
+							<td class="text-center align-middle" scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"></a>{{reporte.id}}</a></th>
+							<td class="text-center align-middle">{{reporte.cantidadPruebas}}</td>
+							<td class="text-center align-middle">{{reporte.cantidadPositivas}}</td>
+							<td class="text-center align-middle">{{reporte.sospechosos}}</td>						
+							<td class="text-center align-middle">{{reporte.departamento}}</td>
+							<td class="text-center align-middle">{{reporte.municipio}}</td>
+							<td class="text-center align-middle">{{reporte.fechaTomada}}</td>
 							{% if reporte.estado == 1 %}
-								<td>Validado</td>
+								<td class="text-center align-middle"><span class="badge badge-pill badge-success">Validado</span></td>
 							{% endif %}
 							{% if reporte.estado == 0 %}
-								<td>Sin Validar</td>
+								<td class="text-center align-middle"><span class="badge badge-pill badge-warning">Sin Validar</span></td>
 							{% endif %}
-							<th scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"><i class="material-icons md-dark">edit</i></a></th>
+							<th class="text-center align-middle" scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						  </tr>
 					{% endfor %}
 				</tbody>
@@ -45,4 +46,10 @@
 		<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
 		
 	</div>
+	<script type="text/javascript">
+
+$("#alert-danger").fadeTo(2000, 500).slideUp(500, function(){
+       $("#alert-danger").slideUp(500);
+});
+		</script>
 {% endblock %}

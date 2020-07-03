@@ -12,5 +12,4 @@ $("#id_departamento").change(function () {
       $("#id_municipio").html(data);
     }
   });
-
 });
