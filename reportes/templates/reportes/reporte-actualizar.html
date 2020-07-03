@@ -5,6 +5,9 @@
 		<div class="my-5">
 			<p class="h2">Editar Reporte</p>
 		</div>
+
+	<form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
+		{% csrf_token %}
 		<div class="row justify-content-end">
 			<div class="col-sm-3">
 				<fieldset disabled>
@@ -15,8 +18,6 @@
 				</fieldset>
 			</div>
 		</div>
-	<form method="POST" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" novalidate>
-		{% csrf_token %}
 		<div class="row">
 			{% if messages %}
 				{% for message in messages %}

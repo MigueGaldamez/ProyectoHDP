@@ -39,6 +39,7 @@ def crear_reporte(request):
 		else:
         		obj.estado = 1
 		obj.save()
+		messages.success(request, 'El Reporte se ha creado Exitosamente!')
 		return redirect('listar_reportes')
 	return render(request,'reportes/reporte-guardar.html',{'form':form,'municipios':municipios,'departamentos':departamentos})
 
@@ -49,7 +50,6 @@ def actualizar_reporte(request,id):
 		departamentos = Departamento.objects.all()
 		municipios = Municipio.objects.all()
 		form = ReporteForm(request.POST or None, instance=reporte)
-		reporte= get_object_or_404(Reporte, pk=id)
 		if request.method == 'POST' and "Eliminar" in request.POST: #Inicia la parte para "eliminar" un reporte
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:
