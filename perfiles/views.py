@@ -16,17 +16,18 @@ from reportes.forms import ReporteForm
 from doctores.forms import DoctorForm
 from doctores.models import Doctor
 
-from django.http import JsonResponse
+from django.views.generic import TemplateView
 
-from django.db.models import Sum
+from django.db.models import Sum,Count
 
 
-def get_data(request,*args,**kwargs):
-	data ={
-		"sales":100,
-		"customers":10,
-	}
-	return JsonResponse()
+#class ClubChartView(TemplateView):
+	#template_name = 'index.html'
+
+	#def get_context_data(self,**kwargs):
+		#context = super().get_context_data(**kwargs)
+		#context["qs"] = Reporte.objects.all()
+		#return context
 
 # Create your views here.
 
@@ -42,9 +43,12 @@ def perfilView(request):
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
 
 def indexView(request):	
+    #qs = Reporte.objects.all().select_related()
+    porMunicipio = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
     casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
     pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
-    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count})
+   
+    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porMunicipio': porMunicipio})
 
 @login_required
 def dashboardView(request):
