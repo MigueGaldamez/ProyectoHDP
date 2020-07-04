@@ -14,32 +14,32 @@
         <div class="row">
            
           
-            <h1 class="display-4 d-none d-sm-block">
+            <h1 class="display-4">
                 {% now "H" as current_time %}
     
                 {% if current_time|add:"0" > 18 %}
                     
-                    Buenas Noches
+                    Buenas Noches,
     
                 {% elif current_time|add:"0" > 12 and 18 > current_time|add:"0" %}
-                    Buenas Tardes
+                    Buenas Tardes,
     
                 {% elif 12 > current_time|add:"0" and current_time|add:"0" > 05  %}
                     <div class="col-md-3">
                         <img src="{% static '/img/sea.png' %}" class="avatar img-circle" alt="...">
                     </div>
                     
-                    Buenos Dias
+                    Buenos Dias,
     
                 {% elif 05 > current_time|add:"0" %}
-                    Que Linda madrugada
+                    Que Linda madrugada,
     
-                {% endif %},Bienvenido {{logi.nombre}}
+                {% endif %}Bienvenido, {{logi.nombre}}
               </h1>
         
           
         </div>
-          <p class="lead d-none d-sm-block">Un resumen de lo que esta pasando</p>
+          <p class="lead">Un resumen de lo que esta pasando</p>
        
           <div class="row mb-3">
               <div class="col-xl-3 col-sm-6 py-2">

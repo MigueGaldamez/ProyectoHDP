@@ -16,9 +16,17 @@ from reportes.forms import ReporteForm
 from doctores.forms import DoctorForm
 from doctores.models import Doctor
 
+from django.http import JsonResponse
+
 from django.db.models import Sum
 
 
+def get_data(request,*args,**kwargs):
+	data ={
+		"sales":100,
+		"customers":10,
+	}
+	return JsonResponse()
 
 # Create your views here.
 

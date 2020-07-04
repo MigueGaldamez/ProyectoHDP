@@ -5,10 +5,11 @@
 	<div class="container">
 		<div class="my-5">
 			<p class="h2">Lista de reportes</p>
+			<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
 		</div>
 		<div class="table-responsive">
-			<table class="table table-hover ">
-				<thead>
+			<table class="table table-hover table-sm">
+				<thead class="thead-dark">
 					<tr>
 						<th scope="col">#</th>
 						<th scope="col">Cantidad Pruebas</th>
@@ -43,7 +44,7 @@
 				</tbody>
 			</table>
 		</div>	
-		<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
+	
 		
 	</div>
 

@@ -3,53 +3,61 @@
     {% block content %}
  
     <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <br>
-                <h2>Casos Covid19 El Salvador</h2>
-                <p>incluso los no reportados por el gob xd</p>
-            </div>    
+      
+        <div class="my-5 text-center">
+
+			<p class="h2">Casos Covid19 El Salvador</p>
+			<p>incluso los no reportados por el gob xd </p>
+		</div>
+        
+    <!------------->
+    <div class="row mb-3">
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body bg-success">
+                    <div class="rotate">
+                        <i class="fa fa-user fa-4x"></i>
+                    </div>
+                    <h6 class="timer count-title count-number">{{ pruebas_count.cantidadPruebas__sum}}</h6>
+                    <h1 class="count-text ">Pruebas Realizadas</h1>
+                </div>
+            </div>
         </div>
-        <div class="row text-center">
-            <div class="col">
-                <div class="counter">
-                    <i class="fa fa-code fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="1700" data-speed="1500">{{ pruebas_count.cantidadPruebas__sum}}</h2>
-                    <p class="count-text ">Pruebas Realizadas</p>
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body bg-danger">
+                    <div class="rotate">
+                        <i class="fa fa-list fa-4x"></i>
+                    </div>
+                    <h6 class="timer count-title count-number" >{{ casos_count.cantidadPositivas__sum}}</h6>
+                    <h1 class="count-text ">Casos Confirmados</h1>
                 </div>
             </div>
-            <div class="col">
-                <div class="counter">
-                    <i class="fa fa-coffee fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="100" data-speed="1500">{{ casos_count.cantidadPositivas__sum}}</h2>
-                    <p class="count-text ">Casos Confirmados</p>
-                    
-                </div>
-            </div>
-            <div class="col">
-                <div class="counter">
-                    <i class="fa fa-lightbulb-o fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="11900" data-speed="1500">456</h2>
-                    <p class="count-text ">Casos Sospechosos</p>
-                </div>
-            </div>
-            <div class="col">
-                <div class="counter">
-                    <i class="fa fa-bug fa-2x"></i>
-                    <h2 class="timer count-title count-number" data-to="157" data-speed="1500"></h2>
-                    <p class="count-text ">aun no se xd</p>
-                </div>
-            </div>
-     
         </div>
-        <br><br>
-        <div class="row">
-            <div class="col text-center">
-                <h2>Casos Covid19 por Departamento</h2>
-                <p>y municipio supongo</p>
-            </div>    
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body bg-info">
+                    <div class="rotate">
+                        <i class="fa fa-twitter fa-4x"></i>
+                    </div>
+                    <h6 class="timer count-title count-number" >Doctores</h6>
+                    <h1 class="count-text ">{{all_docs}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 py-2">
+            <div class="card text-white bg-light text-dark h-100">
+                <div class="card-body">
+                    <div class="rotate">
+                        <i class="fa fa-share fa-4x"></i>
+                    </div>
+                    <h6 class="timer count-title count-number" >aun</h6>
+                    <h1 class="count-text ">no se xd</h1>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
     
     {% endblock %}

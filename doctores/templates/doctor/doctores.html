@@ -2,14 +2,19 @@
 {% block content %}
 
 	<div class="container">
-		
-			<table class="table">
-				<thead>
+		<div class="my-5">
+			<p class="h2">Lista de Doctores</p>
+			<a href ="{% url 'crear_doctor'%}">Nuevo doctor (creeria que nel pero tu decides) </a>
+		</div>
+			<table class="table table-sm">
+				<thead class="thead-dark">
 				  <tr>
 					<th scope="col">#</th>
-					<th scope="col">Especialidad</th>
-					<th scope="col">Codigo Doctor</th>
 					<th scope="col">Nombre Doctor</th>
+					<th scope="col">Codigo Doctor</th>
+					<th scope="col">Especialidad</th>
+					<th scope="col">Direccion</th>
+				
 					
 				  </tr>
 				</thead>
@@ -18,20 +23,18 @@
 					{% for doctor in doctores %}
 						<tr>
 							<th scope="row"><a href="{% url 'actualizar_doctor' doctor.id %}">{{doctor.id}}</a></th>
-							<td>{{doctor.especialidad}}</td>
-							<td>{{doctor.codigoDoctor}}</td>
+							
+							
 							<td>{{doctor.perfil.nombre}}</td>
-							<td>{{doctor.perfil.departamento}}</td>
-							<td>{{doctor.perfil.municipio}}</td>
+							<td>{{doctor.codigoDoctor}}</td>
+							<td>{{doctor.especialidad}}</td>
+							<td>{{doctor.perfil.departamento}},{{doctor.perfil.municipio}}</td>
 						  </tr>
 					{% endfor %}
 				
 				
 				</tbody>
 			  </table>	
-					
 
-					
-		<a href ="{% url 'crear_doctor'%}">Nuevo doctor</a>
 	</div>
 {% endblock %}
