@@ -13,6 +13,12 @@ class Perfil(models.Model):
 	nombre =models.CharField(max_length=50)
 	user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
 	tipoUsuario =  models.IntegerField()
+
+	apellido =models.CharField(max_length=50)
+	complemento = models.CharField(max_length=50)
+	telefono = models.CharField(max_length=50)
+	DUI = models.CharField(max_length=50)
+	fechaNacimiento = models.DateField()
 	def __str__(self):
 		return self.nombre
 	class Meta:

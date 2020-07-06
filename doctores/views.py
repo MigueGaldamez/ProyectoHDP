@@ -22,7 +22,7 @@ def actualizar_doctor(request,id):
     
     if form.is_valid():
         form.save() 
-        return redirect('listar_doctoress')
+        return redirect('listar_doctores')
     
     return render(request, 'doctor/doctor-actualizar.html',{'form':form,'doctor':doctor})
 

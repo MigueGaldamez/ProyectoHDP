@@ -155,3 +155,12 @@ img{
     font-weight: 600;
     color: #0062cc;
 }
+
+
+#sticky-footer {
+    flex-shrink: none;
+  }
+
+  #page-content {
+    flex: 1 0 auto;
+  }
