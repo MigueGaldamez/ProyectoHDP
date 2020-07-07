@@ -2,9 +2,12 @@
 {% block content %}
 
 	<div class="container">
-		
-			<table class="table">
-				<thead>
+		<div class="my-5">
+			<p class="h2">Lista de Municipios</p>
+			<a href ="{% url 'crear_municipio'%}">Nuevo Municipio </a>
+		</div>
+			<table class="table table-sm" >
+				<thead class="thead-dark">
 				  <tr>
 					<th scope="col">#</th>
 					<th scope="col">Nombre Municipio</th>
@@ -27,8 +30,5 @@
 				</tbody>
 			  </table>	
 					
-
-					
-		<a href ="{% url 'crear_municipio'%}">Nuevo Municipio</a>
 	</div>
 {% endblock %}

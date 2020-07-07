@@ -40,9 +40,16 @@ class PerfilForm(forms.ModelForm):
 	departamento.widget.attrs.update({'class': 'form-control'})
 	nombre = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'nombre','class': 'form-control'}))
 	tipoUsuario = forms.IntegerField(required=False)
+	
+	apellido =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Apellido','class': 'form-control'}))
+	complemento = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Direccion','class': 'form-control'}))
+	telefono =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Telefono','class': 'form-control'}))
+	DUI = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'DUI','class': 'form-control'}))
+	fechaNacimiento =forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'form-control'}))
+
 	class Meta:
 		model=Perfil
-		fields =['departamento','municipio','nombre']
+		fields =['departamento','municipio','nombre','apellido','complemento','telefono','DUI','fechaNacimiento']
 
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)

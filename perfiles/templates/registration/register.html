@@ -11,171 +11,225 @@ window.location.replace('/dashboard/');
 </script> 
 {% endif %}
 <br>
-    <main class="login-form">
-        <div class="cotainer">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+    <div class="login-form">      
+            <div class="container">
+                <div class="">
                     <div class="card">
-                        <div class="card-header">Crear Cuenta</div>
-                        <div class="card-body ">
-                            <form action="" class="row row-cols-2" id="ReporteForm" method="POST" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
-                                {% csrf_token %}
-                                <div class="form-group row col">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Usuario</label>
-                                    <div class="col-md-6">
-                                     {{form.username}}
+                        <!--<div class="card-header">Crear Cuenta</div>-->
+                            <div class="card-body ">
+                              
+                               
+                               
+                                <form action="" class="container row row-cols-3" id="ReporteForm" method="POST" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
+                                    {% csrf_token %}
+                                    <div class="col-sm-12 col-12">
+                                        <h2>Registrarse</h2>
+                                        <br>
                                     </div>
-                                    {% if form.usuario.errors %}
-                                        <ul>
-                                        {% for error in form.usuario.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </div>
-    
-                                <div class="form-group row col">
-                                    <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
-                                    <div class="col-md-6">
-                                        {{form.password1}}
-                                    </div>
-                                    {% if form.password1.errors %}
-                                        <ul>
-                                        {% for error in form.password1.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                      
-                                        </ul>
-                                    {% endif %}
+                                    <div class="col-md-4  col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Nombre</label>
+                                            <div>  {{perfil_form.nombre}}</div>   
+                                            {% if perfil_form.nombre.errors %}                                            
+                                                {% for error in perfil_form.nombre.errors %}                                                
+                                                    <small><a  href="#id_{{ perfil_form.nombre.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}                                          
+                                        </div>
+                                    </div>   
                                     
-                                </div>
-                                <div class="form-group row col">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Confirmar su contraseña</label>
-                                    <div class="col-md-6">
-                                     {{form.password2}}
-                                    </div>
-                                    {% if form.password2.errors %}
-                                        <ul>
-                                        {% for error in form.password2.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Usuario</label>
-                                    <div class="col-md-6">
-                                     {{form.email}}
-                                    </div>
-                                    {% if form.email.errors %}
-                                        <ul>
-                                        {% for error in form.email.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                        </ul>
-                                    {% endif %}
-                                </div>
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">departamento</label>
-                                    <div class="col-md-6">
-                                     {{perfil_form.departamento}}
-                                    </div>
-                                    {% if perfil_form.departamento.errors %}
-                                        <ul>
-                                        {% for error in perfil_form.departamento.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">municipio</label>
-                                    <div class="col-md-6">
-                                     {{perfil_form.municipio}}
-                                    </div>
-                                    {% if perfil_form.municipio.errors %}
-                                        <ul>
-                                        {% for error in perfil_form.municipio.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">especialidad</label>
-                                    <div class="col-md-6">
-                                     {{doctor_form.especialidad}}
-                                    </div>
-                                    {% if doctor_form.especialidad.errors %}
-                                        <ul>
-                                        {% for error in  doctor_form.especialidad.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Codido Doctor</label>
-                                    <div class="col-md-6">
-                                     {{doctor_form.codigoDoctor}}
-                                    </div>
-                                    {% if doctor_form.codigoDoctor.errors %}
-                                        <ul>
-                                        {% for error in  doctor_form.codigoDoctor.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="email_address" class="col-md-4 col-form-label text-md-right">Nombre</label>
-                                    <div class="col-md-6">
-                                     {{perfil_form.nombre}}
-                                    </div>
-                                    {% if perfil_form.nombre.errors %}
-                                        <ul>
-                                        {% for error in perfil_form.nombre.errors %}
-                                            <li>{{ error }}</li>
-                                        {% endfor %}
-                                    
-                                        </ul>
-                                    {% endif %}
-                                </div>
-    
-                                <div class="form-group row">
-                                    <div class="col-md-6 offset-md-4">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="remember"> Recuerdame
-                                            </label>
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Direccion</label>
+                                            <div>{{perfil_form.complemento}}</div>
+                                            {% if perfil_form.complemento.errors %}                                            
+                                                {% for error in perfil_form.complemento.errors %}                                                
+                                                    <small><a  href="#id_{{ perfil_form.complemento.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}                                            
                                         </div>
                                     </div>
-                                </div>
-    
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Registrarse
-                                    </button>
-                                    <a href="{% url 'login' %}" class="btn btn-link">
-                                       ¿ya tienes cuenta? Inicia sesion.c:
-                                    </a>
-                                </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Apellido</label>
+                                            <div> {{perfil_form.apellido}}</div>
+                                            {% if perfil_form.apellido.errors %}                                            
+                                                {% for error in perfil_form.apellido.errors %}                                                
+                                                    <small><a  href="#id_{{ perfil_form.apellido.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}  
+                                        </div>
+                                    </div>   
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >DUI</label>
+                                            <div> {{perfil_form.DUI}}</div>
+                                            {% if perfil_form.DUI.errors %}                                            
+                                                {% for error in perfil_form.DUI.errors %}                                                
+                                                    <small><a  href="#id_{{ perfil_form.DUI.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}  
+                                        </div>
+                                    </div>   
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Telefono</label>
+                                            <div> {{perfil_form.telefono}}</div>
+                                            {% if perfil_form.telefono.errors %}                                            
+                                                {% for error in perfil_form.telefono.errors %}                                                
+                                                    <small><a  href="#id_{{ perfil_form.telefono.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}  
+                                        </div>
+                                    </div>  
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Fecha Nacimiento </label>                                        
+                                            <div class="custom-control-inline col-sm-12"> {{perfil_form.fechaNacimiento}}</div>
+                                            {% if form.fechaNacimiento.errors %}                                            
+                                                {% for error in form.fechaNacimiento.errors %}                                                
+                                                    <small><a  href="#id_{{ form.fechaNacimiento.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}    
+                                        </div>                                                                                                                                         
+                                    </div>   
+                                    
+                      
+                                    
+
+
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Correo Electronico </label>
+                                            <div >{{form.email}}</div>
+                                            {% if form.email.errors %}                                            
+                                                {% for error in form.email.errors %}                                                
+                                                    <small><a  href="#id_{{  form.email.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Usuario </label>
+                                            <div >{{form.username}}</div>
+                                            {% if form.username.errors %}                                            
+                                                {% for error in form.username.errors %}                                                
+                                                    <small><a  href="#id_{{  form.username.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Institucion para la que trabaja</label>
+                                            <div >{{doctor_form.institucionTrabajo}}</div>
+                                            {% if doctor_form.institucionTrabajo.errors %}                                            
+                                                {% for error in doctor_form.institucionTrabajo.errors %}                                                
+                                                    <small><a  href="#id_{{  doctor_form.institucionTrabajo.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Contraseña</label>
+                                            <div >{{form.password2}}</div>
+                                            {% if form.password2.errors %}                                            
+                                                {% for error in form.password2.errors %}                                                
+                                                    <small><a  href="#id_{{  form.password2.name }}" class="text-danger ">* {{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>   
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Confirmar Contraseña</label>
+                                            <div >{{form.password1}}</div>
+                                            {% if form.password1.errors %}                                            
+                                                {% for error in form.password1.errors %}                                                
+                                                    <small><a  href="#id_{{  form.password1.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Departamento de residencia</label>
+                                            <div >{{perfil_form.departamento}}</div>
+                                            {% if perfil_form.departamento.errors %}                                            
+                                                {% for error in perfil_form.departamento.errors %}                                                
+                                                    <small><a  href="#id_{{  perfil_form.departamento.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Municipio de residencia</label>
+                                            <div >{{perfil_form.municipio}}</div>
+                                            {% if perfil_form.municipio.errors %}                                            
+                                                {% for error in perfil_form.municipio.errors %}                                                
+                                                    <small><a  href="#id_{{  perfil_form.municipio.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Especialidad</label>
+                                            <div >{{doctor_form.especialidad}}</div>
+                                            {% if doctor_form.especialidad.errors %}                                            
+                                                {% for error in doctor_form.especialidad.errors %}                                                
+                                                    <small><a  href="#id_{{ doctor_form.especialidad.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                                    <div class="col-md-4 col col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label >Codigo del cosejo de medicos</label>
+                                            <div >{{doctor_form.codigoDoctor}}</div>
+                                            {% if doctor_form.codigoDoctor.errors %}                                            
+                                                {% for error in doctor_form.codigoDoctor.errors %}                                                
+                                                    <small><a  href="#id_{{ doctor_form.codigoDoctor.name }}" class="text-danger ">{{error}}</a></small>
+                                                {% endfor %}                                          
+                                            {% endif %}
+                                        </div>                                                             
+                                    </div>
+                                    
+                           
+                                   
+                                
+                                    <div class="col-md-6 col-sm-12 offset-sm-2 offset-md-4">
+                                        <button type="submit" class="btn btn-primary">
+                                            Registrarse
+                                        </button>
+                                        <a href="{% url 'login' %}" class="btn btn-link">
+                                        ¿ya tienes cuenta? Inicia sesion.c:
+                                        </a>
+                                    </div>
+                                   
+                                   
+                               
+                                
+                               
+                                </form>
+                            </div>
                         </div>
-                        </form>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>
-    
-    </main>
+            </div>   
+    </div>
    
 {% endblock %}

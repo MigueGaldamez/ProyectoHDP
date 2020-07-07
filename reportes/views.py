@@ -16,6 +16,8 @@ from perfiles.forms import PerfilForm
 from django.contrib import messages
 from django.http import Http404
 # Create your views here.
+from .filters import ReporteFilter
+from django.core.paginator import Paginator
 
 def cargar_municipios(request):
     departamento_id = request.GET.get('departamento')
@@ -25,9 +27,23 @@ def cargar_municipios(request):
 #crud reporte
 @login_required
 def listar_reportes(request):
-	reportes = Reporte.objects.exclude(eliminado=1).order_by('-fechaTomada')
-	return render(request,'reportes/reportes.html',{'reportes':reportes})
+	context ={}
+	filtered_reportes = ReporteFilter(
+		request.GET,
+		queryset = Reporte.objects.all().order_by('-fechaTomada')
+	)
+	context['filtered_reportes']=filtered_reportes
 	
+	paginated_filtered_reportes = Paginator(filtered_reportes.qs,4)
+	page_number = request.GET.get('page')
+	reporte_page_obj = paginated_filtered_reportes.get_page(page_number)
+
+	context['reporte_page_obj']=reporte_page_obj
+	reportes = Reporte.objects.exclude(eliminado=1).order_by('-fechaTomada')
+	#return render(request,'reportes/reportes.html',{'reportes':reportes})
+	return render(request,'reportes/reportes.html',context=context)
+	
+
 def crear_reporte(request):
 	departamentos = Departamento.objects.all()
 	municipios = Municipio.objects.all()
@@ -46,7 +62,13 @@ def crear_reporte(request):
 @login_required
 def actualizar_reporte(request,id):
 	try:
-		reporte = Reporte.objects.exclude(eliminado=1).get(id=id)
+		reporte = 0
+		if request.user.is_authenticated:
+			reporte = Reporte.objects.get(id=id)
+		else:
+			reporte = Reporte.objects.exclude(eliminado=1).get(id=id)
+
+		
 		departamentos = Departamento.objects.all()
 		municipios = Municipio.objects.all()
 		form = ReporteForm(request.POST or None, instance=reporte)

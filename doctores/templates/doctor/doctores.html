@@ -2,14 +2,28 @@
 {% block content %}
 
 	<div class="container">
-		
-			<table class="table">
-				<thead>
+		<div class="my-5">
+			<p class="h2">Lista de Doctores</p>
+			<a href ="{% url 'crear_doctor'%}">Nuevo doctor (creeria que nel pero tu decides) </a>
+		</div>
+			<table class="table table-sm">
+				<thead class="thead-dark">
 				  <tr>
-					<th scope="col">#</th>
-					<th scope="col">Especialidad</th>
-					<th scope="col">Codigo Doctor</th>
+					<!--<th scope="col">#</th>-->
 					<th scope="col">Nombre Doctor</th>
+					<th scope="col">Apellido</th>
+				
+					<th scope="col">Especialidad</th>
+					<th scope="col">Direccion</th>
+					<th scope="col">Lugar de trabajo</th>
+
+					<th scope="col">Nombre de Usuario</th> 	
+					<th scope="col">fecha Union</th>
+					<th scope="col">DUI</th>
+					<th scope="col">Estado Cuenta</th>
+					<th scope="col">acciones</th>
+					<!--<th scope="col">Fecha Nacimiento</th>-->
+					
 					
 				  </tr>
 				</thead>
@@ -17,21 +31,36 @@
 					
 					{% for doctor in doctores %}
 						<tr>
-							<th scope="row"><a href="{% url 'actualizar_doctor' doctor.id %}">{{doctor.id}}</a></th>
-							<td>{{doctor.especialidad}}</td>
-							<td>{{doctor.codigoDoctor}}</td>
+							<!--<th scope="row"><a href="{% url 'actualizar_doctor' doctor.id %}">{{doctor.id}}</a></th>-->
+							
+							
 							<td>{{doctor.perfil.nombre}}</td>
-							<td>{{doctor.perfil.departamento}}</td>
-							<td>{{doctor.perfil.municipio}}</td>
+							<td>{{doctor.perfil.apellido}}</td>
+							<!--<td>{{doctor.codigoDoctor}}</td>-->
+							<td>{{doctor.especialidad}}</td>
+							<td> {{doctor.perfil.complemento}}, {{doctor.perfil.municipio}}, {{doctor.perfil.departamento}}</td>
+							<td>{{doctor.institucionTrabajo}}</td>
+							<td>{{doctor.perfil.user.username}}</td>
+							<td>{{doctor.perfil.user.date_joined}}</td>
+							<td>{{doctor.perfil.DUI}}</td>
+							<td>	
+								{% if doctor.perfil.user.is_active == 1 %}
+
+								<span class="badge badge-pill badge-success">Validado</span>
+								{% endif %}
+								{% if doctor.perfil.user.is_active == 0 %}
+								<span class="badge badge-pill badge-warning">Sin Validar</span>
+								{% endif %}
+								{% if reporte.eliminado == 1 and user.perfil.tipoUsuario == 1 %}
+								<span class="badge badge-pill badge-danger">Eliminado</span>
+								{% endif %}</td>
+							<th class="text-center align-middle" scope="row"><a href="{%  url 'actualizar_doctor' doctor.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						  </tr>
 					{% endfor %}
 				
 				
 				</tbody>
 			  </table>	
-					
 
-					
-		<a href ="{% url 'crear_doctor'%}">Nuevo doctor</a>
 	</div>
 {% endblock %}

@@ -6,6 +6,14 @@ from django.contrib.auth.decorators import login_required
 from .forms import UCFWithEmail
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
+#django messages
+from django.contrib import messages
+#from django.core.paginator import Paginator
+
+#json
+import json
+from django.http import JsonResponse
+
 #imports
 from departamentos.forms import DepartamentoForm
 from departamentos.models import Departamento
@@ -16,11 +24,101 @@ from reportes.forms import ReporteForm
 from doctores.forms import DoctorForm
 from doctores.models import Doctor
 
-from django.db.models import Sum
+from django.views.generic import TemplateView
+
+from django.db.models import Sum,Count
 
 
+def editarDoctor(request):
 
-# Create your views here.
+	doctor = Doctor.objects.get(id=id)
+	perfil = Perfil.objects.get(id=doctro.perfil_id)
+	user = User.objects.get(id=perfil.user_id)
+	form = DoctorForm(request.POST or None, instance=doctor)
+    
+	if form.is_valid():
+		form.save() 
+		return redirect('listar_doctores')
+    
+	return render(request, 'doctor/doctor-actualizar.html',{'form':form,'doctor':doctor})
+	
+
+def index2_view(request):
+	porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+	porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
+	casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
+	pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
+   
+	return render(request,'index_nofunc.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
+
+
+def  genero_resumen(request):
+	porGenero = Reporte.objects.filter(estado=1)
+	finalrep ={}
+	femenino = 0 
+	masculino = 0
+	for item in porGenero:
+		
+		femenino += item.cantFemenino
+		masculino += item.cantMasculino
+
+	finalrep["Femenino"]=femenino
+	finalrep["Masculino"]=masculino
+	return JsonResponse({'genero_resumen':finalrep},safe=False)
+	
+
+
+def  departamentos_resumen(request):
+	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+	porDepartamento = Reporte.objects.filter(estado=1)
+	finalrep ={}
+
+	def get_departamento(reporte):
+		return reporte.departamento
+	
+	departamento_list = list(set(map(get_departamento,porDepartamento)))
+	
+
+	def get_departamento_amount(departamento):
+		amount = 0
+		filtered_by_departamento = porDepartamento.filter(departamento=departamento)
+		for item in filtered_by_departamento:
+			amount += item.cantidadPositivas
+		return amount
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep[str(y)]=get_departamento_amount(y)
+			
+	return JsonResponse({'departamento_resumen':finalrep},safe=False)
+
+
+def dep1_resumen(request):
+	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+	porDepartamento = Reporte.objects.filter(estado=1, departamento=1)
+	finalrep ={}
+
+	def get_departamento(reporte):
+		return reporte.municipio
+	
+	departamento_list = list(set(map(get_departamento,porDepartamento)))
+	
+
+	def get_departamento_amount(departamento):
+		amount = 0
+		filtered_by_departamento = porDepartamento.filter(municipio=departamento)
+		for item in filtered_by_departamento:
+			amount += item.cantidadPositivas
+		return amount
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep[str(y)]=get_departamento_amount(y)
+			
+	return JsonResponse({'dep1_resumen':finalrep},safe=False)
+
 
 #VIEWS DE SEGURIDAD
 def perfilView(request):
@@ -34,9 +132,12 @@ def perfilView(request):
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
 
 def indexView(request):	
+    porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+    porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
     casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
     pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
-    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count})
+   
+    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
 
 @login_required
 def dashboardView(request):
@@ -46,11 +147,15 @@ def dashboardView(request):
 	perfiles_count =  User.objects.only().filter(is_active=0).count()
 	all_reports = Reporte.objects.all().count()
 	all_docs = Perfil.objects.all().filter(tipoUsuario=0).count()
+	reportes_zona=0
 	
 	if request.user.is_authenticated:
-		logi = Perfil.objects.get(user_id=request.user.id)	
+		logi = Perfil.objects.get(user_id=request.user.id)
+		if logi.tipoUsuario == 0:
+			reportes_zona = Reporte.objects.all().filter(municipio=logi.municipio).count()
+
 	
-	return render(request, 'dashboard.html',{'reportes':reportes,'reportes_count':reportes_count , 'perfiles':perfiles , 'logi':logi ,'perfiles_count':perfiles_count , 'all_reports':all_reports,'all_docs':all_docs})
+	return render(request, 'dashboard.html',{'reportes':reportes,'reportes_count':reportes_count , 'perfiles':perfiles , 'logi':logi ,'perfiles_count':perfiles_count , 'all_reports':all_reports,'all_docs':all_docs,'reportes_zona':reportes_zona})
 
 def registerView(request):
 	if request.method == "POST":
@@ -72,7 +177,7 @@ def registerView(request):
 			doctor = doctor_form.save(commit=False)
 			doctor.perfil = perfil
 			doctor.save()
-
+			messages.success(request, 'Cuenta creada con exito,espere a que sea activada!')
 			#username = form.cleaned_data.get('username')
 			#password = form.cleaned_data.get('password1')
 			#user = authenticate(username=username,password=password)
