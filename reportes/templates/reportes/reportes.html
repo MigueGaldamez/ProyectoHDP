@@ -1,12 +1,96 @@
 {% extends '../plantilla.html' %}
 {% block content %}
-
+{% load reportes_extras %}
+	
 
 	<div class="container">
-		<div class="my-5">
+		<br>
+		
 			<p class="h2">Lista de reportes</p>
 			<a href ="{% url 'crear_reporte'%}">Nuevo reporte </a>
-		</div>
+		<br>
+		<form method="GET" class="row" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
+			<!--{{filtered_reportes.form.as_p}}-->
+			
+		
+
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Departamento</label>
+					<div >{{filtered_reportes.form.departamento}}</div>
+			
+				</div>                                                             
+			</div>
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Municipio</label>
+					<div >{{filtered_reportes.form.municipio}}</div>
+			
+				</div>                                                             
+			</div>
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Direccion</label>
+					<div >	{{filtered_reportes.form.complemento}}</div>
+			
+				</div>                                                             
+			</div>
+		
+
+	
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Fecha Tomada </label>
+					<div><input type="date" name="fechaTomada"  id="id_fechaTomada" class="form-control form-control-sm"></div>
+				</div>
+			</div>
+			
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Fecha Tomada </label>
+					<div><input type="date" name="fechaTomada"  id="id_fechaEditado" class="form-control form-control-sm"></div>
+				</div>
+			</div>
+			 <!--
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Fecha Editado </label>
+					{{filtered_reportes.form.fechaEditado}}
+				</div>
+			</div>-->
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="checkbox" id="eliminados" value="" onChange=dropdownChange();>
+					<label class="form-check-label" for="inlineCheckbox1">Mostrar Eliminados</label>
+				</div>                                                           
+			</div>
+			
+			<div class="col-md-3 col col-sm-6 col-12 ">
+				<div class="form-group">
+					<div class="btn-group mr-2 " role="group" aria-label="First group">
+						<button type="submit" class="btn btn-primary btn-sm">Aplicar filtros</button>
+					</div>
+				</div>
+			</div>
+			
+			
+		
+		
+			{{filtered_reportes.form.eliminado}}
+		
+
+			
+			<!--<p><label for="id_eliminado">Eliminado:</label> <input type="number" name="eliminado" step="any" id="id_eliminado"></p>-->
+					
+			
+
+
+
+
+			
+		
+		
+		</form>
 		<div class="table-responsive">
 			<table class="table table-hover table-sm">
 				<thead class="thead-dark">
@@ -23,7 +107,7 @@
 					</tr>
 				</thead>
 				<tbody >
-					{% for reporte in reportes %}
+					{% for reporte in reporte_page_obj %}
 						<tr >
 							<td class="text-center align-middle" scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"></a>{{reporte.id}}</a></th>
 							<td class="text-center align-middle">{{reporte.cantidadPruebas}}</td>
@@ -32,20 +116,56 @@
 							<td class="text-center align-middle">{{reporte.departamento}}</td>
 							<td class="text-center align-middle">{{reporte.municipio}}</td>
 							<td class="text-center align-middle">{{reporte.fechaTomada}}</td>
-							{% if reporte.estado == 1 %}
-								<td class="text-center align-middle"><span class="badge badge-pill badge-success">Validado</span></td>
-							{% endif %}
-							{% if reporte.estado == 0 %}
-								<td class="text-center align-middle"><span class="badge badge-pill badge-warning">Sin Validar</span></td>
-							{% endif %}
+							<td class="text-center align-middle">
+								{% if reporte.estado == 1 %}
+
+								<span class="badge badge-pill badge-success">Validado</span>
+								{% endif %}
+								{% if reporte.estado == 0 %}
+								<span class="badge badge-pill badge-warning">Sin Validar</span>
+								{% endif %}
+								{% if reporte.eliminado == 1 and user.perfil.tipoUsuario == 1 %}
+								<span class="badge badge-pill badge-danger">Eliminado</span>
+								{% endif %}
+							</td>
 							<th class="text-center align-middle" scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						  </tr>
 					{% endfor %}
 				</tbody>
 			</table>
 		</div>	
-	
 		
+		<nav aria-label="Page navigation mx-auto">
+			<ul class="pagination">
+
+			{% if reporte_page_obj.has_previous %}
+			<li class="page-item">
+				<a href="{% my_url 1 'page' request.GET.urlencode %}"  class="page-link">  <span aria-hidden="true">&laquo;</span></a>
+			</li>
+			<li class="page-item">
+				<a href="{% my_url 	reporte_page_obj.previous_page_number 'page' request.GET.urlencode %}" class="page-link">{{reporte_page_obj.previous_page_number}}</a>
+			</li>
+			{% endif %}
+			  
+
+			
+		
+			  <li class="page-item"><a class="page-link" href="#">Pagina {{reporte_page_obj.number}} de {{reporte_page_obj.paginator.num_pages}}</a></li>
+
+			  
+			{% if reporte_page_obj.has_next %}
+			<li class="page-item">
+				<a class="page-link" href="{% my_url reporte_page_obj.next_page_number 'page' request.GET.urlencode %}">{{reporte_page_obj.next_page_number}}</a>
+			</li>
+			<li class="page-item">
+				<a class="page-link" href="{% my_url reporte_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">  <span aria-hidden="true">&raquo;</span></a>
+			</li>
+			{% endif %}
+			 
+			
+
+			</ul>
+		  </nav>
 	</div>
 
 {% endblock %}

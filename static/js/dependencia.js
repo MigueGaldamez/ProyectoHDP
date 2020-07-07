@@ -15,3 +15,13 @@ $("#id_departamento").change(function () {
   });
 });
 
+function dropdownChange() { 
+
+  if (document.getElementById('eliminados').checked) 
+  {
+      document.getElementById('id_eliminado').value = "";
+      //alert('SI')
+  } else {
+      document.getElementById('id_eliminado').value = 0;
+  }
+} 
