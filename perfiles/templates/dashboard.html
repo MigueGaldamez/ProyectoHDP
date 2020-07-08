@@ -48,8 +48,8 @@
                           <div class="rotate">
                               <i class="fa fa-user fa-4x"></i>
                           </div>
-                          <a href="{% url 'listar_doctores' %}">Aqui</a>
-                          <h6 href="{% url 'listar_doctores' %}" class="text-uppercase">Solicitudes de usuarios</h6>
+                        
+                          <h6 class="text-uppercase">  <a href="{% url 'listar_doctores' %}?perfil__user__is_active=false" class="text-light"> Solicitudes de usuarios</a></h6>
                           <h1 class="display-4">{{perfiles_count}}</h1>
                       </div>
                   </div>
@@ -60,7 +60,7 @@
                           <div class="rotate">
                               <i class="fa fa-list fa-4x"></i>
                           </div>
-                          <h6 class="text-uppercase">Reportes sin validar</h6>
+                          <h6 class="text-uppercase"><a href="{% url 'listar_reportes' %}?estado=0" class="text-light"> Reportes sin validar</a></h6>
                           <h1 class="display-4">{{reportes_count}}</h1>
                       </div>
                   </div>

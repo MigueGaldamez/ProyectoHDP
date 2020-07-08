@@ -10,7 +10,7 @@ class ReporteFilter(django_filters.FilterSet):
     class Meta:
         fechaEditado = django_filters.DateFilter()
         model = Reporte
-        fields =['fechaTomada','fechaEditado','municipio','complemento','departamento','eliminado']
+        fields =['fechaTomada','fechaEditado','municipio','complemento','departamento','eliminado','estado']
 
     def __init__(self, data=None, queryset=None, *, request=None, prefix=None):
         super(ReporteFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)

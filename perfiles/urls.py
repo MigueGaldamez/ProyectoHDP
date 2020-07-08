@@ -32,5 +32,5 @@ urlpatterns=[
 	path('dep1_resumen', views.dep1_resumen , name ="dep1_resumen"),
 	
 	
-	path('indexrapido', views.index2_view , name ="index2_views"),
+	
 ] 

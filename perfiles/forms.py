@@ -33,8 +33,24 @@ class UCFWithEmail(UserCreationForm):
         model = User
         fields = ["username", "password1", "password2","email"]
 
+class UCFWithEmail_editar(UserCreationForm):
+    # Ahora el campo username es de tipo email y cambiamos su texto
+   
+    password1 = forms.CharField(required = False,widget=forms.PasswordInput(attrs={'placeholder':'*******','class': 'form-control'}))
+    password2 = forms.CharField(required = False,widget=forms.PasswordInput(attrs={'placeholder':'*******','class': 'form-control'}))
+    is_active = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder':'Activo','class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = [ "password1", "password2","is_active"]
+
+    def __init__(self, *args , **kwargs):
+        super().__init__(*args , **kwargs)
+       
+
 
 class PerfilForm(forms.ModelForm):
+
 	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), required = False)
 	departamento.empty_label="Seleccione"
 	departamento.widget.attrs.update({'class': 'form-control'})
@@ -56,6 +72,41 @@ class PerfilForm(forms.ModelForm):
 		self.fields['municipio'].queryset = Municipio.objects.none()
 		self.fields['municipio'].empty_label="Seleccione"
 		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
+
+		if 'departamento' in self.data:
+			try:
+				departamento_id =int(self.data.get('departamento'))
+				self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
+				
+			except(ValueError ,TypeError):
+				pass 	
+		
+		elif self.instance.pk:
+			self.fields['municipio'].queryset = self.instance.departamento.municipio_set.order_by('nombre')
+
+class PerfilForm_editar(forms.ModelForm):
+	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), required = False)
+	departamento.empty_label="Seleccione"
+	departamento.widget.attrs.update({'class': 'form-control'})
+	nombre = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'nombre','class': 'form-control'}))
+	tipoUsuario = forms.IntegerField(required=False)
+	
+	apellido =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Apellido','class': 'form-control'}))
+	complemento = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Direccion','class': 'form-control'}))
+	telefono =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Telefono','class': 'form-control'}))
+	DUI = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'DUI','class': 'form-control'}))
+	fechaNacimiento =forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'form-control'}))
+
+	class Meta:
+		model=Perfil
+		fields =['departamento','municipio','nombre','apellido','complemento','telefono','DUI','fechaNacimiento']
+
+	def __init__(self, *args , **kwargs):
+		super().__init__(*args , **kwargs)
+		self.fields['municipio'].queryset = Municipio.objects.none()
+		self.fields['municipio'].empty_label="Seleccione"
+		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
+		#self.fields['DUI'].widget.attrs['disabled'] = True
 
 		if 'departamento' in self.data:
 			try:
