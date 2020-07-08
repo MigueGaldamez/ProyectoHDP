@@ -27,6 +27,7 @@ urlpatterns=[
 	path('password_reset/',auth_views.PasswordResetView.as_view(template_name='registration/password_reset_form.html'),name='password_reset'),
 	path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),name='password_reset_complete'),
 
+	path('fechas_resumen', views.fechas_resumen , name ="fechas_resumen"),
 	path('departamentos_resumen', views.departamentos_resumen , name ="departamentos_resumen"),
 	path('genero_resumen', views.genero_resumen , name ="genero_resumen"),
 	path('dep1_resumen', views.dep1_resumen , name ="dep1_resumen"),

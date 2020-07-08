@@ -67,9 +67,47 @@ def  genero_resumen(request):
 	return JsonResponse({'genero_resumen':finalrep},safe=False)
 	
 
+def fechas_resumen(request):
+	porDepartamento = Reporte.objects.order_by('fechaTomada').filter(estado=1)
+	finalrep ={}
+	finalrep2 ={}
+	def get_departamento(reporte):
+		return reporte.fechaTomada
+	
+	departamento_list = list(sorted(set(map(get_departamento,porDepartamento))))
+
+	
+
+	def get_departamento_amount(departamento):
+		amount = 0
+		filtered_by_departamento = porDepartamento.filter(fechaTomada=departamento)
+		for item in filtered_by_departamento:
+			amount += item.cantidadPositivas
+		return amount
+
+	def get_fecha_amount(departamento):
+		amount = 0
+		filtered_by_fecha = porDepartamento.filter(fechaTomada=departamento)
+		for item in filtered_by_fecha:
+			amount += item.cantidadPruebas
+		return amount
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep[str(y)]=get_departamento_amount(y)
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep2[str(y)]=get_fecha_amount(y)
+			
+	return JsonResponse({'fecha1_resumen':finalrep,'fecha2_resumen':finalrep2 ,'departamento_list':departamento_list},safe=False)
+
+
+
 
 def  departamentos_resumen(request):
-	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
 	porDepartamento = Reporte.objects.filter(estado=1)
 	finalrep ={}
 
@@ -92,7 +130,6 @@ def  departamentos_resumen(request):
 			finalrep[str(y)]=get_departamento_amount(y)
 			
 	return JsonResponse({'departamento_resumen':finalrep},safe=False)
-
 
 def dep1_resumen(request):
 	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
