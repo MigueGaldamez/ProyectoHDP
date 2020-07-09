@@ -35,7 +35,7 @@ class ReporteForm(forms.ModelForm):
 	complemento = forms.CharField(error_messages={'required': requerido+"Complemento de direccion"},widget=forms.TextInput(attrs={'class': 'form-control'}))
 	estado = forms.IntegerField(required=False)
 	eliminado = forms.IntegerField(required=False)
-	fechaEditado=  forms.DateField(required=False,widget=forms.NumberInput(attrs={'class': 'form-control','type':'date'}))
+	fechaEditado=  forms.DateField(disabled=True,required=False,widget=forms.NumberInput(attrs={'class': 'form-control','type':'date'}))
 	class Meta:
 		model = Reporte
 		fields =['estado','cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']

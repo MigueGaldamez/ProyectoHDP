@@ -155,7 +155,12 @@ img{
     font-weight: 600;
     color: #0062cc;
 }
-
+.material-icons.md-9{ 
+    font-size: 13.5px; 
+}
+.material-icons.md-p{ 
+    font-size: 100%; 
+}
 
 #sticky-footer {
     flex-shrink: none;

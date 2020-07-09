@@ -82,6 +82,7 @@ def actualizar_reporte(request,id):
 		departamentos = Departamento.objects.all()
 		municipios = Municipio.objects.all()
 		form = ReporteForm(request.POST or None, instance=reporte)
+		texto="Hola Mundo"
 		if request.method == 'POST' and "Eliminar" in request.POST: #Inicia la parte para "eliminar" un reporte
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:

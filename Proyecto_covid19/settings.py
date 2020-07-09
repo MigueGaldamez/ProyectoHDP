@@ -26,7 +26,7 @@ SECRET_KEY = 'iaf(g!pr9evoa4401(j%#c)u=h3#!t@dmek0&h5^&3cri!vnnb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.22']
+ALLOWED_HOSTS = []
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
 ]
 #para los mensajes
 MESSAGE_TAGS = {
