@@ -8,6 +8,27 @@
 			<div class="card-header">
 				<p class="h3">Editar Reporte</p>
 			</div>
+			{%if reporte.estado == 0 %}
+			<div class="col">
+				<div class="alert col-8 border-info" role="alert">
+					<div class="form-group ">
+						<label for="exampleInputEmail1" class="text-info">este reporte no  ha tenido resolucion desea:</label>
+							
+							  
+							  <div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="aceptado12" value="1" onChange = checkbox12();>
+								<label class="form-check-label" for="inlineRadio1">Aceptarlo</label>
+							  </div>
+							  <div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" onChange = checkbox12();	>
+								<label class="form-check-label" for="inlineRadio2">Rechazarlo</label>
+							  </div>
+						<div class="d-none">{{ form.estado }}</div>					
+					</div>	
+				</div>
+			
+			</div>
+			{% endif %}
 			<div class="card-body">
 				<div class="row">
 					<div class="col-sm-3">

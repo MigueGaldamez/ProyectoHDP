@@ -19,6 +19,8 @@ from django.http import Http404
 from .filters import ReporteFilter
 from django.core.paginator import Paginator
 
+
+
 def cargar_municipios(request):
     departamento_id = request.GET.get('departamento')
     municipios = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
@@ -28,13 +30,21 @@ def cargar_municipios(request):
 @login_required
 def listar_reportes(request):
 	context ={}
-	filtered_reportes = ReporteFilter(
-		request.GET,
-		queryset = Reporte.objects.all().order_by('-fechaTomada')
-	)
+	if request.method == 'GET' and 'eliminado' in request.GET:
+		filtered_reportes = ReporteFilter(
+			request.GET,
+			queryset = Reporte.objects.all().order_by('-fechaTomada')
+		)
+	else:
+		filtered_reportes = ReporteFilter(
+			request.GET,
+			queryset = Reporte.objects.all().order_by('-fechaTomada').filter(eliminado=0)
+		)
+
+
 	context['filtered_reportes']=filtered_reportes
 	
-	paginated_filtered_reportes = Paginator(filtered_reportes.qs,4)
+	paginated_filtered_reportes = Paginator(filtered_reportes.qs,8)
 	page_number = request.GET.get('page')
 	reporte_page_obj = paginated_filtered_reportes.get_page(page_number)
 
@@ -77,8 +87,7 @@ def actualizar_reporte(request,id):
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:
 				obj.estado = 0
-			else:
-				obj.estado = 1
+
 			obj.save()
 			Reporte.objects.filter(id=id).update(eliminado=1)#filtramos que el registro sea por id y que le actulice el estado a  0
 			messages.info(request, 'El Reporte ha sido eliminado Exitosamente!')
@@ -87,8 +96,7 @@ def actualizar_reporte(request,id):
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:
 					obj.estado = 0
-			else:
-					obj.estado = 1
+			
 			obj.save()
 			messages.success(request, 'El  reporte ha sido actualizado Exitosamente!')
 			return redirect('listar_reportes')

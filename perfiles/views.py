@@ -1,9 +1,9 @@
 from django.shortcuts import render ,redirect
 from .models import Perfil
-from .forms import PerfilForm
+from .forms import PerfilForm,PerfilForm_editar
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .forms import UCFWithEmail
+from .forms import UCFWithEmail ,UCFWithEmail_editar
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 #django messages
@@ -29,28 +29,28 @@ from django.views.generic import TemplateView
 from django.db.models import Sum,Count
 
 
-def editarDoctor(request):
+def editarDoctor(request,id):
 
 	doctor = Doctor.objects.get(id=id)
-	perfil = Perfil.objects.get(id=doctro.perfil_id)
+	perfil = Perfil.objects.get(id=doctor.perfil_id)
 	user = User.objects.get(id=perfil.user_id)
 	form = DoctorForm(request.POST or None, instance=doctor)
+	form_perfil = PerfilForm_editar(request.POST or None, instance=perfil)
+	form_user = UCFWithEmail_editar(request.POST or None , instance=user)
     
-	if form.is_valid():
-		form.save() 
+	if form.is_valid() and form_perfil.is_valid() and form_user.is_valid():
+
+		doctor = form.save(commit=False)
+		doctor.save()
+		perfil = form_perfil.save(commit=False)
+		perfil.save()
+		user = form_user.save(commit=False)
+		user.save()
+	
 		return redirect('listar_doctores')
     
-	return render(request, 'doctor/doctor-actualizar.html',{'form':form,'doctor':doctor})
+	return render(request, 'doctor/doctor-actualizar.html',{'form':form,'doctor':doctor ,'form_perfil':form_perfil ,'user':user , 'form_user':form_user})
 	
-
-def index2_view(request):
-	porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
-	porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
-	casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
-	pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
-   
-	return render(request,'index_nofunc.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
-
 
 def  genero_resumen(request):
 	porGenero = Reporte.objects.filter(estado=1)
@@ -67,9 +67,47 @@ def  genero_resumen(request):
 	return JsonResponse({'genero_resumen':finalrep},safe=False)
 	
 
+def fechas_resumen(request):
+	porDepartamento = Reporte.objects.order_by('fechaTomada').filter(estado=1)
+	finalrep ={}
+	finalrep2 ={}
+	def get_departamento(reporte):
+		return reporte.fechaTomada
+	
+	departamento_list = list(sorted(set(map(get_departamento,porDepartamento))))
+
+	
+
+	def get_departamento_amount(departamento):
+		amount = 0
+		filtered_by_departamento = porDepartamento.filter(fechaTomada=departamento)
+		for item in filtered_by_departamento:
+			amount += item.cantidadPositivas
+		return amount
+
+	def get_fecha_amount(departamento):
+		amount = 0
+		filtered_by_fecha = porDepartamento.filter(fechaTomada=departamento)
+		for item in filtered_by_fecha:
+			amount += item.cantidadPruebas
+		return amount
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep[str(y)]=get_departamento_amount(y)
+
+	
+	for x in porDepartamento:
+		for y in departamento_list:
+			finalrep2[str(y)]=get_fecha_amount(y)
+			
+	return JsonResponse({'fecha1_resumen':finalrep,'fecha2_resumen':finalrep2 ,'departamento_list':departamento_list},safe=False)
+
+
+
 
 def  departamentos_resumen(request):
-	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
 	porDepartamento = Reporte.objects.filter(estado=1)
 	finalrep ={}
 
@@ -92,7 +130,6 @@ def  departamentos_resumen(request):
 			finalrep[str(y)]=get_departamento_amount(y)
 			
 	return JsonResponse({'departamento_resumen':finalrep},safe=False)
-
 
 def dep1_resumen(request):
 	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
@@ -142,7 +179,7 @@ def indexView(request):
 @login_required
 def dashboardView(request):
 	reportes = Reporte.objects.all().filter(estado=0)
-	reportes_count = Reporte.objects.all().filter(estado=0).count()
+	reportes_count = Reporte.objects.all().filter(estado=0,eliminado=0).count()
 	perfiles = User.objects.only().filter(is_active=0)
 	perfiles_count =  User.objects.only().filter(is_active=0).count()
 	all_reports = Reporte.objects.all().count()

@@ -1,35 +1,39 @@
 import django_filters
 
-from .models import Reporte
+from reportes.models import Reporte
 from municipios.models import Municipio
 from departamentos.models import Departamento
+from perfiles.models import Perfil
+from django.contrib.auth.models import User
 from django import forms 
+from .models import Doctor
 
 class DoctorFilter(django_filters.FilterSet):
    
     class Meta:
-        fechaEditado = django_filters.DateFilter()
-        model = Reporte
-        fields =['fechaTomada','fechaEditado','municipio','complemento','departamento','eliminado']
+       
+        model = Doctor
+        fields =['perfil__nombre','perfil__apellido','perfil__municipio','perfil__complemento','perfil__departamento','perfil__user__is_active']
 
     def __init__(self, data=None, queryset=None, *, request=None, prefix=None):
-        super(ReporteFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)
-        self.filters['eliminado'].field.widget.attrs.update({'class': 'form-control form-control-sm, d-none'})
-        self.filters['departamento'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
+        super(DoctorFilter, self).__init__(data=data, queryset=queryset, request=request, prefix=prefix)
+        self.filters['perfil__departamento'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
       
-        self.filters['departamento'].field.empty_label="Seleccione"
-        self.filters['municipio'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
-        self.filters['complemento'].field.widget.attrs.update({'class': 'form-control form-control-sm','placeholder':'direccion'})
-        self.filters['municipio'].field.queryset = Municipio.objects.none()
-        self.filters['municipio'].field.empty_label="Seleccione"
-        self.filters['fechaEditado'].field.widget.attrs.update({'class': 'form-control form-control-sm' ,'type':'date'})
+        self.filters['perfil__departamento'].field.empty_label="Seleccione"
+        self.filters['perfil__municipio'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.filters['perfil__nombre'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.filters['perfil__apellido'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
+        self.filters['perfil__complemento'].field.widget.attrs.update({'class': 'form-control form-control-sm','placeholder':'direccion'})
+        self.filters['perfil__municipio'].field.queryset = Municipio.objects.none()
+        self.filters['perfil__municipio'].field.empty_label="Seleccione"
+        self.filters['perfil__user__is_active'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
         
 
-        if 'departamento' in self.data:
+        if 'perfil__departamento' in self.data:
             try:
 
-                departamento_id =int(self.data.get('departamento'))
-                self.filters['municipio'].field.queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
+                departamento_id =int(self.data.get('perfil__departamento'))
+                self.filters['perfil__municipio'].field.queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
 			
             except(ValueError ,TypeError):
                 pass 	

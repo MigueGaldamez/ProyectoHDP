@@ -38,7 +38,7 @@ class ReporteForm(forms.ModelForm):
 	fechaEditado=  forms.DateField(disabled=True,required=False,widget=forms.NumberInput(attrs={'class': 'form-control','type':'date'}))
 	class Meta:
 		model = Reporte
-		fields =['cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']
+		fields =['estado','cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']
 	
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)

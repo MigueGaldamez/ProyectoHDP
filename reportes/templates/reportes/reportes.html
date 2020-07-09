@@ -101,6 +101,9 @@
 								{% if reporte.estado == 0 %}
 								<span class="badge badge-pill badge-warning">Sin Validar</span>
 								{% endif %}
+								{% if reporte.estado == 2 %}
+								<span class="badge badge-pill badge-danger">Rechazado</span>
+								{% endif %}
 								{% if reporte.eliminado == 1 and user.perfil.tipoUsuario == 1 %}
 								<span class="badge badge-pill badge-danger">Eliminado</span>
 								{% endif %}

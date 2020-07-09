@@ -1,27 +1,128 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
-	<h1>Actualizar</h1>
-	<form method="POST">
+	<br>	
+	
+
+	<form method="POST"  id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
 		{% csrf_token %}
-		<div class="row">
+
+		
+		<div class="row row-cols-2">
+			<div class="col">
+				<h1>Actualizar Doctor</h1>
+				<a href="{% url 'listar_doctores' %}">Regresar</a>
+			</div>
+			{%if user.is_active == 0 %}
+			<div class="col">
+				<div class="alert col-10  border-info" role="alert">
+					<div class="form-group ">
+						<label for="exampleInputEmail1" class="text-info">este usuario no esta activo , desea activar su cuenta?</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="validar12" onChange=checkChange();>
+		
+							<label class="form-check-label" for="defaultCheck1">
+							 <a class="text-info">Activar</a>
+							</label>
+						  </div>
+						<div class="d-none">{{ form_user.is_active }}</div>					
+					</div>	
+				</div>
+			
+			</div>
+			{% endif %}
+		</div>
+		
+		
+		<div class="row row-cols-4">
+			
 			<div class="col">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<label for="exampleInputEmail1">DUI</label>
+					<div class="">{{ form_perfil.DUI }}</div>					
+				</div>
+			</div>
+			<div class="col">				
+				<div class="form-group">
+					<label for="exampleInputEmail1">Nombre</label>
+					<div>{{ form_perfil.nombre }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Apellido</label>
+					<div>{{ form_perfil.apellido }}</div>
+					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Especialidad</label>
 					<div>{{ form.especialidad }}</div>
 					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 				</div>
 			</div>
 			<div class="col">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
+					<label for="exampleInputEmail1">Codigo Medico</label>
 					<div>{{ form.codigoDoctor }}</div>
 					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
 				</div>
 			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Institucion donde Trabaja</label>
+					<div>{{ form.institucionTrabajo }}</div>
+					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Departamento de residencia</label>
+					<div>{{ form_perfil.departamento }}</div>
+					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Municipio de residencia</label>
+					<div>{{ form_perfil.municipio }}</div>
+					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Fecha Nacimiento</label>
+					<div class="form-inline">{{ form_perfil.fechaNacimiento }}</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Direccion</label>
+					<div class=""">{{ form_perfil.complemento }}</div>					
+				</div>
+			</div>
 			
-		  </div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Telefono</label>
+					<div class="">{{ form_perfil.telefono }}</div>					
+				</div>
+			</div>
 			
+		</div>
+		{% for error in form_perfil.errors %}
+		<li>{{ error }}</li>
+	{% endfor %}
+			
+	{% for error in form.errors %}
+		<li>{{ error }}</li>
+	{% endfor %}
+	{% for error in form_user.errors %}
+		<li>{{ error }}</li>
+	{% endfor %}
 			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 				<div class="btn-group mr-2" role="group" aria-label="First group">
 					<button type="submit" class="btn btn-primary">Guardar</button>
@@ -33,10 +134,10 @@
 					{% endif %}
 				</div>
 				
-			  </div>
+			</div>
 			
 		   
-			
+
 		</form>
 		
 	
