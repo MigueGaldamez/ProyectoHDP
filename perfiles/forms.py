@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from departamentos.models import Departamento
 from municipios.models import Municipio
 from reportes.models import Reporte
-
+import datetime
 from django.forms import ModelForm, Textarea, IntegerField
 from django.core import validators
 from django.core.exceptions import ValidationError
@@ -43,9 +43,9 @@ class PerfilForm(forms.ModelForm):
 	
 	apellido =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Apellido','class': 'form-control'}))
 	complemento = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Direccion','class': 'form-control'}))
-	telefono =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Telefono','class': 'form-control'}))
-	DUI = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'DUI','class': 'form-control'}))
-	fechaNacimiento =forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'form-control'}))
+	telefono =forms.CharField(max_length=8,min_length=8, widget=forms.TextInput(attrs={'placeholder':'Telefono','class': 'form-control'}))
+	DUI = forms.CharField(max_length=9,min_length=9,widget=forms.TextInput(attrs={'placeholder':'DUI','class': 'form-control'}))
+	fechaNacimiento =forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control','type':'date'}))
 
 	class Meta:
 		model=Perfil
@@ -67,4 +67,51 @@ class PerfilForm(forms.ModelForm):
 		
 		elif self.instance.pk:
 			self.fields['municipio'].queryset = self.instance.departamento.municipio_set.order_by('nombre')
-
+	def clean_telefono(self):
+		telefono = self.cleaned_data.get('telefono')
+		valor = False
+		try:
+			if telefono.isdigit():
+				valor = False
+			else:
+				raise ValidationError(_('%(value)s ,No es un numero valido'),params={'value': telefono},)
+			if telefono[0] != '6' and telefono[0] != '7' and telefono[0] != '2' :
+				raise ValidationError(_('%(value)s ,No es un numero valido'),params={'value': telefono},)
+		except(ValueError ,TypeError):
+			pass 
+		return telefono
+	def clean_DUI(self):
+		DUI = self.cleaned_data.get('DUI')
+		try:
+			if DUI.isdigit():
+				valor = False
+			else:
+				raise ValidationError(_('%(value)s ,No es un DUI valido'),params={'value': DUI},)
+			ultimo= DUI[8]
+			contador=9
+			suma=0
+			valor = False
+			for numero in DUI: #summador de los primeros 8 numeros del dui
+				suma=suma+(int(numero)*contador)
+				contador=contador-1
+			suma=suma - (int(ultimo)*1)
+			verificador = 10 - suma%10
+			if verificador != 0 and verificador != int(ultimo):#verifica el verificador es el ultimo numero del dui o es 0
+				raise ValidationError(_('%(value)s ,No es un DUI valido'),params={'value': DUI},)
+		except(ValueError ,TypeError):
+			pass
+		return DUI
+	def clean_fechaNacimiento(self):
+		fechaNacimiento= self.cleaned_data.get('fechaNacimiento')
+		try:
+			hoy= datetime.date.today()
+			"""primero restamos los años y luego restamos la comparación entre mes 
+			y día actual y mes y día de nacimiento. Si la combianción mes/día de
+			hoy es anterior a la combinación mes/día de nacimiento la comparación devuelve 1, si no devuelve 0."""
+			edad = hoy.year - fechaNacimiento.year - ((hoy.month, hoy.day) < (fechaNacimiento.month, fechaNacimiento.day))
+			if(edad<23):
+				print(edad)
+				raise ValidationError(_('%(value)s años, ¿ y eres  doctor?'),params={'value': edad},)
+		except(ValueError ,TypeError):
+			pass 
+		return fechaNacimiento
