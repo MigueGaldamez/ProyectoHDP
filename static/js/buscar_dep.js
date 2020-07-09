@@ -67,7 +67,8 @@ const getChartDatafechas =()=>{
 
         const departamento_resumen_d =results.fecha1_resumen;
         const fecha2_resumen_d =results.fecha2_resumen;
-       
+        console.log( fecha2_resumen_d);
+        console.log('yup')
         const [labels,data]=[
             Object.keys(departamento_resumen_d),
             Object.values(departamento_resumen_d),
@@ -245,6 +246,7 @@ const getChartData_dep1 =()=>{
         console.log ("results",results);
 
         const dep1_resumen_d =results.dep1_resumen;
+      
         const [labels,data]=[
             Object.keys(dep1_resumen_d),
             Object.values(dep1_resumen_d),

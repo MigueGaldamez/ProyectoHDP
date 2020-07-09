@@ -68,9 +68,10 @@ def  genero_resumen(request):
 	
 
 def fechas_resumen(request):
-	porDepartamento = Reporte.objects.order_by('fechaTomada').filter(estado=1)
+	porDepartamento = Reporte.objects.filter(estado=1).order_by('fechaTomada')
 	finalrep ={}
 	finalrep2 ={}
+	
 	def get_departamento(reporte):
 		return reporte.fechaTomada
 	
@@ -96,11 +97,13 @@ def fechas_resumen(request):
 	for x in porDepartamento:
 		for y in departamento_list:
 			finalrep[str(y)]=get_departamento_amount(y)
-
-	
-	for x in porDepartamento:
-		for y in departamento_list:
 			finalrep2[str(y)]=get_fecha_amount(y)
+			
+	
+
+	finalrep = dict(sorted(finalrep.items(), key = lambda kv:kv[0]))
+	finalrep2 = dict(sorted(finalrep2.items(), key = lambda kv:kv[0]))
+	
 			
 	return JsonResponse({'fecha1_resumen':finalrep,'fecha2_resumen':finalrep2 ,'departamento_list':departamento_list},safe=False)
 
