@@ -59,14 +59,15 @@ const renderChartFechas =(data,labels,data2)=>{
 
 
 const getChartDatafechas =()=>{
-   git 
+   
+ 
     fetch('/fechas_resumen')
     .then((res)=>res.json())
     .then((results)=>{
         console.log ("results",results);
 
-        const departamento_resumen_d =results.fecha1_resumen;
-        const fecha2_resumen_d =results.fecha2_resumen;
+        const departamento_resumen_d =results.positivas_resumen;
+        const fecha2_resumen_d =results.pruebas_resumen;
        
         const [labels,data]=[
             Object.keys(departamento_resumen_d),
@@ -76,9 +77,9 @@ const getChartDatafechas =()=>{
             Object.keys(fecha2_resumen_d),
             Object.values(fecha2_resumen_d),
         ];
+        ad1 = data;
         renderChartFechas(data,labels,data2);
     });
-    
    
 };
 //departamentos

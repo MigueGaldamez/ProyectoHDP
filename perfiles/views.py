@@ -28,6 +28,7 @@ from django.views.generic import TemplateView
 
 from django.db.models import Sum,Count
 
+from collections import OrderedDict as SortedDict
 
 def editarDoctor(request,id):
 
@@ -68,44 +69,50 @@ def  genero_resumen(request):
 	
 
 def fechas_resumen(request):
-	porDepartamento = Reporte.objects.filter(estado=1).order_by('fechaTomada')
+	porFecha = Reporte.objects.filter(estado=1).order_by('fechaTomada')
 	finalrep ={}
 	finalrep2 ={}
-	
-	def get_departamento(reporte):
+				
+	def get_fecha(reporte):
 		return reporte.fechaTomada
 	
-	departamento_list = list(sorted(set(map(get_departamento,porDepartamento))))
+	fechas_list = list(sorted(set(map(get_fecha,porFecha))))
 
-	
-
-	def get_departamento_amount(departamento):
+	def get_positivas_amount(fecha):
 		amount = 0
-		filtered_by_departamento = porDepartamento.filter(fechaTomada=departamento)
-		for item in filtered_by_departamento:
+		filtered_by_fecha = porFecha.filter(fechaTomada=fecha)
+		for item in filtered_by_fecha:
 			amount += item.cantidadPositivas
 		return amount
 
-	def get_fecha_amount(departamento):
+	def get_pruebas_amount(fecha):
 		amount = 0
-		filtered_by_fecha = porDepartamento.filter(fechaTomada=departamento)
+		filtered_by_fecha = porFecha.filter(fechaTomada=fecha)
 		for item in filtered_by_fecha:
 			amount += item.cantidadPruebas
 		return amount
 
-	
-	for x in porDepartamento:
-		for y in departamento_list:
-			finalrep[str(y)]=get_departamento_amount(y)
-			finalrep2[str(y)]=get_fecha_amount(y)
-			
-	
+	for x in porFecha:
+		for y in fechas_list:
+			finalrep[str(y)]=get_positivas_amount(y)
+			finalrep2[str(y)]=get_pruebas_amount(y)
 
-	finalrep = dict(sorted(finalrep.items(), key = lambda kv:kv[0]))
-	finalrep2 = dict(sorted(finalrep2.items(), key = lambda kv:kv[0]))
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+		
 	
+	finalrep = listsort(finalrep)
+	finalrep2 = listsort(finalrep2)
+	#finalrep2 = dict(sorted(finalrep2.items(), key = lambda kv:kv[0]))
+	#finalrep = dict(sorted(finalrep.items(), key = lambda kv:kv[0]))
 			
-	return JsonResponse({'fecha1_resumen':finalrep,'fecha2_resumen':finalrep2 ,'departamento_list':departamento_list},safe=False)
+	return JsonResponse({'positivas_resumen':finalrep,'pruebas_resumen':finalrep2 ,'fechas_list':fechas_list},safe=False)
 
 
 
