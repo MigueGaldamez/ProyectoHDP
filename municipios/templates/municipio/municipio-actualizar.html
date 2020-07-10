@@ -1,28 +1,28 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 <div class="container">
-	<h1>Actualizar</h1>
+	<div class="my-5">
+		<p class="h2">Actualizar Municipio</p>
+		<a href ="{% url 'listar_municipios'%}">Regresar </a>
+	</div>
 	<form method="POST">
 		{% csrf_token %}
-		<div class="row">
-			<div class="col">
+		<div class="row col-6">
+			<div class="col-6">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas realizadas</label>
+					<label for="exampleInputEmail1">Departamento</label>
 					<div>{{ form.departamento }}</div>
-					<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
+					<small id="emailHelp" class="form-text text-muted">Departamento.</small>
 				</div>
 			</div>
-			<div class="col">
+			<div class="col-6">
 				<div class="form-group">
-					<label for="exampleInputEmail1">Cantidad pruebas Positivas</label>
+					<label for="exampleInputEmail1">Municipio</label>
 					<div>{{ form.nombre }}</div>
-					<small id="emailHelp" class="form-text text-muted">comentario?.</small>
+					<small id="emailHelp" class="form-text text-muted">Municipio.</small>
 				</div>
 			</div>
-			
-		  </div>
-			
-			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			<div class="btn-toolbar col" role="toolbar" aria-label="Toolbar with button groups">
 				<div class="btn-group mr-2" role="group" aria-label="First group">
 					<button type="submit" class="btn btn-primary">Guardar</button>
 				</div>
@@ -33,7 +33,11 @@
 					{% endif %}
 				</div>
 				
-			  </div>
+			</div>
+			
+		  </div>
+			
+		
 			
 		   
 			

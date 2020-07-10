@@ -6,14 +6,31 @@ from departamentos.forms import DepartamentoForm
 from departamentos.models import Departamento
 
 from django.contrib import messages
-# Create your views here.
+
+
+from .filters import MunicipioFilter
+from django.core.paginator import Paginator
+# Create your views here. 
 
 # crud municipios
 def listar_municipios(request):
-    municipios = Municipio.objects.all()
-    departamentos = Departamento.objects.all()
-    return render(request,'municipio/municipios.html',{'municipios':municipios,'departamentos':departamentos})
-				#
+
+
+	context ={}
+	filtered_municipios = MunicipioFilter(
+		request.GET,
+		queryset = Municipio.objects.all().order_by('nombre')
+	)
+	context['filtered_municipios']= filtered_municipios
+	
+	paginated_filtered_muncipios = Paginator(filtered_municipios.qs,8)
+	page_number_mun = request.GET.get('page')
+	municipio_page_obj = paginated_filtered_muncipios.get_page(page_number_mun)
+
+	context['municipio_page_obj']=municipio_page_obj
+	
+	return render(request,'municipio/municipios.html',context=context)
+				
 	
 def crear_municipio(request):
 	form = MunicipioForm(request.POST or None)

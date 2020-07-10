@@ -1,15 +1,38 @@
 {% extends '../plantilla.html' %}
 {% block content %}
+{% load reportes_extras %}
 
 	<div class="container">
 		<div class="my-5">
 			<p class="h2">Lista de Municipios</p>
 			<a href ="{% url 'crear_municipio'%}">Nuevo Municipio </a>
 		</div>
-			<table class="table table-sm" >
+		<form method="GET" class="row" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
+			<!--{{filtered_reportes.form.as_p}}-->
+
+			<div class="col-md-3 col col-sm-6 col-12">
+				<div class="form-group">
+					<label >Departamento</label>
+					<div >{{filtered_municipios.form.departamento}}</div>
+			
+				</div>                                                             
+			</div>
+			
+			
+			<div class="col-md-3 col col-sm-6 col-12 ">
+				<div class="form-group">
+					<div class="btn-group mr-2 " role="group" aria-label="First group">
+						<button type="submit" class="btn btn-primary btn-sm">Aplicar filtros</button>
+					</div>
+				</div>
+			</div>		
+		</form>
+
+		
+			<table class="table table-sm table-striped table-hover " >
 				<thead class="thead-dark">
 				  <tr>
-					<th scope="col">#</th>
+					<!--<th scope="col">#</th>-->
 					<th scope="col">Nombre Municipio</th>
 					<th scope="col">Departamento</th>
 					
@@ -17,18 +40,47 @@
 				</thead>
 				<tbody>
 					
-					{% for municipio in municipios %}
+					{% for municipio in municipio_page_obj %}
 						<tr>
-							<th scope="row"><a href="{% url 'actualizar_municipio' municipio.id %}">{{municipio.id}}</a></th>
-							<td>{{municipio.nombre}}</td>
+							<!--<th scope="row"><a href="{% url 'actualizar_municipio' municipio.id %}">{{municipio.id}}</a></th>-->
+							<td><a href="{% url 'actualizar_municipio' municipio.id %}" class="text-dark">{{municipio.nombre}}</a></td>
 							<td>{{municipio.departamento}}</td>
 						   
 						  </tr>
 					{% endfor %}
-					<form action="">	{{form.departamento}}</form>
+					<form action="">{{form.departamento}}</form>
 				
 				</tbody>
-			  </table>	
+			  </table>
+			  <nav aria-label="Page navigation mx-auto">
+				<ul class="pagination">
+	
+				{% if municipio_page_obj.has_previous %}
+				<li class="page-item">
+					<a href="{% my_url 1 'page' request.GET.urlencode %}"  class="page-link">  <span aria-hidden="true">&laquo;</span></a>
+				</li>
+				<li class="page-item">
+					<a href="{% my_url 	municipio_page_obj.previous_page_number 'page' request.GET.urlencode %}" class="page-link">{{municipio_page_obj.previous_page_number}}</a>
+				</li>
+				{% endif %}
+				  
+	
+				
+			
+				  <li class="page-item"><a class="page-link" href="#">Pagina {{municipio_page_obj.number}} de {{municipio_page_obj.paginator.num_pages}}</a></li>
+	
+				  
+				{% if municipio_page_obj.has_next %}
+				<li class="page-item">
+					<a class="page-link" href="{% my_url municipio_page_obj.next_page_number 'page' request.GET.urlencode %}">{{municipio_page_obj.next_page_number}}</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="{% my_url municipio_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">  <span aria-hidden="true">&raquo;</span></a>
+				</li>
+				{% endif %}			
+	
+				</ul>
+			  </nav>	
 					
 	</div>
 {% endblock %}
