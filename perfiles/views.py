@@ -8,8 +8,6 @@ from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 #django messages
 from django.contrib import messages
-#from django.core.paginator import Paginator
-
 #json
 import json
 from django.http import JsonResponse
@@ -25,9 +23,7 @@ from doctores.forms import DoctorForm
 from doctores.models import Doctor
 
 from django.views.generic import TemplateView
-
 from django.db.models import Sum,Count
-
 from collections import OrderedDict as SortedDict
 
 def editarDoctor(request,id):
@@ -54,22 +50,32 @@ def editarDoctor(request,id):
 	
 
 def  genero_resumen(request):
-	porGenero = Reporte.objects.filter(estado=1)
+	porGenero = Reporte.objects.filter(estado=1,eliminado=0)
 	finalrep ={}
 	femenino = 0 
 	masculino = 0
-	for item in porGenero:
-		
+	for item in porGenero:		
 		femenino += item.cantFemenino
 		masculino += item.cantMasculino
 
 	finalrep["Femenino"]=femenino
 	finalrep["Masculino"]=masculino
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+	
+	finalrep = listsort(finalrep) 
 	return JsonResponse({'genero_resumen':finalrep},safe=False)
 	
 
 def fechas_resumen(request):
-	porFecha = Reporte.objects.filter(estado=1).order_by('fechaTomada')
+	porFecha = Reporte.objects.filter(estado=1, eliminado=0).order_by('fechaTomada')
 	finalrep ={}
 	finalrep2 ={}
 				
@@ -105,20 +111,15 @@ def fechas_resumen(request):
 			for key in key_list:
 				new_dict[key] = value[key]
 			return new_dict
-		
-	
+			
 	finalrep = listsort(finalrep)
 	finalrep2 = listsort(finalrep2)
-	#finalrep2 = dict(sorted(finalrep2.items(), key = lambda kv:kv[0]))
-	#finalrep = dict(sorted(finalrep.items(), key = lambda kv:kv[0]))
 			
 	return JsonResponse({'positivas_resumen':finalrep,'pruebas_resumen':finalrep2 ,'fechas_list':fechas_list},safe=False)
 
 
-
-
 def  departamentos_resumen(request):
-	porDepartamento = Reporte.objects.filter(estado=1)
+	porDepartamento = Reporte.objects.filter(estado=1,eliminado=0)
 	finalrep ={}
 
 	def get_departamento(reporte):
@@ -138,19 +139,28 @@ def  departamentos_resumen(request):
 	for x in porDepartamento:
 		for y in departamento_list:
 			finalrep[str(y)]=get_departamento_amount(y)
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+	finalrep = listsort(finalrep)
 			
 	return JsonResponse({'departamento_resumen':finalrep},safe=False)
+#comeinza
+def dep1_resumen(request ,id):
 
-def dep1_resumen(request):
-	#porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
-	porDepartamento = Reporte.objects.filter(estado=1, departamento=1)
+	porDepartamento = Reporte.objects.filter(estado=1,eliminado=0, departamento=id)
 	finalrep ={}
 
 	def get_departamento(reporte):
 		return reporte.municipio
 	
 	departamento_list = list(set(map(get_departamento,porDepartamento)))
-	
 
 	def get_departamento_amount(departamento):
 		amount = 0
@@ -163,8 +173,19 @@ def dep1_resumen(request):
 	for x in porDepartamento:
 		for y in departamento_list:
 			finalrep[str(y)]=get_departamento_amount(y)
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+	finalrep = listsort(finalrep)
 			
 	return JsonResponse({'dep1_resumen':finalrep},safe=False)
+	
 
 
 #VIEWS DE SEGURIDAD
@@ -201,7 +222,6 @@ def dashboardView(request):
 		if logi.tipoUsuario == 0:
 			reportes_zona = Reporte.objects.all().filter(municipio=logi.municipio).count()
 
-	
 	return render(request, 'dashboard.html',{'reportes':reportes,'reportes_count':reportes_count , 'perfiles':perfiles , 'logi':logi ,'perfiles_count':perfiles_count , 'all_reports':all_reports,'all_docs':all_docs,'reportes_zona':reportes_zona})
 
 def registerView(request):
@@ -209,8 +229,7 @@ def registerView(request):
 		form = UCFWithEmail(request.POST)
 		perfil_form = PerfilForm(request.POST)
 		doctor_form = DoctorForm(request.POST)
-	
-		
+			
 		if form.is_valid() and perfil_form.is_valid() and doctor_form.is_valid():
 			user = form.save(commit=False)
 			user.is_active=0

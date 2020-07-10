@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from departamentos.forms import DepartamentoForm
 from departamentos.models import Departamento
 
+from django.contrib import messages
 # Create your views here.
 
 # crud municipios
@@ -19,6 +20,7 @@ def crear_municipio(request):
 	
 	if form.is_valid():
 		form.save()
+		messages.success(request, 'Municipio agregado con exito !')
 		return redirect('listar_municipios')
 	return render(request, 'municipio/municipio-guardar.html',{'form':form})
 

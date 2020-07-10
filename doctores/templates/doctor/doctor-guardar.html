@@ -94,6 +94,34 @@
 					<div class="">{{ form_perfil.telefono }}</div>					
 				</div>
 			</div>
+
+			<!--user-->
+
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Usuario</label>
+					<div class="">{{ form_user.username }}</div>					
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Correo electronico</label>
+					<div class="">{{ form_user.email }}</div>					
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Confirmacion</label>
+					<div class="">{{ form_user.password1 }}</div>					
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<label for="exampleInputEmail1">Contraseña</label>
+					<div class="">{{ form_user.password2 }}</div>					
+				</div>
+			</div>
+	
 			
 		</div>
 			{% for error in form_perfil.errors %}
@@ -109,12 +137,6 @@
 			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 				<div class="btn-group mr-2" role="group" aria-label="First group">
 					<button type="submit" class="btn btn-primary">Guardar</button>
-				</div>
-				<div class="btn-group mr-2" role="group" aria-label="Second group">
-					{% if doctor %}
-					<div><a class="btn btn-danger" href="{% url 'eliminar_doctor' doctor.id %}" role="button">Borrar</a></div>
-						
-					{% endif %}
 				</div>
 				
 			</div>
