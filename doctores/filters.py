@@ -27,7 +27,6 @@ class DoctorFilter(django_filters.FilterSet):
         self.filters['perfil__municipio'].field.queryset = Municipio.objects.none()
         self.filters['perfil__municipio'].field.empty_label="Seleccione"
         self.filters['perfil__user__is_active'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
-        
 
         if 'perfil__departamento' in self.data:
             try:

@@ -72,7 +72,7 @@ class PerfilForm(forms.ModelForm):
 		self.fields['municipio'].queryset = Municipio.objects.none()
 		self.fields['municipio'].empty_label="Seleccione"
 		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
-
+		self.fields['departamento'].queryset = Departamento.objects.order_by('nombre')
 		if 'departamento' in self.data:
 			try:
 				departamento_id =int(self.data.get('departamento'))
@@ -106,6 +106,7 @@ class PerfilForm_editar(forms.ModelForm):
 		self.fields['municipio'].queryset = Municipio.objects.none()
 		self.fields['municipio'].empty_label="Seleccione"
 		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
+		self.fields['departamento'].queryset = Departamento.objects.order_by('nombre')
 		#self.fields['DUI'].widget.attrs['disabled'] = True
 
 		if 'departamento' in self.data:

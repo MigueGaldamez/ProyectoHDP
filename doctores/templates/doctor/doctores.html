@@ -3,112 +3,96 @@
 {% load reportes_extras %}
 
 	<div class="container">
-		<br>
+		<div class="row col mt-5"> 
 			<p class="h2">Lista de Doctores</p>
-			<a href ="{% url 'crear_doctor'%}">Nuevo doctor (creeria que nel pero tu decides) </a>
-		<br><br>
-		<form method="GET" class="row" id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
-			<!--{{filtered_reportes.form.as_p}}-->
-			
-		
-
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Nombre</label>
-					<div >{{filtered_doctores.form.perfil__nombre}}</div>
-			
-				</div>                                                             
-			</div>
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Apellidos</label>
-					<div >{{filtered_doctores.form.perfil__apellido}}</div>
-			
-				</div>                                                             
-			</div>
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Departamento</label>
-					<div >{{filtered_doctores.form.perfil__departamento}}</div>
-			
-				</div>                                                             
-			</div>
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Municipio</label>
-					<div >{{filtered_doctores.form.perfil__municipio}}</div>
-			
-				</div>                                                             
-			</div>
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Direccion</label>
-					<div >{{filtered_doctores.form.perfil__complemento}}</div>
-			
-				</div>                                                             
-			</div>
-			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
-					<label >Activos</label>
-					<div >{{filtered_doctores.form.perfil__user__is_active}}</div>
-			
-				</div>                                                             
-			</div>
-			
-			
-			
-			<div class="col-md-3 col col-sm-6 col-12 ">
-				<div class="form-group">
+		</div>
+		<form method="GET" autocomplete="off"  id="DoctorForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
+			<div class="card text-center mb-5">
+				<div class="card-header">
+					<a class="btn btn-outline-info" href="{% url 'crear_doctor'%}" >Registrar nuevo Doctor</a>		
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<!--{{filtered_reportes.form.as_p}}-->
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Nombre</label>
+								<div >{{filtered_doctores.form.perfil__nombre}}</div>
+							</div>                                                             
+						</div>
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Apellidos</label>
+								<div >{{filtered_doctores.form.perfil__apellido}}</div>
+							</div>                                                             
+						</div>
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Departamento</label>
+								<div >{{filtered_doctores.form.perfil__departamento}}</div>
+							</div>                                                             
+						</div>
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Municipio</label>
+								<div >{{filtered_doctores.form.perfil__municipio}}</div>
+							</div>                                                             
+						</div>
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Direccion</label>
+								<div >{{filtered_doctores.form.perfil__complemento}}</div>
+							</div>                                                             
+						</div>
+						<div class="col-md-2 col col-sm-6 col-12">
+							<div class="form-group">
+								<label >Activos</label>
+								<div >{{filtered_doctores.form.perfil__user__is_active}}</div>
+							</div>                                                             
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-muted">
 					<div class="btn-group mr-2 " role="group" aria-label="First group">
-						<button type="submit" class="btn btn-primary btn-sm">Aplicar filtros</button>
+						<button type="submit" class="btn btn-primary btn-sm">
+							Aplicar filtros <span class="material-icons md-p">search</span> 
+						</button>
 					</div>
 				</div>
 			</div>
-			
-			
-		
-		
-		
 		</form>
-			<table class="table table-sm">
-				<thead class="thead-dark">
-				  <tr>
-					<!--<th scope="col">#</th>-->
-					<th scope="col">Nombre Doctor</th>
-					<th scope="col">Apellido</th>
-				
-					<th scope="col">Especialidad</th>
-					<th scope="col">Direccion</th>
-					<th scope="col">Lugar de trabajo</th>
-
-					<th scope="col">Nombre de Usuario</th> 	
-					<th scope="col">fecha Union</th>
-					<th scope="col">DUI</th>
-					<th scope="col">Estado Cuenta</th>
-					<th scope="col">acciones</th>
-					<!--<th scope="col">Fecha Nacimiento</th>-->
-					
-					
-				  </tr>
+		<div class="table-responsive ">
+			<table class="table table-hover table-sm">
+				<thead class="thead-dark text-center align-middle ">
+				  	<tr>
+						<!--<th scope="col">#</th>-->
+						<th scope="col">Nombres</th>
+						<th scope="col">Apellidos</th>
+						<th scope="col">Especialidad</th>
+						<th scope="col">Direccion</th>
+						<th scope="col">Lugar de trabajo</th>
+						<th scope="col"> Usuario</th> 	
+						<th scope="col">fecha Union</th>
+						<th scope="col">DUI</th>
+						<th scope="col">Estado Cuenta</th>
+						<th scope="col">Ver/Editar</th>
+						<!--<th scope="col">Fecha Nacimiento</th>-->
+					</tr>
 				</thead>
 				<tbody>
-					
 					{% for doctor in   doctor_page_obj %}
 						<tr>
-							
-							
-							<td>{{doctor.perfil.nombre}}</td>
-							<td>{{doctor.perfil.apellido}}</td>
+							<td class="text-center align-middle">{{doctor.perfil.nombre}}</td>
+							<td class="text-center align-middle">{{doctor.perfil.apellido}}</td>
 							<!--<td>{{doctor.codigoDoctor}}</td>-->
-							<td>{{doctor.perfil.doctor.especialidad}}</td>
-							<td> {{doctor.perfil.complemento}}, {{doctor.perfil.municipio}}, {{doctor.perfil.departamento}}</td>
-							<td>{{doctor.institucionTrabajo}}</td>
-							<td>{{doctor.perfil.user.username}}</td>
-							<td>{{doctor.perfil.user.date_joined}}</td>
-							<td>{{doctor.perfil.DUI}}</td>
-							<td>	
+							<td class="text-center align-middle">{{doctor.perfil.doctor.especialidad}}</td>
+							<td class="text-center align-middle"> {{doctor.perfil.complemento}}, {{doctor.perfil.municipio}}, {{doctor.perfil.departamento}}</td>
+							<td class="text-center align-middle">{{doctor.institucionTrabajo}}</td>
+							<td class="text-center align-middle">{{doctor.perfil.user.username}}</td>
+							<td class="text-center align-middle">{{doctor.perfil.user.date_joined}}</td>
+							<td class="text-center align-middle">{{doctor.perfil.DUI}}</td>
+							<td class="text-center align-middle">	
 								{% if doctor.perfil.user.is_active == 1 %}
-
 								<span class="badge badge-pill badge-success">Validado</span>
 								{% endif %}
 								{% if doctor.perfil.user.is_active == 0 %}
@@ -120,14 +104,11 @@
 							<th class="text-center align-middle" scope="row"><a href="{%  url 'actualizar_doctor' doctor.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						  </tr>
 					{% endfor %}
-				
-				
 				</tbody>
-			  </table>	
-
-			  <nav aria-label="Page navigation mx-auto">
-				<ul class="pagination">
-	
+			</table>	
+		</div>
+		<nav aria-label="Page navigation mx-auto">
+			<ul class="pagination">
 				{% if doctor_page_obj.has_previous %}
 				<li class="page-item">
 					<a href="{% my_url 1 'page' request.GET.urlencode %}"  class="page-link">  <span aria-hidden="true">&laquo;</span></a>
@@ -136,13 +117,9 @@
 					<a href="{% my_url 	doctor_page_obj.previous_page_number 'page' request.GET.urlencode %}" class="page-link">{{doctor_page_obj.previous_page_number}}</a>
 				</li>
 				{% endif %}
-				  
-	
-				
-			
-				  <li class="page-item"><a class="page-link" href="#">Pagina {{doctor_page_obj.number}} de {{doctor_page_obj.paginator.num_pages}}</a></li>
-	
-				  
+				<li class="page-item">
+					<a class="page-link" href="#">Pagina {{doctor_page_obj.number}} de {{doctor_page_obj.paginator.num_pages}}</a>
+				</li>
 				{% if doctor_page_obj.has_next %}
 				<li class="page-item">
 					<a class="page-link" href="{% my_url doctor_page_obj.next_page_number 'page' request.GET.urlencode %}">{{doctor_page_obj.next_page_number}}</a>
@@ -151,9 +128,7 @@
 					<a class="page-link" href="{% my_url doctor_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">  <span aria-hidden="true">&raquo;</span></a>
 				</li>
 				{% endif %}			
-	
-				</ul>
-			  </nav>
-
+			</ul>
+		</nav>
 	</div>
 {% endblock %}

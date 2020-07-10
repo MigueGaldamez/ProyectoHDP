@@ -46,12 +46,12 @@ class ReporteForm(forms.ModelForm):
 		self.fields['municipio'].empty_label="Seleccione"
 		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
 		self.fields['municipio'].error_messages.update({'required': 'Llena el campo','invalid_choice':'Seleccione un Elemento ',})
+		self.fields['departamento'].queryset = Departamento.objects.order_by('nombre')
 		if 'departamento' in self.data:
 			try:
 
 				departamento_id =int(self.data.get('departamento'))
 				self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
-			
 			except(ValueError ,TypeError):
 				pass 	
 		

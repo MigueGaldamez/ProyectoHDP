@@ -14,7 +14,6 @@
 						<div class="form-group">
 							<label for="{{ form.departamento.id_for_label }}">Departamento</label>
 							<div>{{ form.departamento }}</div>
-							<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 							{% if form.errors %}
 								{% for error in form.departamento.errors %}
 								<div class="font-weight-lighter text-danger text-center align-middle">
@@ -28,7 +27,6 @@
 						<div class="form-group">
 							<label for="{{ form.municipio.id_for_label }}">Municipio</label>
 							<div>{{ form.municipio }}</div>
-							<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
 							{% if form.errors %}
 								{% for error in form.municipio.errors %}
 								<div class="font-weight-lighter text-danger text-center align-middle">
