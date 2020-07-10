@@ -1,4 +1,61 @@
+const renderChartEdades =(data,labels)=>{
+    
+    var ctx = document.getElementById('myChart_edades').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'polarArea',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Cantidad de pruebas',
+                data: data,
+                backgroundColor: [
+                    'rgba(33, 36, 89, 0.7)',
+                    'rgba(2, 100, 140, 0.7)',
+                    'rgba(2, 140, 140, 0.7)',
+                    'rgba(4, 191, 172, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(33, 36, 89, 1)',
+                    'rgba(2, 100, 140, 1)',
+                    'rgba(2, 140, 140, 1)',
+                    'rgba(4, 191, 172, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
 
+
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true
+            },
+           
+        }
+    });
+}
+
+
+const getChartDataEdades =()=>{
+   
+    fetch('/edades_resumen')
+    .then((res)=>res.json())
+    .then((results)=>{
+        console.log ("results",results);
+
+        const departamento_resumen_d =results.edad_resumen;
+        const [labels,data]=[
+            Object.keys(departamento_resumen_d),
+            Object.values(departamento_resumen_d),
+        ];
+        renderChartEdades(data,labels);
+    });
+};
+//por fechas
 const renderChartFechas =(data,labels,data2)=>{
     
     var ctx = document.getElementById('myChartfechas').getContext('2d');
@@ -10,18 +67,18 @@ const renderChartFechas =(data,labels,data2)=>{
                 label: 'Cantidad de pruebas Positivas',
                 data: data,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(33, 36, 89, 0.7)',
+                    'rgba(2, 100, 140, 0.7)',
+                    'rgba(2, 140, 140, 0.7)',
+                    'rgba(4, 191, 172, 0.7)',
                     'rgba(153, 102, 255, 0.7)',
                     'rgba(255, 159, 64, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(33, 36, 89, 1)',
+                    'rgba(2, 100, 140, 1)',
+                    'rgba(2, 140, 140, 1)',
+                    'rgba(4, 191, 172, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)'
                 ],
@@ -30,18 +87,18 @@ const renderChartFechas =(data,labels,data2)=>{
                 label: 'Cantidad de pruebas Realizadas',
                 data: data2,
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(2, 100, 140, 0.7)',
+                    'rgba(33, 36, 89, 0.7)',                 
+                    'rgba(2, 140, 140, 0.7)',
+                    'rgba(4, 191, 172, 0.7)',
                     'rgba(153, 102, 255, 0.7)',
                     'rgba(255, 159, 64, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(2, 100, 140, 1)',
+                    'rgba(33, 36, 89, 1)',
+                    'rgba(2, 140, 140, 1)',
+                    'rgba(4, 191, 172, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)'
                 ],
@@ -94,18 +151,18 @@ const renderChart =(data,labels)=>{
                 label: 'Cantidad de pruebas',
                 data: data,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(33, 36, 89, 0.7)',
+                    'rgba(2, 100, 140, 0.7)',
+                    'rgba(2, 140, 140, 0.7)',
+                    'rgba(4, 191, 172, 0.7)',
                     'rgba(153, 102, 255, 0.7)',
                     'rgba(255, 159, 64, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(33, 36, 89, 1)',
+                    'rgba(2, 100, 140, 1)',
+                    'rgba(2, 140, 140, 1)',
+                    'rgba(4, 191, 172, 1)',
                     'rgba(153, 102, 255, 1)',
                     'rgba(255, 159, 64, 1)'
                 ],
@@ -149,19 +206,20 @@ const renderChartGenero =(data,labels)=>{
                 label: 'Cantidad de pruebas positivas',
                 data: data,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)',
                     'rgba(153, 102, 255, 0.7)',
+                    'rgba(2, 100, 140, 0.7)',
+                    'rgba(33, 36, 89, 0.7)',                   
+                    'rgba(2, 140, 140, 0.7)',
+                    'rgba(4, 191, 172, 0.7)',
+                  
                     'rgba(255, 159, 64, 0.7)'
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',
+                    'rgba(2, 100, 140, 1)',
+                    'rgba(33, 36, 89, 1)',                   
+                    'rgba(2, 140, 140, 1)',
+                    'rgba(4, 191, 172, 1)',                  
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1
@@ -209,18 +267,18 @@ function porDepartamento(id) {
                     label: '# of Votes',
                     data: data,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(33, 36, 89, 0.7)',
+                        'rgba(2, 100, 140, 0.7)',
+                        'rgba(2, 140, 140, 0.7)',
+                        'rgba(4, 191, 172, 0.7)',
                         'rgba(153, 102, 255, 0.7)',
                         'rgba(255, 159, 64, 0.7)'
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
+                        'rgba(33, 36, 89, 1)',
+                        'rgba(2, 100, 140, 1)',
+                        'rgba(2, 140, 140, 1)',
+                        'rgba(4, 191, 172, 1)',
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
@@ -276,3 +334,4 @@ document.onload = getChartDataGenero();
 document.onload = getChartDatafechas();
 
 document.onload = cargarpordep();
+document.onload = getChartDataEdades();

@@ -72,7 +72,44 @@ def  genero_resumen(request):
 	
 	finalrep = listsort(finalrep) 
 	return JsonResponse({'genero_resumen':finalrep},safe=False)
+
+def edades_resumen(request):
+	porEdad = Reporte.objects.filter(estado=1,eliminado=0)
+	finalrep ={}
+	edad1 = 0 
+	edad2 = 0
+	edad3 = 0
+	edad4 = 0
+	edad5 = 0
+	edad6 = 0
+	for item in porEdad:		
+		edad1 += item.edadCero
+		edad2 += item.edadDiez
+		edad3 += item.edadVeinte
+		edad4 += item.edadCuarenta
+		edad5 += item.edadSesenta
+		edad6 += item.edadOchenta
+
+	finalrep["De 0 a 9 anios"]=edad1
+	finalrep["De 10 a 19 anios"]=edad2
+	finalrep["De 20 a 39 anios"]=edad3
+	finalrep["De 40 a 59 anios"]=edad4
+	finalrep["De 60 a 79 anios"]=edad5
+	finalrep["Mayores de 80"]=edad6
 	
+
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+	
+	finalrep = listsort(finalrep) 
+	return JsonResponse({'edad_resumen':finalrep},safe=False)	
 
 def fechas_resumen(request):
 	porFecha = Reporte.objects.filter(estado=1, eliminado=0).order_by('fechaTomada')
