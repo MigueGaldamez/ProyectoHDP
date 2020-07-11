@@ -47,8 +47,28 @@ class UCFWithEmail_editar(UserCreationForm):
     def __init__(self, *args , **kwargs):
         super().__init__(*args , **kwargs)
        
+class PerfilForm_ver(forms.ModelForm):
+	class Meta:
+		model=Perfil
+		fields =['departamento','municipio','nombre','apellido','complemento','telefono','DUI','fechaNacimiento']
+	def __init__(self, *args , **kwargs):
+		super().__init__(*args , **kwargs)
+		self.fields['municipio'].queryset = Municipio.objects.none()
+		self.fields['municipio'].empty_label="Seleccione"
+		self.fields['municipio'].widget.attrs.update({'class': 'form-control'})
+		self.fields['departamento'].queryset = Departamento.objects.order_by('nombre')
+		if 'departamento' in self.data:
+			try:
+				departamento_id =int(self.data.get('departamento'))
+				self.fields['municipio'].queryset = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
+				
+			except(ValueError ,TypeError):
+				pass 	
+		
+		elif self.instance.pk:
+			self.fields['municipio'].queryset = self.instance.departamento.municipio_set.order_by('nombre')
 
-
+  
 class PerfilForm(forms.ModelForm):
 
 	departamento = forms.ModelChoiceField(queryset=Departamento.objects.all(), required = False)
@@ -127,8 +147,8 @@ class PerfilForm_editar(forms.ModelForm):
 				valor = False
 			else:
 				raise ValidationError(_('%(value)s ,No es un numero valido'),params={'value': telefono},)
-			if telefono[0] != '6' and telefono[0] != '7' and telefono[0] != '2' :
-				raise ValidationError(_('%(value)s ,No es un numero valido'),params={'value': telefono},)
+				if telefono[0] != '6' and telefono[0] != '7' and telefono[0] != '2' :
+					raise ValidationError(_('%(value)s ,Debe Iniciar con 2,7,6'),params={'value': telefono},)
 		except(ValueError ,TypeError):
 			pass 
 		return telefono
@@ -161,8 +181,9 @@ class PerfilForm_editar(forms.ModelForm):
 			y día actual y mes y día de nacimiento. Si la combianción mes/día de
 			hoy es anterior a la combinación mes/día de nacimiento la comparación devuelve 1, si no devuelve 0."""
 			edad = hoy.year - fechaNacimiento.year - ((hoy.month, hoy.day) < (fechaNacimiento.month, fechaNacimiento.day))
-			if(edad<23):
-				print(edad)
+			if fechaNacimiento> datetime.date.today():
+				raise ValidationError(_('Ingresa una fecha Valida'))
+			elif(edad<23):
 				raise ValidationError(_('%(value)s años, ¿ y eres  doctor?'),params={'value': edad},)
 		except(ValueError ,TypeError):
 			pass 

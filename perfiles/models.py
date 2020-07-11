@@ -13,7 +13,7 @@ class Perfil(models.Model):
 	nombre =models.CharField(max_length=50)
 	user = models.OneToOneField(User, null=True,on_delete=models.CASCADE)
 	tipoUsuario =  models.IntegerField()
-
+	eliminado=models.IntegerField()
 	apellido =models.CharField(max_length=50)
 	complemento = models.CharField(max_length=50)
 	telefono = models.CharField(max_length=50)

@@ -33,7 +33,7 @@ $("#id_perfil__departamento").change(function () {
 });
 
 function dropdownChange() { 
-  alert('SI')
+ 
   if (document.getElementById('eliminados').checked) 
   {
       document.getElementById('id_eliminado').value = "";
