@@ -3,7 +3,7 @@ from .models import Perfil
 from .forms import PerfilForm,PerfilForm_editar,PerfilForm_ver
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .forms import UCFWithEmail ,UCFWithEmail_editar
+from .forms import UCFWithEmail ,UCFWithEmail_editar,UCFWithEmail_perfil
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.models import User
 #django messages
@@ -26,14 +26,15 @@ from django.views.generic import TemplateView
 from django.db.models import Sum,Count
 from collections import OrderedDict as SortedDict
 
-def editarDoctor(request,id):
 
-	doctor = Doctor.objects.get(id=id)
-	perfil = Perfil.objects.get(id=doctor.perfil_id)
+
+def editar_perfil(request):#vista para editar el  perfil de usuario
+	perfil = Perfil.objects.get(user_id=request.user.id)
 	user = User.objects.get(id=perfil.user_id)
+	doctor = Doctor.objects.get(perfil_id=perfil.id)
 	form = DoctorForm(request.POST or None, instance=doctor)
 	form_perfil = PerfilForm_editar(request.POST or None, instance=perfil)
-	form_user = UCFWithEmail_editar(request.POST or None , instance=user)
+	form_user = UCFWithEmail_perfil(request.POST or None , instance=user)
     
 	if form.is_valid() and form_perfil.is_valid() and form_user.is_valid():
 
@@ -43,10 +44,10 @@ def editarDoctor(request,id):
 		perfil.save()
 		user = form_user.save(commit=False)
 		user.save()
-	
-		return redirect('listar_doctores')
+		messages.success(request, 'Tu perfil ha sido actualizado exitosamente!')
+		return redirect('perfilview')
     
-	return render(request, 'doctor/doctor-actualizar.html',{'form':form,'doctor':doctor ,'form_perfil':form_perfil ,'user':user , 'form_user':form_user})
+	return render(request, 'perfiles/editar_perfil.html',{'form':form,'doctor':doctor ,'form_perfil':form_perfil ,'user':user , 'form_user':form_user})
 	
 
 def  genero_resumen(request):
@@ -232,7 +233,7 @@ def perfilView(request):
 	if request.user.is_authenticated:
 		perfil = Perfil.objects.get(user_id=request.user.id)
 		if perfil.tipoUsuario == 0:
-			doctor = Doctor.objects.get(perfil_id=perfil.id)	
+			doctor = Doctor.objects.get(perfil_id=perfil.id)
 
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
 
@@ -275,6 +276,7 @@ def registerView(request):
 		
 			perfil.user = user
 			perfil.tipoUsuario = 0
+			perfil.eliminado=0
 			perfil.save()
 
 			doctor = doctor_form.save(commit=False)

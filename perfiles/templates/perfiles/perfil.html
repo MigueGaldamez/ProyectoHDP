@@ -10,17 +10,13 @@ window.location.replace('/login/');
 
 <div class="container emp-profile">
     <form method="post">
-        <div class="row">
-            
-            <div class="col-md-6">
+        <div class="row justify-content-center">
+            <div class="col-md-6 ">
                 <div class="profile-head">
                     <div class="row row-cols-2">
-                        <div class="col"> <h5>{{perfil.nombre}}</h5></div>
-                       
-
+                        <div class="col"> <h5>{{perfil.nombre}} {{perfil.apellido}} </h5></div>
                         <div class="col text-right">
                             <a href="{%url 'password_change'%}">Cambiar contraseña</a>
-                            
                         </div>
                     </div>
                     <div class="row row-cols-2">
@@ -30,22 +26,14 @@ window.location.replace('/login/');
                                    Doctor, {{doctor.especialidad}}
                                 {% else %}
                                     Administrador
-
                                 {% endif%}
-                                
                             </h6>
                         </div>
-                       
-
                         <div class="col text-right">
-                            <a >Editar Perfil</a>
-                            
+                            <a href="{%url 'editar_perfil'%}" >Editar Perfil</a>
                         </div>
                     </div>
-                   
-                           
-                            <p class="proile-rating"> <span>Fecha de union :</span>{{user.date_joined}}</p>
-                           
+                        <p class="proile-rating"> <span>Miembro desde: </span>{{user.date_joined}}</p>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Informacion</a>
@@ -53,85 +41,105 @@ window.location.replace('/login/');
                         <li class="nav-item">
                             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Mas info</a>
                         </li>
+                        {%if doctor %}  
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#doc" role="tab" aria-controls="profile" aria-selected="false">Info. Doc</a>
+                        </li>
+                        {% endif%}
                     </ul>
-                 
                 </div>
-                   <!--parte de abajo--> 
+                <!--parte de abajo--> 
                 <div class="tab-content profile-tab" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Usuario</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{user.username}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Nombre</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{perfil.nombre}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{user.email}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Telefono</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>123 456 7890</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Direccion</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{perfil.departamento}},{{perfil.municipio}}</p>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Usuario</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.username}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Correo</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{user.email}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Telefono</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{perfil.telefono}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Direccion</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{perfil.departamento}},{{perfil.municipio}}</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="row">
                             <div class="col-md-6">
-                                <label></label>
+                                <label>Direccion</label>
                             </div>
                             <div class="col-md-6">
-                                <p></p>
+                                <p>{{perfil.complemento}},{{perfil.departamento}},{{perfil.municipio}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>DUI</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{perfil.DUI}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Fecha de Nacimiento</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{perfil.fechaNacimiento}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="doc" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Especialidad</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{doctor.especialidad}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Codigo Doctor</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{doctor.codigoDoctor}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Insitucion de trabajo</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{doctor.institucionTrabajo}}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            
             </div>
-            <div class="col-md-6">
-             
-                <h2 >Reportes Realizados</h2>
-                <div class="container">
-                    <div class="alert alert-primary" role="alert">
-                        A simple primary alert—check it out!
-                      </div>
-                </div>  
-              
-                
-            </div>
-
-          
-           
         </div>
-   
         <div class="row">
-            
-           
         </div>
     </form>           
 </div>

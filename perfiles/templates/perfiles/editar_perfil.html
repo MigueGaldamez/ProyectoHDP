@@ -1,0 +1,200 @@
+{% extends '../plantilla.html' %}
+
+{% block content %}
+  
+{% if not user.is_authenticated %}
+<script>  
+window.location.replace('/login/');
+</script> 
+{% endif %}
+<div class="container my-5">	
+	<form method="POST" autocomplete="off" id="PerfilrForm" novalidate data-municipios-url="{% url 'ajax_cargar_municipios' %}">
+		{% csrf_token %}
+		<div class="card text-center">
+			<div class="card-header">
+				<p class="h3">Editar Mi Perfil</p>
+			</div>
+			<div class="card-body">
+				<div class="row"> 
+					<div class="col-sm-3">				
+						<div class="form-group">
+							<label for="{{ form_perfil.nombre.id_for_label }}">Nombres</label>
+							<div>{{ form_perfil.nombre }}</div>
+							{% if form_perfil.nombre.errors %}
+								{% for error in form_perfil.nombre.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}	
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form_perfil.apellido.id_for_label }}">Apellidos</label>
+							<div>{{ form_perfil.apellido }}</div>
+							{% if form_perfil.apellido.errors %}
+								{% for error in form_perfil.apellido.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}	
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="{{ form_perfil.DUI.id_for_label }}">DUI</label>
+							<div >{{ form_perfil.DUI }}</div>
+							{% if form_perfil.DUI.errors %}
+								{% for error in form_perfil.DUI.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}						
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label for="{{ form_perfil.telefono.id_for_label }}">Telefono</label>
+							<div >{{ form_perfil.telefono }}</div>
+							{% if form_perfil.telefono.errors %}
+								{% for error in form_perfil.telefono.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}						
+						</div>
+                    </div>
+                    <div class="col-sm-2">
+						<div class="form-group">
+							<label for="{{ form.codigoDoctor.id_for_label }}">Codigo Medico</label>
+							<div>{{ form.codigoDoctor }}</div>
+							{% if form.codigoDoctor.errors %}
+								{% for error in form.codigoDoctor.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}		
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form_perfil.departamento.id_for_label }}">Departamento de residencia</label>
+							<div>{{ form_perfil.departamento }}</div>
+							{% if form_perfil.departamento.errors %}
+								{% for error in form_perfil.departamento.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}	
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form_perfil.municipio.id_for_label }}">Municipio de residencia</label>
+							<div>{{ form_perfil.municipio }}</div>
+							{% if  form_perfil.municipio.errors %}
+								{% for error in form_perfil.municipio.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}	
+						</div>
+					</div>
+					<div class="col">
+						<div class="form-group">
+							<label for="{{ form_perfil.complemento.id_for_label }}">Direccion</label>
+							<div>{{ form_perfil.complemento }}</div>
+							{% if form_perfil.complemento.errors %}
+								{% for error in form_perfil.complemento.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}						
+						</div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="{{ form_perfil.fechaNacimiento.id_for_label }}">Fecha Nacimiento</label>
+                            <div >{{ form_perfil.fechaNacimiento }}</div>
+                            {% if form_perfil.fechaNacimiento.errors %}
+                                {% for error in form_perfil.fechaNacimiento.errors %}
+                                    <div class="font-weight-lighter text-danger text-center align-middle">
+                                        <small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}	
+                        </div>
+                    </div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form.especialidad.id_for_label }}">Especialidad</label>
+							<div>{{ form.especialidad }}</div>
+							{% if form.especialidad.errors %}
+								{% for error in form.especialidad.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}		
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form.institucionTrabajo.id_for_label }}">Institucion donde Trabaja</label>
+							<div>{{ form.institucionTrabajo }}</div>
+							{% if  form.institucionTrabajo.errors %}
+								{% for error in form.institucionTrabajo.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}		
+						</div>
+					</div>
+					<!--user-->
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form_user.username.id_for_label }}">Usuario</label>
+							<div>{{ form_user.username }}</div>
+							{% if form_user.username.errors %}
+								{% for error in form_user.username.errors %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+									</div>
+								{% endfor %}
+							{% endif %}						
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label for="{{ form_user.email.id_for_label }}">Correo electronico</label>
+							<div >{{ form_user.email }}</div>
+							{% if form_user.email.errors %}
+							{% for error in form_user.email.errors %}
+								<div class="font-weight-lighter text-danger text-center align-middle">
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+								</div>
+							{% endfor %}
+						{% endif %}							
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer text-muted">
+				<div class="btn-group mr-2" role="group" aria-label="First group">
+					<button type="submit" class="btn btn-primary">Guardar <span class="material-icons md-p">save_alt</span></button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock %}
