@@ -16,4 +16,5 @@ class MunicipioFilter(django_filters.FilterSet):
         self.filters['departamento'].field.empty_label="Seleccione"
         
 
+
     

@@ -35,10 +35,14 @@ class ReporteForm(forms.ModelForm):
 	complemento = forms.CharField(error_messages={'required': requerido+"Complemento de direccion"},widget=forms.TextInput(attrs={'class': 'form-control'}))
 	estado = forms.IntegerField(required=False)
 	eliminado = forms.IntegerField(required=False)
+	duiIngresado = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'DUI','class': 'form-control'}))
+	perfil = forms.IntegerField(required=False)
+
+	
 	fechaEditado=  forms.DateField(disabled=True,required=False,widget=forms.NumberInput(attrs={'class': 'form-control','type':'date'}))
 	class Meta:
 		model = Reporte
-		fields =['estado','cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']
+		fields =['duiIngresado','perfil','estado','cantidadPruebas','cantidadPositivas','sospechosos','fechaTomada','fechaEditado','cantFemenino','cantMasculino','edadCero','edadDiez','edadVeinte','edadCuarenta','edadSesenta','edadOchenta','municipio','complemento','departamento','eliminado']
 	
 	def __init__(self, *args , **kwargs):
 		super().__init__(*args , **kwargs)

@@ -72,7 +72,7 @@
             {% if user.is_authenticated %}
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle my-2 my-sm-0 text-light bg-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{user.perfil.nombre}}
+                {{user.perfil.nombre}} {{user.perfil.apellido}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>

@@ -244,7 +244,12 @@
 				</div>
 			</div>
 			<blockquote class="blockquote mb-0">
-				<footer class="blockquote-footer">Creado por: <cite title="Source Title">Source Title</cite></footer>
+				{% if reporte.perfil.doctor %}
+				<footer class="blockquote-footer">Creado por: <cite href="{% url 'actualizar_doctor' reporte.perfil.doctor.id %}" title="Source Title">{{reporte.perfil.nombre}} {{reporte.perfil.apellido}}</cite></footer>
+				{% else %}
+				<footer class="blockquote-footer">Creado por: <cite href="" title="Source Title">{{reporte.perfil.nombre}} {{reporte.perfil.apellido}}</cite></footer>
+				{% endif %}
+			
 				<footer class="blockquote-footer">Ultima Fecha Editado: <cite title="Source Title">{{ form.fechaTomada.value }}</cite></footer>
 			  </blockquote>
 		</div>
