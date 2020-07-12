@@ -61,9 +61,11 @@ def crear_reporte(request):
 	if form.is_valid():
 		obj = form.save(commit=False)
 		if not request.user.is_authenticated:
-        		obj.estado = 0
+			obj.estado = 0
+			obj.perfil = 0
 		else:
-        		obj.estado = 1
+			obj.estado = 1
+			obj.perfil = request.user.perfil
 		obj.save()
 		messages.success(request, 'El Reporte se ha creado Exitosamente!')
 		return redirect('listar_reportes')

@@ -1,6 +1,7 @@
 from django.db import models
 from departamentos.models import Departamento
 from municipios.models import Municipio
+from perfiles.models import Perfil
     
 class Reporte(models.Model):
 	cantidadPruebas = models.IntegerField()
@@ -21,6 +22,8 @@ class Reporte(models.Model):
 	municipio = models.ForeignKey(Municipio,on_delete=models.CASCADE) 
 	estado = models.IntegerField()
 	eliminado = models.IntegerField()
+	perfil = models.ForeignKey(Perfil,on_delete = models.CASCADE)
+	duiIngreso =  models.IntegerField()
 	class Meta:
 		db_table="reporte"
 

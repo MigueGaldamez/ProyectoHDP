@@ -10,6 +10,25 @@
 			</div>
 			<div class="card-body ">	
 				<div class="row">
+					{% if not user.is_authenticated %}
+						<div class="col-sm-3">
+							<div class="form-group">
+								<label for="{{ form.departamento.id_for_label }}">Su DUI</label>
+								<div>{{ form.duiIngresado }}</div>
+								<small id="emailHelp" class="form-text text-muted">para futuras referencias.</small>
+								{% if form.errors %}
+									{% for error in form.duiIngresado %}
+									<div class="font-weight-lighter text-danger text-center align-middle">
+										<span class="material-icons md-9 ">error_outline</span> {{error}}
+									</div>
+									{% endfor %}
+								{% endif %}	
+							</div>
+						</div>
+					{% elif user.is_authenticated %}
+					<input type="text" name="duiIngresado" id="id_duiIngresado" placeholder="DUI" class="form-control d-none" value="{{ user.perfil.DUI }}" required>
+					{% endif %}
+					
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label for="{{ form.departamento.id_for_label }}">Departamento</label>
