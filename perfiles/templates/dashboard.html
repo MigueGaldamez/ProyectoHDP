@@ -1,39 +1,24 @@
 {% extends 'plantilla.html' %}
-
-
 {% block content %}
-
-<!------------>
-
 {% load static  %}
 <div class="container" id="main">
-  <div class="row row-offcanvas row-offcanvas-left">
-      <div class="col main pt-5 mt-3">
-          
-       
-        <div class="row">
-           
-          
-            <h1 class="display-4">
+    <div class="row row-offcanvas row-offcanvas-left">
+        <div class="col main pt-5 mt-3">
+            <div class="row">
+                <h1 class="display-4">
                 {% now "H" as current_time %}
-    
                 {% if current_time|add:"0" >= 18 %}
-                    
                     Buenas Noches,
-    
                 {% elif current_time|add:"0" >= 12 and 18 > current_time|add:"0" %}
                     Buenas Tardes,
-    
                 {% elif 12 > current_time|add:"0" and current_time|add:"0" >= 05  %}
                     <div class="col-md-3">
                         <img src="{% static '/img/sea.png' %}" class="avatar img-circle" alt="...">
                     </div>
-                    
                     Buenos Dias,
-    
                 {% elif 05 > current_time|add:"0" %}
                     Es de madrugada,
-    
+
                 {% endif %}Bienvenido, {{logi.nombre}}
               </h1>
         
