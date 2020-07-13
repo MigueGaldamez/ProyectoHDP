@@ -39,9 +39,9 @@ class DoctorFilter(django_filters.FilterSet):
       
         self.filters['perfil__departamento'].field.empty_label="Seleccione"
         self.filters['perfil__municipio'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
-        self.filters['perfil__nombre_c'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
-        self.filters['perfil__apellido_c'].field.widget.attrs.update({'class': 'form-control form-control-sm'})
-        self.filters['perfil__complemento_c'].field.widget.attrs.update({'class': 'form-control form-control-sm','placeholder':'direccion'})
+        self.filters['perfil__nombre_c'].field.widget.attrs.update({'class': 'form-control form-control-sm' , 'placeholder':'Nombres'})
+        self.filters['perfil__apellido_c'].field.widget.attrs.update({'class': 'form-control form-control-sm' ,'placeholder':'Apellidos'})
+        self.filters['perfil__complemento_c'].field.widget.attrs.update({'class': 'form-control form-control-sm','placeholder':'Direccion'})
         self.filters['perfil__municipio'].field.queryset = Municipio.objects.none()
         self.filters['perfil__municipio'].field.empty_label="Seleccione"
         self.filters['perfil__user__is_active'].field.widget.attrs.update({'class': 'form-control form-control-sm'})

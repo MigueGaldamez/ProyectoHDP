@@ -225,8 +225,8 @@ def dep1_resumen(request ,id):
 	return JsonResponse({'dep1_resumen':finalrep},safe=False)
 	
 
-
 #VIEWS DE SEGURIDAD
+
 def perfilView(request):
 	perfil = 0
 	doctor = 0
@@ -236,6 +236,15 @@ def perfilView(request):
 			doctor = Doctor.objects.get(perfil_id=perfil.id)
 
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
+
+
+#permisos view
+def permisosView(request):
+	doctores =  Doctor.objects.all()
+	perfiles =  Perfil.objects.all()
+	users = User.objects.all()
+
+	return render(request,'perfiles/permisos.html',{'perfiles':perfiles,'doctores':doctores ,'users':users})
 
 def indexView(request):	
     porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))

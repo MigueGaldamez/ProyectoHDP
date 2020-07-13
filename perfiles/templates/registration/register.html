@@ -1,9 +1,27 @@
 {% extends '../plantilla.html' %}
 {% block content %}
 {% if user.is_authenticated %}
-<script>  
-window.location.replace('/dashboard/');
-</script> 
+<div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Hola {{user.perfil.nombre}}</h5>
+         
+        </div>
+        <div class="modal-body">
+          <p>Parece ser que ya has iniciado sesion.</p>
+        </div>
+        <div class="modal-footer">
+          <a type="button"  href="{% url 'dashboard' %}" class="btn btn-primary">Continuar al inicio</a>
+          <a type="button" href="{% url 'logout' %}" class="btn btn-secondary">Cerrar sesion</a>
+        </div>
+      </div>
+    </div>
+  </div> 
+  <script>  
+  //window.location.replace('/dashboard/');
+  $('#myModal').modal('show')
+  </script> 
 {% endif %}
 <br>
     <div class="login-form">      
