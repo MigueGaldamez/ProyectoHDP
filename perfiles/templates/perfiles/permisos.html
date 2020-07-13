@@ -4,13 +4,10 @@
 
 	<div class="container">
 		<div class="row col mt-5"> 
-			<p class="h2">Lista de Doctores</p>
+			<p class="h2">Lista de Usuarios</p>
 		</div>
 		<form method="GET" autocomplete="off"  id="DoctorForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
 			<div class="card text-center mb-5">
-				<div class="card-header">
-					<a class="btn btn-outline-info" href="{% url 'crear_doctor'%}" >Registrar nuevo Doctor</a>		
-				</div>
 				<div class="card-body">
 					<div class="row">
 						<!--{{filtered_reportes.form.as_p}}-->
@@ -28,22 +25,16 @@
 						</div>
 						<div class="col-md-2 col col-sm-6 col-12">
 							<div class="form-group">
-								<label >Departamento</label>
-								<div >{{filtered_doctores.form.perfil__departamento}}</div>
+								<label >Nombre Usuario</label>
+								<div >{{filtered_doctores.form.nombre_usuario_c}}</div>
 							</div>                                                             
 						</div>
 						<div class="col-md-2 col col-sm-6 col-12">
 							<div class="form-group">
-								<label >Municipio</label>
-								<div >{{filtered_doctores.form.perfil__municipio}}</div>
+								<label >Correo</label>
+								<div >{{filtered_doctores.form.correo_c}}</div>
 							</div>                                                             
-						</div>
-						<div class="col-md-2 col col-sm-6 col-12">
-							<div class="form-group">
-								<label >Direccion</label>
-								<div >{{filtered_doctores.form.perfil__complemento_c}}</div>
-							</div>                                                             
-						</div>
+						</div>	
 						<div class="col-md-2 col col-sm-6 col-12">
 							<div class="form-group">
 								<label >Activos</label>
@@ -68,12 +59,12 @@
 						<!--<th scope="col">#</th>-->
 						<th scope="col">Nombres</th>
 						<th scope="col">Apellidos</th>
-						<th scope="col">Especialidad</th>
-						<th scope="col">Direccion</th>
-						<th scope="col">Lugar de trabajo</th>
-						<th scope="col"> Usuario</th> 	
+						<th scope="col">Nombre Usuario</th>
+						<th scope="col">Correo</th>
+						<th scope="col">Tipo Usuario</th>
 						<th scope="col">fecha Union</th>
-						<th scope="col">DUI</th>
+				
+						
 						<th scope="col">Estado Cuenta</th>
 						<th scope="col">Ver/Editar</th>
 						<!--<th scope="col">Fecha Nacimiento</th>-->
@@ -84,13 +75,21 @@
 						<tr>
 							<td class="text-center align-middle">{{doctor.perfil.nombre}}</td>
 							<td class="text-center align-middle">{{doctor.perfil.apellido}}</td>
-							<!--<td>{{doctor.codigoDoctor}}</td>-->
-							<td class="text-center align-middle">{{doctor.perfil.doctor.especialidad}}</td>
-							<td class="text-center align-middle"> {{doctor.perfil.complemento}}, {{doctor.perfil.municipio}}, {{doctor.perfil.departamento}}</td>
-							<td class="text-center align-middle">{{doctor.institucionTrabajo}}</td>
 							<td class="text-center align-middle">{{doctor.perfil.user.username}}</td>
+							<!--<td>{{doctor.codigoDoctor}}</td>-->
+							<td class="text-center align-middle">{{doctor.perfil.user.email}}</td>
+							
+							<td class="text-center align-middle">	
+								{% if doctor.perfil.tipoUsuario == 1 %}
+								<span class="badge badge-pill badge-success">Administrador</span>
+								{% endif %}
+								{% if doctor.perfil.tipoUsuario == 0  %}
+								<span class="badge badge-pill badge-warning">Doctor</span>
+								{% endif %}
+							</td>
+
 							<td class="text-center align-middle">{{doctor.perfil.user.date_joined}}</td>
-							<td class="text-center align-middle">{{doctor.perfil.DUI}}</td>
+							
 							<td class="text-center align-middle">	
 								{% if doctor.perfil.user.is_active == 1 %}
 								<span class="badge badge-pill badge-success">Validado</span>
@@ -101,7 +100,11 @@
 								{% if doctor.perfil.eliminado == 1 and user.perfil.tipoUsuario == 1 %}
 								<span class="badge badge-pill badge-danger">Eliminado</span>
 								{% endif %}</td>
-							<th class="text-center align-middle" scope="row"><a href="{%  url 'actualizar_doctor' doctor.id %}"><i class="material-icons md-dark">edit</i></a></th>
+
+
+							<td class="text-center align-middle" scope="row">
+								<a href="{%  url 'actualizar_permisos' doctor.id %}"><i class="material-icons md-dark">edit</i></a>
+							</td>
 						  </tr>
 					{% endfor %}
 				</tbody>

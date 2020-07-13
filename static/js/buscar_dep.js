@@ -31,7 +31,9 @@ const renderChartEdades =(data,labels)=>{
             }]
         },
         options: {
+           
             legend: {
+                position:'left',
                 display: true
             },
            
