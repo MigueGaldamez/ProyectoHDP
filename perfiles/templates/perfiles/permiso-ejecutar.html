@@ -1,0 +1,29 @@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">¿estas seguro que deseas cambiar los permisos de este usuario?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+          
+          {% if doctor.perfil.tipoUsuario == 0%}
+          Brindras a: {{doctor.perfil.nombre}} {{doctor.perfil.apellido}}, permisos de  Administrador.
+          {% else%}
+          Revocaras permisos de administrador a: {{doctor.perfil.nombre}} {{doctor.perfil.apellido}}.
+          {% endif %}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="Eliminar" class="btn btn-warning">Confirmar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

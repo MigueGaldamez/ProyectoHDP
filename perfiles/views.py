@@ -12,6 +12,7 @@ from django.contrib import messages
 import json
 from django.http import JsonResponse
 
+from django.core.paginator import Paginator
 #imports
 from departamentos.forms import DepartamentoForm
 from departamentos.models import Departamento
@@ -26,7 +27,27 @@ from django.views.generic import TemplateView
 from django.db.models import Sum,Count
 from collections import OrderedDict as SortedDict
 
+from .filters import DoctorFilter
 
+
+def verDoctorPermiso(request, id): #Vist apara ver informacion de un doctor en especifico dentro de la tabla
+	doctor= Doctor.objects.get(id=id)
+	perfil= Perfil.objects.get(id=doctor.perfil_id)
+	user = User.objects.get(id=perfil.user_id)
+	form_perfil=PerfilForm_ver(request.POST or None,instance=perfil)
+	form_user= UCFWithEmail_editar(request.POST or None , instance=user)
+    
+	if request.method == 'POST' and "Eliminar" in request.POST: #Inicia la parte para "eliminar" un reporte
+		if perfil.tipoUsuario == 1:
+			perfil.tipoUsuario =0 
+		elif perfil.tipoUsuario == 0:
+			perfil.tipoUsuario = 1
+			
+		perfil.save()
+		messages.info(request, 'Los permisos de han sido actualizados!')
+		return redirect('permisos')#termina el  codigo para eliminar un reporte
+   
+	return render(request, 'perfiles/permiso-actualizar.html',{'doctor':doctor ,'form_perfil':form_perfil ,'user':user,'form_user':form_user })
 
 def editar_perfil(request):#vista para editar el  perfil de usuario
 	perfil = Perfil.objects.get(user_id=request.user.id)
@@ -91,12 +112,12 @@ def edades_resumen(request):
 		edad5 += item.edadSesenta
 		edad6 += item.edadOchenta
 
-	finalrep["De 0 a 9 anios"]=edad1
-	finalrep["De 10 a 19 anios"]=edad2
-	finalrep["De 20 a 39 anios"]=edad3
-	finalrep["De 40 a 59 anios"]=edad4
-	finalrep["De 60 a 79 anios"]=edad5
-	finalrep["Mayores de 80"]=edad6
+	finalrep["De 0 a 9 años"]=edad1
+	finalrep["De 10 a 19 años"]=edad2
+	finalrep["De 20 a 39 años"]=edad3
+	finalrep["De 40 a 59 años"]=edad4
+	finalrep["De 60 a 79 años"]=edad5
+	finalrep["Mayores de 80 años"]=edad6
 	
 
 
@@ -225,8 +246,8 @@ def dep1_resumen(request ,id):
 	return JsonResponse({'dep1_resumen':finalrep},safe=False)
 	
 
-
 #VIEWS DE SEGURIDAD
+
 def perfilView(request):
 	perfil = 0
 	doctor = 0
@@ -237,13 +258,36 @@ def perfilView(request):
 
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
 
+
+#permisos view
+def permisosView(request):
+	context ={}
+	filtered_doctores = DoctorFilter(
+		request.GET,
+		queryset = Doctor.objects.all().order_by('codigoDoctor')
+	)
+	context['filtered_doctores']=filtered_doctores
+	
+	paginated_filtered_doctores = Paginator(filtered_doctores.qs,8)
+	page_number_doc = request.GET.get('page')
+	doctor_page_obj = paginated_filtered_doctores.get_page(page_number_doc)
+
+	context['doctor_page_obj']=doctor_page_obj
+	
+
+	return render(request,'perfiles/permisos.html',context=context)
+
 def indexView(request):	
-	porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
-	porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
+    #porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+    #porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
 	casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
 	pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
-	sospechosos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('sospechosos'))
-	return render(request,'index.html',{'sospechosos_count':sospechosos_count,'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
+	sospechosas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('sospechosos'))
+	doctores_count=Doctor.objects.all().filter(perfil__eliminado=0).count()
+   
+    #return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
+	return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count ,'sospechosas_count':sospechosas_count , 'doctores_count':doctores_count})
+
 
 @login_required
 def dashboardView(request):

@@ -15,7 +15,11 @@
   <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static '/css/toastr.min.css' %}">
   <link rel="stylesheet" href="{% static '/css/style.css' %}">
-  	<!----Javascript-->
+
+
+    <!----Javascript-->
+    <script src="{% static '/js/popper.min.js' %}" ></script>
+    <script src="{% static '/js/bootstrap.min.js' %}" ></script>
 	<title>Reporte casos covid</title>
 </head>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -26,45 +30,105 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto ">
         {% if user.is_authenticated == False%} 
-        <li class="nav-item ">
-          <a class="nav-link" href="{% url 'home' %}">Inicio <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'crear_reporte' %}">Envianos tu reporte <span class="sr-only">(current)</span></a>
-        </li>
+          {%  if request.get_full_path == "/" %}
+
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'home' %}">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+            </li>
+          {% endif %}
+
+          {%  if request.get_full_path == "/dashboard/reportes/new" %}
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'crear_reporte' %}">Envianos tu reporte <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'crear_reporte' %}">Envianos tu reporte</a>
+            </li>
+          {% endif %}
+
         {% endif %}
-          {% if user.is_authenticated %}
-        <li class="nav-item">
-          <div class="form-inline my-2 my-lg-0">
-        <a class="nav-link" href="{% url 'dashboard' %}">
-          Inicio 
-        </a>
-        </li>
-        <li class="nav-item">
-          <div class="form-inline my-2 my-lg-0">
-          <a class="nav-link" href="{% url 'listar_reportes' %}">
-            Reportes {% block badge %}
-            {% endblock %}
-          </a>
-        </li>
-        <li class="nav-item">
-          <div class="form-inline my-2 my-lg-0">
-        <a class="nav-link" href="{% url 'listar_doctores' %}">
-            Doctores 
-          </a>
-        </li>
-          <li class="nav-item">
-            <div class="form-inline my-2 my-lg-0">
-          <a class="nav-link" href="{% url 'listar_departamentos' %}">
-            Departamentos 
-          </a>
-        </li>
-          <li class="nav-item">
-            <div class="form-inline my-2 my-lg-0">
-          <a class="nav-link" href="{% url 'listar_municipios' %}">
-              Municipios
-          </a>
-        </li>
+      {% if user.is_authenticated %}
+
+        {%  if request.get_full_path == "/" %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'home' %}">Publico <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'home' %}">Publico</a>
+          </li>
+        {% endif %}
+      
+        {%  if request.get_full_path == "/dashboard/" %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'dashboard' %}">Menu<span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'dashboard' %}">Menu</a>
+          </li>
+        {% endif %}
+
+        {%  if "/dashboard/reportes/" in request.path %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'listar_reportes' %}">   
+              Reportes  <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'listar_reportes' %}">   
+              Reportes {% block badge %}
+              {% endblock %}</a>
+          </li>
+        {% endif %}
+
+        {%  if "/dashboard/doctores/" in request.path %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores</a>
+          </li>
+        {% endif %}
+      
+       {% if user.is_staff == 1 %}
+          {%  if "/dashboard/permisos/" in request.path %}
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'permisos' %}">Permisos <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'permisos' %}">Permisos</a>
+            </li>
+          {% endif %}
+       {% endif %}
+
+        {%  if "/dashboard/departamentos/" in request.path %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos</a>
+          </li>
+        {% endif %}
+
+
+        {%  if  "/dashboard/municipios/" in request.path %}
+          <li class="nav-item active">     
+            <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios <span class="sr-only">(current)</span></a>
+          </li>
+        {% else %}
+          <li class="nav-item">     
+            <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios</a>
+          </li>
+        {% endif %}
       {% endif %}   
       </ul>
       <div class="form-inline my-2 my-lg-0">
@@ -111,8 +175,7 @@
     <a class="text-light" href="#">casos covid , copyright</a>  
   </footer>
 
-    <script src="{% static '/js/popper.min.js' %}" ></script>
-    <script src="{% static '/js/bootstrap.min.js' %}" ></script>
+   
     <script src="{% static '/js/toastr.min.js' %}" ></script>
 
       {% include 'reportes/mensaje.html' %}
