@@ -32,7 +32,11 @@ const renderChartEdades =(data,labels)=>{
         },
         options: {
             legend: {
-                display: true
+                display: true,
+                position: 'left',
+                labels: {
+                    boxWidth: 20
+                }
             },
            
         }
@@ -171,13 +175,17 @@ const renderChart =(data,labels)=>{
         },
         options: {
             legend: {
-                display: true
+                display: true,
+                position: 'left',
+                labels: {
+                    boxWidth: 20
+                }
             },
            
         }
     });
+    
 }
-
 
 const getChartData =()=>{
    
@@ -264,7 +272,7 @@ function porDepartamento(id) {
             data: {
                 labels: labels,
                 datasets: [{
-                    label: '# of Votes',
+                    label: '# de casos: ',
                     data: data,
                     backgroundColor: [
                         'rgba(33, 36, 89, 0.7)',

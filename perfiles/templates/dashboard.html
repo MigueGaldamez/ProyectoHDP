@@ -6,98 +6,87 @@
         <div class="col main pt-5 mt-3">
             <div class="row">
                 <h1 class="display-4">
-                {% now "H" as current_time %}
-                {% if current_time|add:"0" >= 18 %}
-                    Buenas Noches,
-                {% elif current_time|add:"0" >= 12 and 18 > current_time|add:"0" %}
-                    Buenas Tardes,
-                {% elif 12 > current_time|add:"0" and current_time|add:"0" >= 05  %}
-                    <div class="col-md-3">
-                        <img src="{% static '/img/sea.png' %}" class="avatar img-circle" alt="...">
+                    {% now "H" as current_time %}
+                    {% if current_time|add:"0" >= 18 %}
+                        Buenas Noches,
+                    {% elif current_time|add:"0" >= 12 and 18 > current_time|add:"0" %}
+                        Buenas Tardes,
+                    {% elif 12 > current_time|add:"0" and current_time|add:"0" >= 05  %}
+                        <div class="col-md-3">
+                            <img src="{% static '/img/sea.png' %}" class="avatar img-circle" alt="...">
+                        </div>
+                        Buenos Dias,
+                    {% elif 05 > current_time|add:"0" %}
+                        Es de madrugada,
+                    {% endif %}Bienvenido, {{logi.nombre}}
+                </h1>
+            </div>
+            <p class="lead">Un resumen de lo que esta pasando</p>
+            <div class="row mb-3">
+                <div class="col-xl-3 col-12 col-sm-6 py-2 px-col-5">
+                    <div class="card bg-success text-white h-100">
+                        <div class="card-body bg-success">
+                            <div class="rotate">
+                                <i class="fa fa-user fa-4x"></i>
+                            </div>
+                            
+                            <h6 class="text-uppercase text-center">  <a href="{% url 'listar_doctores' %}?perfil__user__is_active=false" class="text-light"> Solicitudes de usuarios</a></h6>
+                            <h1 class="display-4 text-center">{{perfiles_count}}</h1>
+                        </div>
                     </div>
-                    Buenos Dias,
-                {% elif 05 > current_time|add:"0" %}
-                    Es de madrugada,
-
-                {% endif %}Bienvenido, {{logi.nombre}}
-              </h1>
-        
-          
+                </div>
+                <div class="col-xl-3 col-12 col-sm-6 py-2  px-col-5">
+                    <div class="card text-white bg-danger h-100">
+                        <div class="card-body bg-danger">
+                            <div class="rotate">
+                                <i class="fa fa-list fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase text-center"><a href="{% url 'listar_reportes' %}?estado=0" class="text-light"> Reportes sin validar</a></h6>
+                            <h1 class="display-4 text-center">{{reportes_count}}</h1>
+                        </div>
+                    </div>
+                </div>
+                {% if logi.tipoUsuario == 1%}
+                <div class="col-xl-3 col-12 col-sm-6 py-2 ">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase "><a href="{% url 'listar_doctores' %}" class="text-light">Doctores</a></h6>
+                            <h1 class="display-4 text-center">{{all_docs}}</h1>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if logi.tipoUsuario == 0%}
+                <div class="col-xl-3 col-12 col-sm-6 py-2 ">
+                    <div class="card text-white bg-info h-100">
+                        <div class="card-body bg-info">
+                            <div class="rotate">
+                                <i class="fa fa-twitter fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase text-center">Reportes en tu Zona</h6>
+                            <h1 class="display-4 text-center">{{reportes_zona}}</h1>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="col-xl-3 col-12 col-sm-6 py-2">
+                    <div class="card text-white bg-warning h-100">
+                        <div class="card-body">
+                            <div class="rotate">
+                                <i class="fa fa-share fa-4x"></i>
+                            </div>
+                            <h6 class="text-uppercase text-center"><a href="{% url 'listar_reportes' %}" class="text-light">Reportes </a></h6>
+                            <h1 class="display-4 text-center">{{all_reports}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-          <p class="lead">Un resumen de lo que esta pasando</p>
-       
-          <div class="row mb-3">
-              <div class="col-xl-3 col-6 col-sm-6 py-2 px-col-5">
-                  <div class="card bg-success text-white h-100">
-                      <div class="card-body bg-success">
-                          <div class="rotate">
-                              <i class="fa fa-user fa-4x"></i>
-                          </div>
-                        
-                          <h6 class="text-uppercase">  <a href="{% url 'listar_doctores' %}?perfil__user__is_active=false" class="text-light"> Solicitudes de usuarios</a></h6>
-                          <h1 class="display-4">{{perfiles_count}}</h1>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-xl-3 col-6 col-sm-6 py-2  px-col-5">
-                  <div class="card text-white bg-danger h-100">
-                      <div class="card-body bg-danger">
-                          <div class="rotate">
-                              <i class="fa fa-list fa-4x"></i>
-                          </div>
-                          <h6 class="text-uppercase"><a href="{% url 'listar_reportes' %}?estado=0" class="text-light"> Reportes sin validar</a></h6>
-                          <h1 class="display-4">{{reportes_count}}</h1>
-                      </div>
-                  </div>
-              </div>
-              {% if logi.tipoUsuario == 1%}
-              <div class="col-xl-3 col-6 col-sm-6 py-2 ">
-                  <div class="card text-white bg-info h-100">
-                      <div class="card-body bg-info">
-                          <div class="rotate">
-                              <i class="fa fa-twitter fa-4x"></i>
-                          </div>
-                          <h6 class="text-uppercase"><a href="{% url 'listar_doctores' %}" class="text-light">Doctores</a></h6>
-                          <h1 class="display-4">{{all_docs}}</h1>
-                      </div>
-                  </div>
-              </div>
-              {% endif %}
-              
-              {% if logi.tipoUsuario == 0%}
-              <div class="col-xl-3 col-6 col-sm-6 py-2 ">
-                  <div class="card text-white bg-info h-100">
-                      <div class="card-body bg-info">
-                          <div class="rotate">
-                              <i class="fa fa-twitter fa-4x"></i>
-                          </div>
-                          <h6 class="text-uppercase">Reportes en tu Zona</h6>
-                          <h1 class="display-4">{{reportes_zona}}</h1>
-                      </div>
-                  </div>
-              </div>
-              {% endif %}
-              <div class="col-xl-3 col-6 col-sm-6 py-2">
-                  <div class="card text-white bg-warning h-100">
-                      <div class="card-body">
-                          <div class="rotate">
-                              <i class="fa fa-share fa-4x"></i>
-                          </div>
-                          <h6 class="text-uppercase"><a href="{% url 'listar_reportes' %}" class="text-light">Reportes </a></h6>
-                          <h1 class="display-4">{{all_reports}}</h1>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!--/main col-->
-  </div>
+    </div>
 </div>
-<!--/.container-->
-
-
-
-
 {% endblock %}
 {% block badge %}
      <span class="badge badge-light">{{reportes_count}}</span>

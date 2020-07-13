@@ -238,12 +238,12 @@ def perfilView(request):
 	return render(request,'perfiles/perfil.html',{'perfil':perfil,'doctor':doctor})
 
 def indexView(request):	
-    porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
-    porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
-    casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
-    pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
-   
-    return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
+	porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
+	porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
+	casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
+	pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
+	sospechosos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('sospechosos'))
+	return render(request,'index.html',{'sospechosos_count':sospechosos_count,'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
 
 @login_required
 def dashboardView(request):
