@@ -9,37 +9,41 @@
 				<p class="h3">Editar Reporte</p>
 			</div>
 			{%if reporte.estado == 0 %}
-			<div class="col">
-				<div class="alert col-8 border-info" role="alert">
+			<div class="card border-warning mb-3 col-12" >
+				<div class="card-body text-warning">
+					<h5 class="card-title">Este reporte no  ha tenido resolucion, desea:</h5>
 					<div class="form-group ">
-						<label for="exampleInputEmail1" class="text-info">este reporte no  ha tenido resolucion desea:</label>
-							
-							  
-							  <div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="aceptado12" value="1" onChange = checkbox12();>
-								<label class="form-check-label" for="inlineRadio1">Aceptarlo</label>
-							  </div>
-							  <div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" onChange = checkbox12();	>
-								<label class="form-check-label" for="inlineRadio2">Rechazarlo</label>
-							  </div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="aceptado12" value="1" onChange = checkbox12();>
+							<label class="form-check-label" for="inlineRadio1">Aceptarlo</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" onChange = checkbox12();	>
+							<label class="form-check-label" for="inlineRadio2">Rechazarlo</label>
+						</div>
 						<div class="d-none">{{ form.estado }}</div>					
 					</div>	
 				</div>
-			
 			</div>
 			{% endif %}
 			<div class="card-body">
+				{% if form.estado.errors %}
+				{% for error in form.estado.errors %}
+					<div class="font-weight-lighter text-danger text-center align-middle">
+						<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
+					</div>
+				{% endfor %}
+			{% endif %}	
 				<div class="row">
 					<div class="col-sm-3">
 						<div class="form-group">
 							<label for="{{ form.departamento.id_for_label }}">Departamento</label>
 							<div>{{ form.departamento }}</div>
 							<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-							{% if form.errors %}
+							{% if form.departamento.errors %}
 								{% for error in form.departamento.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -50,10 +54,10 @@
 							<label for="{{ form.municipio.id_for_label }}">Municipio</label>
 							<div>{{ form.municipio }}</div>
 							<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-							{% if form.errors %}
+							{% if form.municipio.errors %}
 								{% for error in form.municipio.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -64,10 +68,10 @@
 							<label for="{{ form.complemento.id_for_label }}">Direccion</label>
 							<div>{{ form.complemento }}</div>
 							<small id="emailHelp" class="form-text text-muted">Calle/Pj/colonia/residencia</small>
-							{% if form.errors %}
+							{% if form.complemento.errors %}
 								{% for error in form.complemento.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -78,10 +82,10 @@
 							<label for="{{ form.cantidadPruebas.id_for_label }}">Cantidad pruebas realizadas</label>
 							<div>{{ form.cantidadPruebas }}</div>
 							<small id="emailHelp" class="form-text text-muted">Incluyendo las negativas.</small>
-							{% if form.errors %}
+							{% if form.cantidadPruebas.errors %}
 								{% for error in form.cantidadPruebas.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -91,10 +95,10 @@
 						<div class="form-group">
 							<label for="{{ form.cantidadPositivas.id_for_label }}">Cantidad pruebas Positivas</label>
 							<div>{{ form.cantidadPositivas }}</div>
-							{% if form.errors %}
+							{% if form.cantidadPositivas.errors %}
 								{% for error in form.cantidadPositivas.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}
@@ -104,10 +108,10 @@
 						<div class="form-group">
 							<label for="{{ form.sospechosos.id_for_label }}">Cantidad Sospechozos</label>
 							<div>{{ form.sospechosos }}</div>
-							{% if form.errors %}
+							{% if form.sospechosos.errors %}
 								{% for error in form.sospechosos.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}
@@ -117,10 +121,10 @@
 						<div class="form-group">
 							<label for="{{ form.fechaTomada.id_for_label }}">Fecha Tomada las pruebas</label>
 							<div>{{ form.fechaTomada }}</div>
-							{% if form.errors %}
+							{% if form.fechaTomada.errors %}
 								{% for error in form.fechaTomada.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}
@@ -130,10 +134,10 @@
 						<div class="form-group">
 							<label for="{{ form.cantFemenino.id_for_label }}">Positivos Femenino</label>
 							<div>{{ form.cantFemenino }} </div>
-							{% if form.errors %}
+							{% if form.cantFemenino.errors %}
 								{% for error in form.cantFemenino.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -143,10 +147,10 @@
 						<div class="form-group">
 							<label for="{{ form.cantMasculino.id_for_label }}">Positivos Masculino</label>
 							<div>{{ form.cantMasculino}}</div>
-							{% if form.errors %}
+							{% if form.cantMasculino.errors %}
 								{% for error in form.cantMasculino.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -156,10 +160,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadCero.id_for_label }}">0 a 9 años</label>
 							<div>{{ form.edadCero }}</div>
-							{% if form.errors %}
+							{% if form.edadCero.errors %}
 								{% for error in form.edadCero.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -169,10 +173,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadDiez.id_for_label }}">10 a 19 años</label>
 							<div>{{ form.edadDiez }}</div>
-							{% if form.errors %}
+							{% if form.edadDiez.errors %}
 								{% for error in form.edadDiez.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -182,10 +186,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadVeinte.id_for_label }}">20 a 39 años</label>
 							<div>{{ form.edadVeinte }}</div>
-							{% if form.errors %}
+							{% if form.edadVeinte.errors %}
 								{% for error in form.edadVeinte.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -195,10 +199,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadCuarenta.id_for_label }}">40 a 59 años</label>
 							<div>{{ form.edadCuarenta }}</div>
-							{% if form.errors %}
+							{% if form.edadCuarenta.errors %}
 								{% for error in form.edadCuarenta.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -208,10 +212,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadS.id_for_label }}">60 a 79 años</label>
 							<div>{{ form.edadSesenta }}</div>
-							{% if form.errors %}
+							{% if form.edadSesenta.errors %}
 								{% for error in form.edadSesenta.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -221,10 +225,10 @@
 						<div class="form-group">
 							<label for="{{ form.edadOchenta.id_for_label }}">Mayores de 80 años</label>
 							<div>{{ form.edadOchenta }}</div>
-							{% if form.errors %}
+							{% if form.edadOchenta.errors %}
 								{% for error in form.edadOchenta.errors %}
 								<div class="font-italic text-danger text-center align-middle">
-									<span class="material-icons md-9 ">error_outline</span> {{error}}
+									<small><span class="material-icons md-9 ">error_outline</span> {{error}}</small>
 								</div>
 								{% endfor %}
 							{% endif %}	
@@ -244,10 +248,11 @@
 				</div>
 			</div>
 			<blockquote class="blockquote mb-0">
+				
 				{% if reporte.perfil.doctor %}
 				<footer class="blockquote-footer">Creado por: <cite href="{% url 'actualizar_doctor' reporte.perfil.doctor.id %}" title="Source Title">{{reporte.perfil.nombre}} {{reporte.perfil.apellido}}</cite></footer>
 				{% else %}
-				<footer class="blockquote-footer">Creado por: <cite href="" title="Source Title">{{reporte.perfil.nombre}} {{reporte.perfil.apellido}}</cite></footer>
+				<footer class="blockquote-footer">Creado por: #DUI <cite href="" title="Source Title">{{reporte.duiIngresado}}</cite></footer>
 				{% endif %}
 			
 				<footer class="blockquote-footer">Ultima Fecha Editado: <cite title="Source Title">{{ form.fechaTomada.value }}</cite></footer>

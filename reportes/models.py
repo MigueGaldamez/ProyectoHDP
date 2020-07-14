@@ -23,7 +23,7 @@ class Reporte(models.Model):
 	estado = models.IntegerField()
 	eliminado = models.IntegerField()
 	perfil = models.ForeignKey(Perfil,on_delete = models.CASCADE)
-	duiIngreso =  models.IntegerField()
+	duiIngresado = models.CharField(max_length=9)
 	class Meta:
 		db_table="reporte"
 

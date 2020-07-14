@@ -1,6 +1,6 @@
 from django.shortcuts import render ,redirect,get_object_or_404
 from .models import Reporte
-from .forms import ReporteForm
+from .forms import ReporteForm,ReporteForm_actualizar
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from perfiles.forms import UCFWithEmail
@@ -62,7 +62,6 @@ def crear_reporte(request):
 		obj = form.save(commit=False)
 		if not request.user.is_authenticated:
 			obj.estado = 0
-			obj.perfil = 0
 		else:
 			obj.estado = 1
 			obj.perfil = request.user.perfil
@@ -79,11 +78,9 @@ def actualizar_reporte(request,id):
 			reporte = Reporte.objects.get(id=id)
 		else:
 			reporte = Reporte.objects.exclude(eliminado=1).get(id=id)
-
-		
 		departamentos = Departamento.objects.all()
 		municipios = Municipio.objects.all()
-		form = ReporteForm(request.POST or None, instance=reporte)
+		form = ReporteForm_actualizar(request.POST or None, instance=reporte)
 		if request.method == 'POST' and "Eliminar" in request.POST: #Inicia la parte para "eliminar" un reporte
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:
@@ -95,8 +92,7 @@ def actualizar_reporte(request,id):
 		if form.is_valid():
 			obj = form.save(commit=False)
 			if not request.user.is_authenticated:
-					obj.estado = 0
-			
+				obj.estado = 0
 			obj.save()
 			messages.success(request, 'El  reporte ha sido actualizado Exitosamente!')
 			return redirect('listar_reportes')

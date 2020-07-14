@@ -16,8 +16,8 @@ class Perfil(models.Model):
 	eliminado=models.IntegerField()
 	apellido =models.CharField(max_length=50)
 	complemento = models.CharField(max_length=50)
-	telefono = models.CharField(max_length=50)
-	DUI = models.CharField(max_length=50)
+	telefono = models.CharField(max_length=8)
+	DUI = models.CharField(max_length=9)
 	fechaNacimiento = models.DateField()
 	def __str__(self):
 		return self.nombre
