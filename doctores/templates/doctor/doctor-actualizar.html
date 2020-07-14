@@ -1,5 +1,32 @@
 {% extends '../plantilla.html' %}
 {% block content %}
+
+{% if not request.user.perfil.tipoUsuario == 1  %}
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Hola {{user.perfil.nombre}}</h5>
+       
+      </div>
+      <div class="modal-body">
+        <p>Parece ser que no tienes permisos para estar aqui.</p>
+      </div>
+      <div class="modal-footer">
+        <a type="button"  href="{% url 'dashboard' %}" class="btn btn-primary">Regresar al inicio</a>
+      
+      </div>
+    </div>
+  </div>
+</div> 
+<script>  
+//window.location.replace('/dashboard/');
+$('#myModal').modal('show')
+</script>
+
+
+{% endif %}
 <div class="container my-5">	
 	<form method="POST"  id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}">
 		{% csrf_token %}
@@ -9,7 +36,7 @@
 			</div>
 			<div class="card-body">
 				<div class="row">
-					{%if user.is_active == 0 %}
+					{%if usuario.is_active == 0 %}
 					<div class="card border-warning mb-3 col-12" >
 						<div class="card-body text-warning">
 							<h5 class="card-title">Usuario Desactivado</h5>
@@ -95,10 +122,10 @@
 								<tr>
 									<th scope="col">Estado de Usuario</th>
 									<td  class="text-center align-middle">
-										{%if user.is_active == 0 %}
+										{%if usuario.is_active == 0 %}
 											<span class="badge badge-pill badge-warning">Desactivado</span>
 										{% endif %}
-										{%if user.is_active == 1 %}
+										{%if usuario.is_active == 1 %}
 											<span class="badge badge-pill badge-success">Activado</span>
 										{% endif %}
 									</td>
