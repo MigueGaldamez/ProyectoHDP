@@ -88,15 +88,16 @@
               {% endblock %}</a>
           </li>
         {% endif %}
-
-        {%  if "/dashboard/doctores/" in request.path %}
-          <li class="nav-item active">     
-            <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores <span class="sr-only">(current)</span></a>
-          </li>
-        {% else %}
-          <li class="nav-item">     
-            <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores</a>
-          </li>
+        {% if user.perfil.tipoUsuario == 1 %}
+          {%  if "/dashboard/doctores/" in request.path %}
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'listar_doctores' %}">Doctores</a>
+            </li>
+          {% endif %}
         {% endif %}
       
        {% if user.is_staff == 1 %}
@@ -110,26 +111,30 @@
             </li>
           {% endif %}
        {% endif %}
-
-        {%  if "/dashboard/departamentos/" in request.path %}
-          <li class="nav-item active">     
-            <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos <span class="sr-only">(current)</span></a>
-          </li>
-        {% else %}
-          <li class="nav-item">     
-            <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos</a>
-          </li>
+       
+        {% if user.is_staff == 1 %}
+          {%  if "/dashboard/departamentos/" in request.path %}
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'listar_departamentos' %}">Departamentos</a>
+            </li>
+          {% endif %}
         {% endif %}
+        
 
-
-        {%  if  "/dashboard/municipios/" in request.path %}
-          <li class="nav-item active">     
-            <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios <span class="sr-only">(current)</span></a>
-          </li>
-        {% else %}
-          <li class="nav-item">     
-            <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios</a>
-          </li>
+        {% if user.is_staff == 1 %}
+          {%  if  "/dashboard/municipios/" in request.path %}
+            <li class="nav-item active">     
+              <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios <span class="sr-only">(current)</span></a>
+            </li>
+          {% else %}
+            <li class="nav-item">     
+              <a class="nav-link" href="{% url 'listar_municipios' %}">Municipios</a>
+            </li>
+          {% endif %}
         {% endif %}
       {% endif %}   
       </ul>

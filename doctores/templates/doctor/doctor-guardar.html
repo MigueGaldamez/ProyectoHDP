@@ -1,5 +1,32 @@
 {% extends '../plantilla.html' %}
+
 {% block content %}
+{% if not user.perfil.tipoUsuario == 1  %}
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Hola {{user.perfil.nombre}}</h5>
+       
+      </div>
+      <div class="modal-body">
+        <p>Parece ser que no tienes permisos para estar aqui.</p>
+      </div>
+      <div class="modal-footer">
+        <a type="button"  href="{% url 'dashboard' %}" class="btn btn-primary">Regresar al inicio</a>
+      
+      </div>
+    </div>
+  </div>
+</div> 
+<script>  
+//window.location.replace('/dashboard/');
+$('#myModal').modal('show')
+</script>
+
+
+{% endif %}
 <div class="container my-5">	
 	<form method="POST" autocomplete="off" id="DoctorForm" novalidate data-municipios-url="{% url 'ajax_cargar_municipios' %}">
 		{% csrf_token %}
