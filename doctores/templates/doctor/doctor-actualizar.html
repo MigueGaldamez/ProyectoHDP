@@ -1,6 +1,7 @@
 {% extends '../plantilla.html' %}
 {% block content %}
-{% if not user.perfil.tipoUsuario == 1  %}
+
+{% if not request.user.perfil.tipoUsuario == 1  %}
 
 <div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog" role="document">
@@ -35,7 +36,7 @@ $('#myModal').modal('show')
 			</div>
 			<div class="card-body">
 				<div class="row">
-					{%if user.is_active == 0 %}
+					{%if usuario.is_active == 0 %}
 					<div class="card border-warning mb-3 col-12" >
 						<div class="card-body text-warning">
 							<h5 class="card-title">Usuario Desactivado</h5>
@@ -121,10 +122,10 @@ $('#myModal').modal('show')
 								<tr>
 									<th scope="col">Estado de Usiario</th>
 									<td  class="text-center align-middle">
-										{%if user.is_active == 0 %}
+										{%if usuario.is_active == 0 %}
 											<span class="badge badge-pill badge-warning">Desactivado</span>
 										{% endif %}
-										{%if user.is_active == 1 %}
+										{%if usuario.is_active == 1 %}
 											<span class="badge badge-pill badge-success">Activado</span>
 										{% endif %}
 									</td>

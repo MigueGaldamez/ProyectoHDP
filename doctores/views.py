@@ -26,7 +26,7 @@ def verDoctor(request, id): #Vist apara ver informacion de un doctor en especifi
         perfil.save()
         user.save()
         return redirect('listar_doctores')
-    return render(request, 'doctor/doctor-actualizar.html',{'doctor':doctor ,'form_perfil':form_perfil ,'user':user,'form_user':form_user })
+    return render(request, 'doctor/doctor-actualizar.html',{'doctor':doctor ,'form_perfil':form_perfil ,'usuario':user,'form_user':form_user })
 
 
 

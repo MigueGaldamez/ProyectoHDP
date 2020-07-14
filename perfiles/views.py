@@ -47,7 +47,7 @@ def verDoctorPermiso(request, id): #Vist apara ver informacion de un doctor en e
 		messages.info(request, 'Los permisos de han sido actualizados!')
 		return redirect('permisos')#termina el  codigo para eliminar un reporte
    
-	return render(request, 'perfiles/permiso-actualizar.html',{'doctor':doctor ,'form_perfil':form_perfil ,'user':user,'form_user':form_user })
+	return render(request, 'perfiles/permiso-actualizar.html',{'doctor':doctor ,'form_perfil':form_perfil ,'usuario':user,'form_user':form_user })
 
 def editar_perfil(request):#vista para editar el  perfil de usuario
 	perfil = Perfil.objects.get(user_id=request.user.id)

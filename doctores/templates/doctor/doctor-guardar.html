@@ -1,7 +1,7 @@
 {% extends '../plantilla.html' %}
 
 {% block content %}
-{% if not user.perfil.tipoUsuario == 1  %}
+{% if not request.user.perfil.tipoUsuario == 1  %}
 
 <div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
   <div class="modal-dialog" role="document">
