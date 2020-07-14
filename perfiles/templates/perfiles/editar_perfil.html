@@ -8,7 +8,7 @@ window.location.replace('/login/');
 </script> 
 {% endif %}
 <div class="container my-5">	
-	<form method="POST" autocomplete="off" id="PerfilrForm" novalidate data-municipios-url="{% url 'ajax_cargar_municipios' %}">
+	<form method="POST" autocomplete="off" id="ReporteForm" novalidate data-municipios-url="{% url 'ajax_cargar_municipios' %}">
 		{% csrf_token %}
 		<div class="card text-center">
 			<div class="card-header">

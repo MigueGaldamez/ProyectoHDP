@@ -50,6 +50,7 @@
 								{{filtered_reportes.form.fechaEditado}}
 							</div>
 						</div>-->
+						{% if user.is_staff == 1 %}
 						<div class="col-md-3 col col-sm-6 col-12">
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="checkbox" id="eliminados" value="" onChange=dropdownChange();>
@@ -57,6 +58,8 @@
 							</div>                                                           
 						</div>
 						{{filtered_reportes.form.eliminado}}
+						
+						{% endif %}
 						<!--<p><label for="id_eliminado">Eliminado:</label> <input type="number" name="eliminado" step="any" id="id_eliminado"></p>-->
 					</div>
 				</div>
