@@ -101,3 +101,7 @@ def actualizar_reporte(request,id):
 		messages.error(request, 'El reporte no existe')
 		return redirect('listar_reportes')
 
+
+
+def error_404_view(request,exception):
+	return render(request,'404.html')

@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'iaf(g!pr9evoa4401(j%#c)u=h3#!t@dmek0&h5^&3cri!vnnb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -158,3 +158,10 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='/dashboard/'
 LOGIN_URL ='/login/'
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'waawaawauu@gmail.com'
+EMAIL_HOST_PASSWORD = 'alexabebe13'
+EMAIL_USE_TLS = True
