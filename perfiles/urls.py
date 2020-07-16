@@ -31,9 +31,11 @@ urlpatterns=[
     path('dashboard/permisos/update/<int:id>', views.verDoctorPermiso , name ="actualizar_permisos"),
 	path('dashboard/permisos/', views.permisosView , name ="permisos"),
 	path('fechas_resumen', views.fechas_resumen , name ="fechas_resumen"),
+	path('fechas_resumen_muni/<int:id>', views.fechas_resumen_muni , name ="fechas_resumen_muni"),
 	path('departamentos_resumen', views.departamentos_resumen , name ="departamentos_resumen"),
 	path('genero_resumen', views.genero_resumen , name ="genero_resumen"),
 	path('edades_resumen', views.edades_resumen , name ="edades_resumen"),
+	path('edades_resumen_muni/<int:id>', views.edades_resumen_muni , name ="edades_resumen_muni"),
 	path('dep1_resumen/<int:id>', views.dep1_resumen , name ="dep1_resumen"),
 	
 	
