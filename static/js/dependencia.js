@@ -64,4 +64,7 @@ function checkbox12() {
   } else {
       document.getElementById('id_estado').value = 2;
   }
-} 
+}
+function acDocFuncion() {
+  document.getElementById('id_is_active').value = 0;
+}

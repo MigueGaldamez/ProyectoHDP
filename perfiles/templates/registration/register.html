@@ -60,40 +60,6 @@
                                 </div>  
                                 <div class="col-md-4 col col-sm-6 col-12">
                                     <div class="form-group">
-                                        <label >Direccion</label>
-                                        <div>{{perfil_form.complemento}}</div>
-                                        {% if perfil_form.complemento.errors %}                                            
-                                            {% for error in perfil_form.complemento.errors %}                                                
-                                                <small><a  href="#id_{{ perfil_form.complemento.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}                                            
-                                    </div>
-                                </div> 
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >DUI</label>
-                                        <div> {{perfil_form.DUI}}</div>
-                                        {% if perfil_form.DUI.errors %}                                            
-                                            {% for error in perfil_form.DUI.errors %}                                                
-                                                <small><a  href="#id_{{ perfil_form.DUI.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}  
-                                    </div>
-                                </div>   
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Telefono</label>
-                                        <div> {{perfil_form.telefono}}</div>
-                                        {% if perfil_form.telefono.errors %}                                            
-                                            {% for error in perfil_form.telefono.errors %}                                                
-                                                <small><a  href="#id_{{ perfil_form.telefono.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}  
-                                    </div>
-                                </div>  
-                                
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
                                         <label >Fecha Nacimiento </label>                                        
                                         <div class="custom-control-inline col-sm-12"> {{perfil_form.fechaNacimiento}}</div>
                                         {% if form.errors %}                                            
@@ -102,63 +68,8 @@
                                             {% endfor %}                                          
                                         {% endif %}    
                                     </div>                                                                                                                                         
-                                </div>   
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Correo Electronico </label>
-                                        <div >{{form.email}}</div>
-                                        {% if form.email.errors %}                                            
-                                            {% for error in form.email.errors %}                                                
-                                                <small><a  href="#id_{{  form.email.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}
-                                    </div>                                                             
-                                </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Usuario </label>
-                                        <div >{{form.username}}</div>
-                                        {% if form.username.errors %}                                            
-                                            {% for error in form.username.errors %}                                                
-                                                <small><a  href="#id_{{  form.username.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}
-                                    </div>                                                             
-                                </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Institucion para la que trabaja</label>
-                                        <div >{{doctor_form.institucionTrabajo}}</div>
-                                        {% if doctor_form.institucionTrabajo.errors %}                                            
-                                            {% for error in doctor_form.institucionTrabajo.errors %}                                                
-                                                <small><a  href="#id_{{  doctor_form.institucionTrabajo.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}
-                                    </div>                                                             
-                                </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Contraseña</label>
-                                        <div >{{form.password2}}</div>
-                                        {% if form.password2.errors %}                                            
-                                            {% for error in form.password2.errors %}                                                
-                                                <small><a  href="#id_{{  form.password2.name }}" class="text-danger ">* {{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}
-                                    </div>                                                             
-                                </div>   
-                                <div class="col-md-4 col col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label >Confirmar Contraseña</label>
-                                        <div >{{form.password1}}</div>
-                                        {% if form.password1.errors %}                                            
-                                            {% for error in form.password1.errors %}                                                
-                                                <small><a  href="#id_{{  form.password1.name }}" class="text-danger ">{{error}}</a></small>
-                                            {% endfor %}                                          
-                                        {% endif %}
-                                    </div>                                                             
-                                </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
+                                </div> 
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label >Departamento de residencia</label>
                                         <div >{{perfil_form.departamento}}</div>
@@ -169,7 +80,7 @@
                                         {% endif %}
                                     </div>                                                             
                                 </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label >Municipio de residencia</label>
                                         <div >{{perfil_form.municipio}}</div>
@@ -179,8 +90,96 @@
                                             {% endfor %}                                          
                                         {% endif %}
                                     </div>                                                             
+                                </div>   
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label >Telefono</label>
+                                        <div> {{perfil_form.telefono}}</div>
+                                        {% if perfil_form.telefono.errors %}                                            
+                                            {% for error in perfil_form.telefono.errors %}                                                
+                                                <small><a  href="#id_{{ perfil_form.telefono.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}  
+                                    </div>
+                                </div>  
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label >Direccion</label>
+                                        <div>{{perfil_form.complemento}}</div>
+                                        {% if perfil_form.complemento.errors %}                                            
+                                            {% for error in perfil_form.complemento.errors %}                                                
+                                                <small><a  href="#id_{{ perfil_form.complemento.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}                                            
+                                    </div>
+                                </div>   
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label >Correo Electronico </label>
+                                        <div >{{form.email}}</div>
+                                        {% if form.email.errors %}                                            
+                                            {% for error in form.email.errors %}                                                
+                                                <small><a  href="#id_{{  form.email.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}
+                                    </div>                                                             
                                 </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label >Usuario </label>
+                                        <div >{{form.username}}</div>
+                                        {% if form.username.errors %}                                            
+                                            {% for error in form.username.errors %}                                                
+                                                <small><a  href="#id_{{  form.username.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}
+                                    </div>                                                             
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label >Contraseña</label>
+                                        <div >{{form.password2}}</div>
+                                        {% if form.password2.errors %}                                            
+                                            {% for error in form.password2.errors %}                                                
+                                                <small><a  href="#id_{{  form.password2.name }}" class="text-danger ">* {{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}
+                                    </div>                                                             
+                                </div>   
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label >Confirmar Contraseña</label>
+                                        <div >{{form.password1}}</div>
+                                        {% if form.password1.errors %}                                            
+                                            {% for error in form.password1.errors %}                                                
+                                                <small><a  href="#id_{{  form.password1.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}
+                                    </div>                                                             
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label >Institucion para la que trabaja</label>
+                                        <div >{{doctor_form.institucionTrabajo}}</div>
+                                        {% if doctor_form.institucionTrabajo.errors %}                                            
+                                            {% for error in doctor_form.institucionTrabajo.errors %}                                                
+                                                <small><a  href="#id_{{  doctor_form.institucionTrabajo.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}
+                                    </div>                                                             
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label >DUI</label>
+                                        <div> {{perfil_form.DUI}}</div>
+                                        {% if perfil_form.DUI.errors %}                                            
+                                            {% for error in perfil_form.DUI.errors %}                                                
+                                                <small><a  href="#id_{{ perfil_form.DUI.name }}" class="text-danger ">{{error}}</a></small>
+                                            {% endfor %}                                          
+                                        {% endif %}  
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
                                     <div class="form-group">
                                         <label >Especialidad</label>
                                         <div >{{doctor_form.especialidad}}</div>
@@ -191,7 +190,7 @@
                                         {% endif %}
                                     </div>                                                             
                                 </div>
-                                <div class="col-md-4 col col-sm-6 col-12">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label >Codigo del cosejo de medicos</label>
                                         <div >{{doctor_form.codigoDoctor}}</div>
