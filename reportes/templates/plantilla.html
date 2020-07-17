@@ -176,11 +176,32 @@
   
 	{% block content %}
   {% endblock %}
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Desarrolado por:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group">
+            <li class="list-group-item">Jose Walter Perez Tejada</li>
+            <li class="list-group-item">Miguel Angel Galdamez Canales</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <div class="mt-5">
 			
   </div>
   <footer class="navbar footer fixed-bottom footer-dark bg-dark ">
-    <a class="text-light" href="#">casos covid , copyright</a>  
+    <a class="text-light" href="#">casos covid , copyright</a>
+    <a href="#" role="button" data-toggle="modal" data-target="#exampleModal">v1.0.01</a>
+
   </footer>
 
    
