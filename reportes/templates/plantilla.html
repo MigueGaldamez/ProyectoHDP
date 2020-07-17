@@ -144,7 +144,21 @@
             {% if user.is_authenticated %}
             <div class="nav-item dropdown">
               <a class="nav-link dropdown-toggle my-2 my-sm-0 text-light bg-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               
+                {% if user.is_staff %}
+                Super usuario |
+                {% endif %}
+                {% if not user.is_staff and user.perfil.tipoUsuario == 1 %}
+                Administrador |
+                {% endif %}
+                {% if not user.is_staff and user.perfil.tipoUsuario == 0 %}
+                Doctor |
+                {% endif %}
                 {{user.perfil.nombre}} {{user.perfil.apellido}}
+
+
+
+              
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>

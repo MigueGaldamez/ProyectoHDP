@@ -95,13 +95,14 @@
 			<table class="table table-hover table-sm"  >
 				<thead class="thead-dark text-center align-middle">
 					<tr>
-						<th scope="col ">#</th>
+						
+						<th scope="col">Ingresado por</th>
+						<th scope="col">Fecha Tomada</th>
 						<th scope="col">Cantidad Pruebas</th>
 						<th scope="col">Cantidad Positivas</th>
 						<th scope="col">Sospechosos</th>
 						<th scope="col">Departamento</th>
 						<th scope="col">Municipio</th>
-						<th scope="col">Fecha Tomada</th>
 						<th scope="col">Estado</th>
 						<th scope="col">Ver/Editar</th>
 					</tr>
@@ -109,13 +110,26 @@
 				<tbody >
 					{% for reporte in reporte_page_obj %}
 						<tr >
-							<td class="text-center align-middle" scope="row"><a href="{% url 'actualizar_reporte' reporte.id %}"></a>{{reporte.id}}</a></th>
+							<td class="text-center align-middle">
+								{% if reporte.perfil %}
+									{{reporte.perfil.nombre}} , {{reporte.perfil.apellido}}
+	
+								{% endif %}
+								{% if reporte.duiIngresado and not reporte.perfil %}
+									{{reporte.duiIngresado}}
+								{% endif%}
+								{% if not reporte.duiIngresado and not reporte.perfil %}
+									Usuario Anonimo
+								{% endif%}
+
+							</td>
+							<td class="text-center align-middle">{{reporte.fechaTomada}}</td>
+							
 							<td class="text-center align-middle">{{reporte.cantidadPruebas}}</td>
 							<td class="text-center align-middle">{{reporte.cantidadPositivas}}</td>
 							<td class="text-center align-middle">{{reporte.sospechosos}}</td>						
 							<td class="text-center align-middle">{{reporte.departamento}}</td>
 							<td class="text-center align-middle">{{reporte.municipio}}</td>
-							<td class="text-center align-middle">{{reporte.fechaTomada}}</td>
 							<td class="text-center align-middle">
 								{% if reporte.estado == 1 %}
 								<span class="badge badge-pill badge-success">Validado</span>

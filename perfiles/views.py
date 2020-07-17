@@ -348,7 +348,7 @@ def permisosView(request):
 	context ={}
 	filtered_doctores = DoctorFilter(
 		request.GET,
-		queryset = Doctor.objects.all().order_by('codigoDoctor')
+		queryset = Doctor.objects.filter(perfil__user__is_staff = 0).order_by('codigoDoctor')
 	)
 	context['filtered_doctores']=filtered_doctores	
 	paginated_filtered_doctores = Paginator(filtered_doctores.qs,8)
