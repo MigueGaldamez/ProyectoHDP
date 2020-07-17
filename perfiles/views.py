@@ -131,10 +131,94 @@ def edades_resumen(request):
 			return new_dict
 	
 	finalrep = listsort(finalrep) 
+	return JsonResponse({'edad_resumen':finalrep},safe=False)
+
+
+def edades_resumen_muni(request,id):
+	porEdad = Reporte.objects.filter(estado=1,eliminado=0,municipio=id)
+	finalrep ={}
+	edad1 = 0 
+	edad2 = 0
+	edad3 = 0
+	edad4 = 0
+	edad5 = 0
+	edad6 = 0
+	for item in porEdad:		
+		edad1 += item.edadCero
+		edad2 += item.edadDiez
+		edad3 += item.edadVeinte
+		edad4 += item.edadCuarenta
+		edad5 += item.edadSesenta
+		edad6 += item.edadOchenta
+
+	finalrep["De 0 a 9 años"]=edad1
+	finalrep["De 10 a 19 años"]=edad2
+	finalrep["De 20 a 39 años"]=edad3
+	finalrep["De 40 a 59 años"]=edad4
+	finalrep["De 60 a 79 años"]=edad5
+	finalrep["Mayores de 80 años"]=edad6
+	
+
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+	
+	finalrep = listsort(finalrep) 
 	return JsonResponse({'edad_resumen':finalrep},safe=False)	
 
 def fechas_resumen(request):
 	porFecha = Reporte.objects.filter(estado=1, eliminado=0).order_by('fechaTomada')
+	finalrep ={}
+	finalrep2 ={}
+				
+	def get_fecha(reporte):
+		return reporte.fechaTomada
+	
+	fechas_list = list(sorted(set(map(get_fecha,porFecha))))
+
+	def get_positivas_amount(fecha):
+		amount = 0
+		filtered_by_fecha = porFecha.filter(fechaTomada=fecha)
+		for item in filtered_by_fecha:
+			amount += item.cantidadPositivas
+		return amount
+
+	def get_pruebas_amount(fecha):
+		amount = 0
+		filtered_by_fecha = porFecha.filter(fechaTomada=fecha)
+		for item in filtered_by_fecha:
+			amount += item.cantidadPruebas
+		return amount
+
+	for x in porFecha:
+		for y in fechas_list:
+			finalrep[str(y)]=get_positivas_amount(y)
+			finalrep2[str(y)]=get_pruebas_amount(y)
+
+	def listsort(value):
+		if isinstance(value,dict):
+			new_dict = SortedDict()
+			key_list = value.keys()
+			key_list=sorted(key_list)
+			for key in key_list:
+				new_dict[key] = value[key]
+			return new_dict
+			
+	finalrep = listsort(finalrep)
+	finalrep2 = listsort(finalrep2)
+			
+	return JsonResponse({'positivas_resumen':finalrep,'pruebas_resumen':finalrep2 ,'fechas_list':fechas_list},safe=False)
+
+
+
+def fechas_resumen_muni(request , id):
+	porFecha = Reporte.objects.filter(estado=1, eliminado=0,municipio=id).order_by('fechaTomada')
 	finalrep ={}
 	finalrep2 ={}
 				
@@ -266,26 +350,20 @@ def permisosView(request):
 		request.GET,
 		queryset = Doctor.objects.all().order_by('codigoDoctor')
 	)
-	context['filtered_doctores']=filtered_doctores
-	
+	context['filtered_doctores']=filtered_doctores	
 	paginated_filtered_doctores = Paginator(filtered_doctores.qs,8)
 	page_number_doc = request.GET.get('page')
 	doctor_page_obj = paginated_filtered_doctores.get_page(page_number_doc)
-
 	context['doctor_page_obj']=doctor_page_obj
 	
 
 	return render(request,'perfiles/permisos.html',context=context)
 
 def indexView(request):	
-    #porDepartamento = Reporte.objects.values('departamento__nombre').filter(estado=1).annotate(total=Sum('cantidadPositivas'))
-    #porMuniDep1 = Reporte.objects.values('municipio__nombre').filter(estado=1 ,departamento=1).annotate(total=Sum('cantidadPositivas'))
 	casos_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPositivas'))
 	pruebas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('cantidadPruebas'))
 	sospechosas_count=Reporte.objects.all().filter(estado=1).aggregate(Sum('sospechosos'))
 	doctores_count=Doctor.objects.all().filter(perfil__eliminado=0).count()
-   
-    #return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count  ,'porDepartamento': porDepartamento,'porMuniDep1':porMuniDep1})
 	return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count ,'sospechosas_count':sospechosas_count , 'doctores_count':doctores_count})
 
 

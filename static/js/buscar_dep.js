@@ -331,6 +331,7 @@ function porDepartamento(id) {
 }
 
 
+
 function cargarpordep() {
     for (i = 1; i < 15; i++) {
         document.onload = porDepartamento(i);
