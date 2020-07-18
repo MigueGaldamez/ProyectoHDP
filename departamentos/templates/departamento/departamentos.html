@@ -1,6 +1,8 @@
 {% extends '../plantilla.html' %}
 
 {% block content %}
+{% load static %}
+<script src="{% static '/js/split.js' %}"></script>
 {% if not user.is_staff  %}
 
 <div class="modal" tabindex="-1" role="dialog" id="myModal"  data-backdrop="static" data-keyboard="false" >
@@ -35,26 +37,33 @@ $('#myModal').modal('show')
 			<p class="h2">Lista de Departamentos</p>
 			<a href ="{% url 'crear_departamento'%}">Nuevo Departamento </a>
 		</div>
-		<div class="row">
+		<div class="row row-cols-2" >
 			
-			<table class="table table-sm">
-				<thead class="thead-dark">
-				  <tr>
-					<th scope="col">#</th>
-					<th scope="col-4">Nombre Municipio</th>
-				  </tr>
-				</thead>
-				<tbody>
-					{% for departamento in departamentos %}
-						<tr>
-							<th scope="row"><a href="{% url 'actualizar_departamento' departamento.id %}">{{departamento.id}}</a></th>
-							<td>{{departamento.nombre}}</td>
+			<div class = "col">
+				<table class="table table-sm table-striped table-hover">
+					<thead class="thead-dark">
+					  <tr>
+						<!--<th scope="col">#</th>-->
+						<th scope="col-4">Nombre Municipio</th>
+					  </tr>
+					</thead>
+					<tbody>
+						{% for departamento in departamentos %}
+							<tr>
+								<th scope="row"><a class="text-dark font-weight-normal" href="{% url 'actualizar_departamento' departamento.id %}">{{departamento.nombre}}</a></th>
+								<!--<td>{{departamento.nombre}}</td>-->
+								
 							
-						
-						  </tr>
-					{% endfor %}
-				</tbody>
-			  </table>	
+							</tr>
+						{% endfor %}
+					</tbody>
+				  </table>	
+			</div>
+			<div class = "col" id="row" name="row" >
+
+			</div>
+			
+			
 	
 	</div>
 	</div>

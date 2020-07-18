@@ -1,5 +1,8 @@
 {% extends '../plantilla.html' %}
 {% block content %}
+
+{% load static %}
+<script src="{% static '/js/split.js' %}"></script>
 {% load reportes_extras %}
 
 {% if not user.is_staff  %}
@@ -39,7 +42,7 @@ $('#myModal').modal('show')
 			<!--{{filtered_reportes.form.as_p}}-->
 
 			<div class="col-md-3 col col-sm-6 col-12">
-				<div class="form-group">
+				<div class="form-group form-inline">
 					<label >Departamento</label>
 					<div >{{filtered_municipios.form.departamento}}</div>
 			
@@ -56,7 +59,9 @@ $('#myModal').modal('show')
 			</div>		
 		</form>
 
-		
+		<div class="row row-cols-2" >
+			
+			<div class = "col">
 			<table class="table table-sm table-striped table-hover " >
 				<thead class="thead-dark">
 				  <tr>
@@ -80,6 +85,11 @@ $('#myModal').modal('show')
 				
 				</tbody>
 			  </table>
+			</div>
+			<div class = "col" id="row" name="row" >
+
+			</div>	
+		</div>
 			  <nav aria-label="Page navigation mx-auto">
 				<ul class="pagination">
 	

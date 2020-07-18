@@ -108,6 +108,9 @@ class PerfilForm(forms.ModelForm):#codigo para el register del login
 		telefono = self.cleaned_data.get('telefono')
 		valor = False
 		try:
+			if Perfil.objects.filter(telefono=telefono).exists():
+				raise ValidationError(_('%(value)s ,Telefono ya ingresado'),params={'value': telefono},)
+        	
 			if telefono.isdigit():
 				valor = False
 			else:
@@ -120,10 +123,15 @@ class PerfilForm(forms.ModelForm):#codigo para el register del login
 	def clean_DUI(self):
 		DUI = self.cleaned_data.get('DUI')
 		try:
+		
+			if Perfil.objects.filter(DUI=DUI).exists():
+				raise ValidationError(_('%(value)s ,Dui ya ingresado'),params={'value': DUI},)
+        	
+
 			if DUI.isdigit():
 				valor = False
 			else:
-				raise ValidationError(_('%(value)s ,No es un DUI valido'),params={'value': DUI},)
+				raise ValidationError(_('%(value)s ,No es un DUI valido , solo numeros permitidos'),params={'value': DUI},)
 			ultimo= DUI[8]
 			contador=9
 			suma=0
@@ -188,6 +196,8 @@ class PerfilForm_editar(forms.ModelForm):#codigo para el formulario de editar pe
 		telefono = self.cleaned_data.get('telefono')
 		valor = False
 		try:
+			if Perfil.objects.filter(telefono=telefono).exists():
+				raise ValidationError(_('%(value)s ,Telefono ya ingresado'),params={'value': telefono},)
 			if telefono.isdigit():
 				valor = False
 			else:
@@ -200,6 +210,9 @@ class PerfilForm_editar(forms.ModelForm):#codigo para el formulario de editar pe
 	def clean_DUI(self):
 		DUI = self.cleaned_data.get('DUI')
 		try:
+			if Perfil.objects.filter(DUI=DUI).exists():
+				raise ValidationError(_('%(value)s ,Dui ya ingresado'),params={'value': DUI},)
+        	
 			if DUI.isdigit():
 				valor = False
 			else:

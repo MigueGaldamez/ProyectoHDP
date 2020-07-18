@@ -23,7 +23,7 @@ def listar_municipios(request):
 	)
 	context['filtered_municipios']= filtered_municipios
 	
-	paginated_filtered_muncipios = Paginator(filtered_municipios.qs,8)
+	paginated_filtered_muncipios = Paginator(filtered_municipios.qs,16)
 	page_number_mun = request.GET.get('page')
 	municipio_page_obj = paginated_filtered_muncipios.get_page(page_number_mun)
 

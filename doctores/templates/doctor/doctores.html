@@ -39,7 +39,7 @@ $('#myModal').modal('show')
 	</div>
 	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<form method="GET" autocomplete="off"  id="DoctorForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
+			<form method="GET" autocomplete="off"  id="ReporteForm" data-municipios-url="{% url 'ajax_cargar_municipios' %}" >
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="staticBackdropLabel">Filtar doctores por:</h5>
@@ -121,6 +121,7 @@ $('#myModal').modal('show')
 				</tr>
 			</thead>
 			<tbody>
+				
 				{% for doctor in   doctor_page_obj %}
 					<tr>
 						<td class="text-center align-middle">{{doctor.perfil.nombre}}</td>
@@ -144,6 +145,25 @@ $('#myModal').modal('show')
 							{% endif %}</td>
 						<th class="text-center align-middle" scope="row"><a href="{%  url 'actualizar_doctor' doctor.id %}"><i class="material-icons md-dark">edit</i></a></th>
 						</tr>
+				{% empty %}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					
+					<td class="text-center align-middle">Lo sentimos </td>
+
+					<td class="text-center align-middle">pero no hay</td>
+					<td class="text-center align-middle">registros que coincidan.</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+
+				</tr>
+							
+							
+						
 				{% endfor %}
 			</tbody>
 		</table>	
