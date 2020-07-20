@@ -19,8 +19,6 @@ from django.http import Http404
 from .filters import ReporteFilter
 from django.core.paginator import Paginator
 
-
-
 def cargar_municipios(request):
     departamento_id = request.GET.get('departamento')
     municipios = Municipio.objects.filter(departamento_id=departamento_id).order_by('nombre')
