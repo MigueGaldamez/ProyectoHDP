@@ -345,3 +345,9 @@ document.onload = getChartDatafechas();
 
 document.onload = cargarpordep();
 document.onload = getChartDataEdades();
+
+setInterval(getChartData, 90000);
+setInterval(getChartDataGenero, 90000);
+setInterval(getChartDatafechas, 90000);
+setInterval(cargarpordep, 90000);
+setInterval(getChartDataEdades, 90000);

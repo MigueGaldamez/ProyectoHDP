@@ -13,6 +13,7 @@ urlpatterns=[
 	#links de seguidad
 	#path('',ClubChartView.as_view(),name="home")
 	path('',views.indexView,name="home"),
+	path('cuidarse',views.cuidarseView,name="cuidarse"),
 	path('dashboard/',views.dashboardView,name="dashboard"),
 	path('login/',LoginView.as_view( template_name="registration/login.html",authentication_form=UserLoginForm),name="login"),
 	path('register/',views.registerView, name="register_url"),

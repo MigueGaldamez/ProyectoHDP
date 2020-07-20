@@ -366,6 +366,10 @@ def indexView(request):
 	doctores_count=Doctor.objects.all().filter(perfil__eliminado=0).count()
 	return render(request,'index.html',{'casos_count':casos_count,'pruebas_count':pruebas_count ,'sospechosas_count':sospechosas_count , 'doctores_count':doctores_count})
 
+def cuidarseView(request):	
+
+	return render(request,'cuidarse.html',{})
+
 
 @login_required
 def dashboardView(request):
@@ -376,6 +380,7 @@ def dashboardView(request):
 	all_reports = Reporte.objects.all().count()
 	all_docs = Perfil.objects.all().filter(tipoUsuario=0).count()
 	reportes_zona=0
+
 	
 	if request.user.is_authenticated:
 		logi = Perfil.objects.get(user_id=request.user.id)

@@ -4,6 +4,19 @@
     {% block content %}
     {% load static%}
     <script src="{%  static 'js/buscar_dep.js' %}"> </script>
+
+    <form class="d-none">
+        <input type="text" class="txt" value="Bienvenido   aqui un resumen de los casos de covid19,    Pruebas realizadas {{ pruebas_count.cantidadPruebas__sum}}   Casos Confirmadas    {{ casos_count.cantidadPositivas__sum}} y casos sospechosos  {{ sospechosas_count.sospechosos__sum }}    recuerda lavarte muy bien las manos">
+       
+    
+        <div class="controls">
+          <button id="play" type="submit">Play</button>
+        </div>
+        </form>
+
+    <script src="{%  static 'js/audioD.js' %}"> </script>
+    
+    
     <div class="container">
         <div class="my-5 text-center">
 			<p class="h2">Casos Covid-19 El Salvador</p>

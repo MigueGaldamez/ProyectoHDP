@@ -9,3 +9,4 @@ $(function() {
         $('table tr').slice(Math.ceil(($('table tr').length / 3)*2))
     ).appendTo('#row2');*/
 });
+

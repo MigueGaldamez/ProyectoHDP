@@ -18,11 +18,13 @@
   <link rel="stylesheet" href="{% static '/css/toastr.min.css' %}">
   <link rel="stylesheet" href="{% static '/css/split.css' %}">
   <link rel="stylesheet" href="{% static '/css/style.css' %}">
+
   
 
     <!----Javascript-->
     <script src="{% static '/js/popper.min.js' %}" ></script>
     <script src="{% static '/js/bootstrap.min.js' %}" ></script>
+    
 	<title>Reporte casos covid</title>
 </head>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -163,6 +165,8 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
                 <a class="dropdown-item" href="{% url 'perfilview' %}">Perfil</a>
+                <a class="dropdown-item" href="{% static 'pdf/manual_usuario.pdf' %}" download="">¿Te sientes un poco perdido?</a>
+           
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
               </div>
